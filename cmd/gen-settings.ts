@@ -200,6 +200,34 @@ const ebookUI: Field[] = [
       "fonts. wrapping quotes are stripped. a name that can't be loaded is " +
       "reported with a notification when the document opens",
   ).ver("3.7"),
+  field(
+    "FontSerif",
+    Str,
+    "",
+    "path to a font file (ttf, otf, ttc) used for serif text in ebooks " +
+      "(e.g. C:/fonts/Literata.ttf); a document family that looks like a serif " +
+      "is drawn with this file instead, empty keeps the document's own font",
+  ),
+  field(
+    "FontSans",
+    Str,
+    "",
+    "path to a font file used for sans-serif text in ebooks; empty keeps the " + "document's own font",
+  ),
+  field(
+    "FontMono",
+    Str,
+    "",
+    "path to a font file used for monospace text (code, pre, kbd) in ebooks; " + "empty keeps the document's own font",
+  ),
+  field(
+    "FontCjk",
+    Str,
+    "",
+    "path to a font file used for Chinese, Japanese and Korean text in ebooks, " +
+      "including glyphs the other slots don't have; empty keeps the engine's " +
+      "usual system fallback",
+  ),
   field("FontSize", Float, 0, "font size in points; 0 means the default (8.0)"),
   compactArray(
     "Margin",
@@ -1099,6 +1127,30 @@ const fileEBookUI: Field[] = [
     "whether the CSS in this document is ignored: true or false; " + "empty uses EBookUI.IgnoreDocumentCSS",
   ).ver("3.7"),
   field("CustomCSS", Str, "", "additional CSS applied to this document; empty uses EBookUI.CustomCSS").ver("3.7"),
+  field(
+    "FontSerif",
+    Str,
+    "",
+    "serif-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontSerif",
+  ),
+  field(
+    "FontSans",
+    Str,
+    "",
+    "sans-serif-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontSans",
+  ),
+  field(
+    "FontMono",
+    Str,
+    "",
+    "monospace-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontMono",
+  ),
+  field(
+    "FontCjk",
+    Str,
+    "",
+    "CJK-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontCjk",
+  ),
 ];
 
 const fileState: Field[] = [

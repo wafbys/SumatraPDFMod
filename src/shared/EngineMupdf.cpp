@@ -25,6 +25,7 @@
 
 extern "C" {
 #include <mupdf/pdf.h>
+#include "mupdf/ebook_font_slots.h"
 #if OS_WIN
 #include "mupdf/pkcs7-windows.h"
 #elif OS_DARWIN
@@ -3988,6 +3989,12 @@ struct EBookUISettings {
     float layoutDy;
     bool ignoreDocumentCSS;
     Str customCSS;
+    Str fontSerif; // font files that replace the ones the document names
+    Str fontSans;
+    Str fontMono;
+    Str fontCjk;
+
+    bool HasFontSlots() const { return fontSerif || fontSans || fontMono || fontCjk; }
 };
 
 static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* perFile) {
@@ -4000,6 +4007,10 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     res.layoutDy = global->layoutDy;
     res.ignoreDocumentCSS = global->ignoreDocumentCSS;
     res.customCSS = global->customCSS;
+    res.fontSerif = global->fontSerif;
+    res.fontSans = global->fontSans;
+    res.fontMono = global->fontMono;
+    res.fontCjk = global->fontCjk;
     if (!perFile) {
         return res;
     }
@@ -4032,8 +4043,38 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     if (perFile->customCSS) {
         res.customCSS = perFile->customCSS;
     }
+    if (perFile->fontSerif) {
+        res.fontSerif = perFile->fontSerif;
+    }
+    if (perFile->fontSans) {
+        res.fontSans = perFile->fontSans;
+    }
+    if (perFile->fontMono) {
+        res.fontMono = perFile->fontMono;
+    }
+    if (perFile->fontCjk) {
+        res.fontCjk = perFile->fontCjk;
+    }
     return res;
 }
+
+// While a reflowable document is laid out or drawn, the font files the reader
+// picked answer for every family the document names (EBookUI.FontSerif /
+// FontSans / FontMono / FontCjk, see src/shared/mupdf/ebook_font_slots.h).
+// mupdf keeps that per thread, so a PDF drawn on another thread - and a
+// fixed-page document's own font substitution - stay untouched.
+struct ScopedEbookFontSlots {
+    explicit ScopedEbookFontSlots(const EngineMupdf* e) {
+        if (!e) {
+            EbookFontSlotsEnd();
+            return;
+        }
+        auto path = [](Str s) -> const char* { return s ? CStrTemp(s) : nullptr; };
+        EbookFontSlotsBegin(path(e->ebookFontSerif), path(e->ebookFontSans), path(e->ebookFontMono),
+                            path(e->ebookFontCjk));
+    }
+    ~ScopedEbookFontSlots() { EbookFontSlotsEnd(); }
+};
 
 #if IS_DEBUG
 bool EngineMupdf_UnitTestEbookMarginCss() {
@@ -4266,6 +4307,14 @@ bool EngineMupdf::LoadFromStream(fz_stream* stm, Str nameHint, PasswordUI* pwdUI
             userCss = str::JoinTemp(userCss, s.customCSS);
         }
         usePublisherCss = s.ignoreDocumentCSS ? 0 : 1;
+        ebookFontSerif = str::Dup(arena, s.fontSerif);
+        ebookFontSans = str::Dup(arena, s.fontSans);
+        ebookFontMono = str::Dup(arena, s.fontMono);
+        ebookFontCjk = str::Dup(arena, s.fontCjk);
+        if (s.HasFontSlots()) {
+            logf("ebook font slots: '%s' '%s' '%s' '%s'\n", ebookFontSerif, ebookFontSans, ebookFontMono,
+                 ebookFontCjk);
+        }
     }
     ebookUserCss = str::Dup(arena, userCss);
     ebookPublisherCss = usePublisherCss;
@@ -4297,6 +4346,9 @@ bool EngineMupdf::LoadFromStream(fz_stream* stm, Str nameHint, PasswordUI* pwdUI
             }
         }
     }
+    // the reader's font files replace the ones the document names while it is
+    // laid out (see ScopedEbookFontSlots)
+    ScopedEbookFontSlots slots(this);
     fz_try(ctx) {
         if (dir) {
             _doc = fz_open_document_with_stream_and_dir(ctx, nameHintZ, stm, dir);
@@ -4328,6 +4380,14 @@ bool EngineMupdf::LoadFromStream(fz_stream* stm, Str nameHint, PasswordUI* pwdUI
     }
 
     isReflowable = fz_is_document_reflowable(ctx, _doc) != 0;
+    if (!isReflowable) {
+        // the reader's font slots replace fonts a stylesheet names; a
+        // fixed-page document has its own fonts and must keep them
+        ebookFontSerif = {};
+        ebookFontSans = {};
+        ebookFontMono = {};
+        ebookFontCjk = {};
+    }
 
     // EBookUI.FontName only affects reflowable documents, and a name we can't
     // resolve silently renders in the default font. Note it for the UI (#4600).
@@ -4680,6 +4740,9 @@ static fz_rect LoadPageBounds(fz_context* ctx, Load load) {
 
 static void FinishNonPDFLoading(EngineMupdf* e) {
     ScopedRecursiveMutex scope(&e->docLock);
+    // loading the first page lays out chapter 1, which resolves the fonts the
+    // document names
+    ScopedEbookFontSlots slots(e);
 
     auto* ctx = e->Ctx();
     if (e->isReflowable && e->HasChapters()) {
@@ -4776,6 +4839,9 @@ static fz_buffer* EngineMupdfLoadExternalStream(fz_context* ctx, const char* fil
 }
 
 bool EngineMupdf::FinishLoading() {
+    // fz_count_chapters() / fz_count_pages() below lay an HTML document out the
+    // first time, which is where it resolves the fonts it names
+    ScopedEbookFontSlots slots(this);
     auto* ctx = Ctx();
     pdfdoc = pdf_specifics(ctx, _doc);
     if (pdfdoc) {
@@ -4964,6 +5030,7 @@ void EngineMupdf::WarmChapter(int chapter) {
     }
     auto* ctx = Ctx();
     ScopedRecursiveMutex scope(&docLock);
+    ScopedEbookFontSlots slots(this);
     fz_try(ctx) {
         fz_count_chapter_pages(ctx, _doc, chapter - 1);
     }
@@ -5063,6 +5130,7 @@ int EngineMupdf::LayOutChapter(int chapter) {
     fz_rect bound = fz_empty_rect;
     {
         ScopedRecursiveMutex docScope(&docLock);
+        ScopedEbookFontSlots slots(this);
         fz_page* page = nullptr;
         fz_var(n);
         fz_var(page);
@@ -5396,6 +5464,9 @@ static constexpr int kMaxGeneratedTocEntries = 400;
 // When the PDF has no outline, build one from numbered headings (issue #5724),
 // same heuristic as sioyek: a short line starting with "I." / "1.2." / "II.A.".
 static TocItem* GenerateTocFromHeadings(EngineMupdf* e, int& idCounter) {
+    // fz_load_page() can lay out a not-yet-laid-out chapter (this runs on the
+    // heading-TOC thread)
+    ScopedEbookFontSlots slots(e);
     if (!e || !e->_doc || e->pageCount <= 0) {
         return nullptr;
     }
@@ -5985,6 +6056,9 @@ static FzPageInfo* GetFzPageInfoLocked(EngineMupdf* e, Location loc, bool loadQu
     // the annotation-loading or heading-TOC thread walks the pages is a
     // use-after-free (and trips mupdf's local_xref_nesting assert).
     ScopedRecursiveMutex docScope(&e->docLock);
+    // fz_load_chapter_page below lays out the chapter if it isn't laid out yet,
+    // and that is where the document's fonts are resolved
+    ScopedEbookFontSlots slots(e);
 
     ReportIf(!loc.IsValid());
     if (!loc.IsValid()) {
@@ -7013,6 +7087,10 @@ Pixmap* EngineMupdf::RenderPage(RenderPageArgs& args) {
     auto* ctx = Ctx();
     auto pageNo = args.pageNo;
     Location loc = args.loc.IsValid() ? args.loc : LocationFromPageNo(pageNo);
+
+    // a reflowable page shapes its text while it is drawn, so the reader's font
+    // files have to be in place here as well
+    ScopedEbookFontSlots slots(this);
 
     fz_cookie* fzcookie = nullptr;
     FitzAbortCookie* cookie = nullptr;
@@ -10182,6 +10260,9 @@ void EngineMupdf::ApplyReflowThemeCss() {
             pi->page = nullptr;
         }
     });
+
+    // the reader's font files also apply when the document is laid out again
+    ScopedEbookFontSlots slots(this);
 
     bool ok = false;
     fz_var(ok);

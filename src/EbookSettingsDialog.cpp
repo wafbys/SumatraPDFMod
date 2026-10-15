@@ -1,4 +1,4 @@
-/* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
+﻿/* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
    License: GPLv3 */
 
 #include "base/Base.h"
@@ -51,6 +51,9 @@ constexpr int kEbookCssFontPx = 13;
 // the generated rules are one long line; without a cap the dialog would grow
 // as wide as the text
 constexpr int kEbookCssMaxDx = 440;
+// the slot dropdowns hold every installed family; cap them so one long name
+// doesn't stretch the dialog
+constexpr int kSlotDropdownMaxDx = 150;
 
 struct EbookSettingsWnd : WindowBase {
     ~EbookSettingsWnd() override;
@@ -66,6 +69,15 @@ struct EbookSettingsWnd : WindowBase {
     Edit* editMargin = nullptr;
     VirtText* labelSpacing = nullptr;
     Edit* editSpacing = nullptr;
+    // the four font slots (a font file or an installed font family)
+    VirtText* labelSlotSerif = nullptr;
+    DropDown* ddSlotSerif = nullptr;
+    VirtText* labelSlotSans = nullptr;
+    DropDown* ddSlotSans = nullptr;
+    VirtText* labelSlotMono = nullptr;
+    DropDown* ddSlotMono = nullptr;
+    VirtText* labelSlotCjk = nullptr;
+    DropDown* ddSlotCjk = nullptr;
     Checkbox* cbIgnoreCss = nullptr;
     Checkbox* cbCustomCss = nullptr;
     Edit* editCss = nullptr;
@@ -84,6 +96,7 @@ struct EbookSettingsWnd : WindowBase {
     void FillFontList();
     void SetValues(Str fontName, float fontSize, const Vec<float>* margin, float lineSpacing, bool ignoreCss,
                    Str customCss);
+    void SetSlotValues(Str serif, Str sans, Str mono, Str cjk);
     void LoadFromTarget();
     void ReadControls(EbookVals& out);
     void UpdateCssPreview();
@@ -157,6 +170,20 @@ void EbookSettingsWnd::FillFontList() {
         }
     }
     ddFont->SetItems(names);
+
+    // the slots get the same list, but their first entry means "the book's own
+    // font" instead of "whatever the engine picks"
+    StrVec slotNames;
+    slotNames.Append(FontSlotDefaultLabel());
+    for (int i = 1; i < len(names); i++) {
+        slotNames.Append(names[i]);
+    }
+    DropDown* slotDds[] = {ddSlotSerif, ddSlotSans, ddSlotMono, ddSlotCjk};
+    for (DropDown* dd : slotDds) {
+        if (dd) {
+            dd->SetItems(slotNames);
+        }
+    }
 }
 
 // the settings this dialog is editing: the document's own values (falling back
@@ -173,6 +200,10 @@ void EbookSettingsWnd::LoadFromTarget() {
     float lineSpacing = g->lineSpacing;
     bool ignoreCss = g->ignoreDocumentCSS;
     Str customCss = g->customCSS;
+    Str fontSerif = g->fontSerif;
+    Str fontSans = g->fontSans;
+    Str fontMono = g->fontMono;
+    Str fontCjk = g->fontCjk;
     if (f) {
         if (f->fontName) {
             fontName = f->fontName;
@@ -192,9 +223,38 @@ void EbookSettingsWnd::LoadFromTarget() {
         if (f->customCSS) {
             customCss = f->customCSS;
         }
+        if (f->fontSerif) {
+            fontSerif = f->fontSerif;
+        }
+        if (f->fontSans) {
+            fontSans = f->fontSans;
+        }
+        if (f->fontMono) {
+            fontMono = f->fontMono;
+        }
+        if (f->fontCjk) {
+            fontCjk = f->fontCjk;
+        }
     }
 
     SetValues(fontName, fontSize, margin, lineSpacing, ignoreCss, customCss);
+    SetSlotValues(fontSerif, fontSans, fontMono, fontCjk);
+}
+
+static void SetSlotText(DropDown* dd, Str value) {
+    if (!dd) {
+        return;
+    }
+    dd->SetText(value ? value : FontSlotDefaultLabel());
+}
+
+void EbookSettingsWnd::SetSlotValues(Str serif, Str sans, Str mono, Str cjk) {
+    updating = true;
+    SetSlotText(ddSlotSerif, serif);
+    SetSlotText(ddSlotSans, sans);
+    SetSlotText(ddSlotMono, mono);
+    SetSlotText(ddSlotCjk, cjk);
+    updating = false;
 }
 
 void EbookSettingsWnd::SetValues(Str fontName, float fontSize, const Vec<float>* margin, float lineSpacing,
@@ -237,6 +297,23 @@ void EbookSettingsWnd::ReadControls(EbookVals& out) {
         VecReset(out.margin);
         out.lineSpacing = 0;
     }
+
+    // the slots are independent of the user CSS: they answer for the families
+    // the document names, before any CSS is consulted
+    auto readSlot = [](DropDown* dd) -> Str {
+        if (!dd) {
+            return {};
+        }
+        TempStr s = dd->GetTextTemp();
+        if (str::Eq(s, FontSlotDefaultLabel())) {
+            return {};
+        }
+        return s;
+    };
+    out.fontSerif = readSlot(ddSlotSerif);
+    out.fontSans = readSlot(ddSlotSans);
+    out.fontMono = readSlot(ddSlotMono);
+    out.fontCjk = readSlot(ddSlotCjk);
 }
 
 void EbookSettingsWnd::SetCssEditable(bool editable) {
@@ -315,6 +392,10 @@ void EbookSettingsWnd::Apply() {
         g->lineSpacing = v.lineSpacing;
         g->ignoreDocumentCSS = v.ignoreDocumentCSS;
         str::ReplaceWithCopy(&g->customCSS, v.customCSS);
+        str::ReplaceWithCopy(&g->fontSerif, v.fontSerif);
+        str::ReplaceWithCopy(&g->fontSans, v.fontSans);
+        str::ReplaceWithCopy(&g->fontMono, v.fontMono);
+        str::ReplaceWithCopy(&g->fontCjk, v.fontCjk);
         // the global values are what the user wants to see, so this document's
         // overrides have to go (same as Change Background Color -> all files)
         FileState* fs = FileHistoryFindByPath(filePath);
@@ -333,7 +414,9 @@ void EbookSettingsWnd::Apply() {
     }
     bool differs = !str::Eq(v.fontName, g->fontName) || v.fontSize != g->fontSize || !MarginEq(v.margin, g->margin) ||
                    v.lineSpacing != g->lineSpacing || v.ignoreDocumentCSS != g->ignoreDocumentCSS ||
-                   !str::Eq(v.customCSS, g->customCSS);
+                   !str::Eq(v.customCSS, g->customCSS) || !str::Eq(v.fontSerif, g->fontSerif) ||
+                   !str::Eq(v.fontSans, g->fontSans) || !str::Eq(v.fontMono, g->fontMono) ||
+                   !str::Eq(v.fontCjk, g->fontCjk);
     if (!differs) {
         // nothing left that isn't the global setting: drop the block entirely
         // so it stops being written out
@@ -360,6 +443,10 @@ void EbookSettingsWnd::Apply() {
     }
     str::ReplaceWithCopy(&f->ignoreDocumentCSS, ignore);
     str::ReplaceWithCopy(&f->customCSS, str::Eq(v.customCSS, g->customCSS) ? Str{} : v.customCSS);
+    str::ReplaceWithCopy(&f->fontSerif, str::Eq(v.fontSerif, g->fontSerif) ? Str{} : v.fontSerif);
+    str::ReplaceWithCopy(&f->fontSans, str::Eq(v.fontSans, g->fontSans) ? Str{} : v.fontSans);
+    str::ReplaceWithCopy(&f->fontMono, str::Eq(v.fontMono, g->fontMono) ? Str{} : v.fontMono);
+    str::ReplaceWithCopy(&f->fontCjk, str::Eq(v.fontCjk, g->fontCjk) ? Str{} : v.fontCjk);
     ScheduleSaveSettings();
 }
 
@@ -375,9 +462,11 @@ void EbookSettingsWnd::OnReset(VirtMouseEvent*) {
     if (thisFile) {
         auto* g = &gSettings->eBookUI;
         SetValues(g->fontName, g->fontSize, g->margin, g->lineSpacing, g->ignoreDocumentCSS, g->customCSS);
+        SetSlotValues(g->fontSerif, g->fontSans, g->fontMono, g->fontCjk);
         return;
     }
     SetValues({}, 0, nullptr, 0, false, {});
+    SetSlotValues({}, {}, {}, {});
 }
 
 void EbookSettingsWnd::OnOk(VirtMouseEvent*) {
@@ -476,6 +565,64 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
     AlignDlgLabels(labels);
     vbox->AddChild(NewDlgSection(fields));
     vbox->AddChild(new VirtLine());
+
+    // the four font slots: they answer for the families the document names
+    // (before its own @font-face entries), so picking a font here also replaces
+    // the font a book ships. A value is an installed font family or a font file.
+    {
+        auto* slots = new VBox();
+        slots->alignCross = CrossAxisAlign::Stretch;
+        auto makeSlotDropdown = [&]() {
+            DropDown::CreateArgs args;
+            args.parent = hwnd;
+            args.font = fontText;
+            args.isRtl = isRtl;
+            args.isEditable = true;
+            auto* dd = new DropDown();
+            dd->Create(args);
+            dd->maxDx = DpiScale(kSlotDropdownMaxDx);
+            return dd;
+        };
+        HBox* row = NewDlgFieldRow();
+        labelSlotSerif = label(Tr("Serif:"));
+        row->AddChild(labelSlotSerif);
+        ddSlotSerif = makeSlotDropdown();
+        row->AddChild(ddSlotSerif, 1);
+        slots->AddChild(row);
+
+        row = NewDlgFieldRow();
+        labelSlotSans = label(Tr("Sans:"));
+        row->AddChild(labelSlotSans);
+        ddSlotSans = makeSlotDropdown();
+        row->AddChild(ddSlotSans, 1);
+        slots->AddChild(row);
+
+        row = NewDlgFieldRow();
+        labelSlotMono = label(Tr("Mono:"));
+        row->AddChild(labelSlotMono);
+        ddSlotMono = makeSlotDropdown();
+        row->AddChild(ddSlotMono, 1);
+        slots->AddChild(row);
+
+        row = NewDlgFieldRow();
+        labelSlotCjk = label(Tr("CJK:"));
+        row->AddChild(labelSlotCjk);
+        ddSlotCjk = makeSlotDropdown();
+        row->AddChild(ddSlotCjk, 1);
+        slots->AddChild(row);
+
+        Vec<VirtText*> slotLabels;
+        VecAppend(slotLabels, labelSlotSerif);
+        VecAppend(slotLabels, labelSlotSans);
+        VecAppend(slotLabels, labelSlotMono);
+        VecAppend(slotLabels, labelSlotCjk);
+        AlignDlgLabels(slotLabels);
+
+        VirtText* hint = label(Tr("Empty keeps the book's font; CJK covers the rest."));
+        slots->AddChild(hint);
+        vbox->AddChild(NewDlgSection(slots));
+        vbox->AddChild(new VirtLine());
+    }
 
     // the styling: the document's, the generated CSS or the user's
     auto* styling = new VBox();

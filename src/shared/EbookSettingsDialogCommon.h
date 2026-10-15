@@ -4,6 +4,8 @@
 // --- shared by EbookSettingsDialogCommon.cpp and each app's EbookSettingsDialog.cpp ---
 
 Str FontDefaultLabel();
+// the font-slot dropdowns' first entry: the document's own font, no override
+Str FontSlotDefaultLabel();
 void ParseMargin(Str s, Vec<float>& out);
 TempStr MarginTextTemp(const Vec<float>* margin);
 bool MarginEq(const Vec<float>& a, const Vec<float>* b);
@@ -17,4 +19,10 @@ struct EbookVals {
     bool ignoreDocumentCSS = false;
     Str customCSS; // not owned; empty unless useCustomCSS
     bool useCustomCSS = false;
+    // the four font slots: a font file or an installed font family, empty = the
+    // document's own font for that category
+    Str fontSerif;
+    Str fontSans;
+    Str fontMono;
+    Str fontCjk;
 };

@@ -1,0 +1,52 @@
+html: the reader's font slots take precedence over the document's fonts
+
+fz_load_html_font() looked at the document's own @font-face entries
+first, so an EPUB (or MOBI/FB2) that ships a font kept that font even
+when the user picked a different one for the same category in the
+ebook settings. The reader's four font slots - per-thread overrides
+that are only set while an ebook is laid out or drawn, and that are
+empty unless the user configured them - are asked before the
+document's faces now, so picking a font replaces the fonts a book
+carries as well.
+
+The lookup lives in src/shared/mupdf/mupdf_load_system_font.c, which
+we compile into mupdf; where it is a stub it returns NULL and this
+change is a no-op.
+
+---
+diff --git a/source/html/html-font.c b/source/html/html-font.c
+index e41035dac..a995a2c0f 100644
+--- a/source/html/html-font.c
++++ b/source/html/html-font.c
+@@ -23,6 +23,8 @@
+ #include "mupdf/fitz.h"
+ #include "html-imp.h"
+ 
++#include "ebook_font_slots.h"
++
+ #include <string.h>
+ 
+ static fz_font *
+@@ -94,6 +96,22 @@ fz_load_html_font(fz_context *ctx, fz_html_font_set *set,
+ 	fz_font *font;
+ 	int size;
+ 
++	/* SumatraPDF: the reader's font slots come first, before the document's
++	   own @font-face entries, so that picking a font in the settings also
++	   replaces a font the book ships. EbookFontSlotFont() returns NULL while
++	   no slots are set (and on non-Windows builds). */
++	font = EbookFontSlotFont(ctx, family, is_bold, is_italic);
++	if (font)
++	{
++		fz_try(ctx)
++			fz_add_html_font_face(ctx, set, family, is_bold, is_italic, is_small_caps, "<slots>", font);
++		fz_always(ctx)
++			fz_drop_font(ctx, font);
++		fz_catch(ctx)
++			fz_rethrow(ctx);
++		return font;
++	}
++
+ 	for (custom = set->custom; custom; custom = custom->next)
+ 	{
+ 		if (!strcmp(family, custom->family))

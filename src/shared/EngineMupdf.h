@@ -257,6 +257,13 @@ class EngineMupdf : public EngineBase {
     float ebookLayoutH = 0;
     float ebookLayoutEm = 0;
 
+    // the font files the reader picked for this document (EBookUI.FontSerif /
+    // FontSans / FontMono / FontCjk); empty keeps the document's own fonts
+    Str ebookFontSerif;
+    Str ebookFontSans;
+    Str ebookFontMono;
+    Str ebookFontCjk;
+
     void ApplyReflowThemeCss();
 
     void GetBitmapRecolorSkipRects(int pageNo, float zoom, int rotation, const RectF& renderPageRect, Size bmpSize,

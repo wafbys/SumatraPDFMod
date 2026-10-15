@@ -25,6 +25,12 @@ Str FontDefaultLabel() {
     return Tr("(default)");
 }
 
+// the font-slot dropdowns' first entry: the document's own font (and, for a
+// document that ships its fonts, that font)
+Str FontSlotDefaultLabel() {
+    return Tr("(the book's font)");
+}
+
 // the margin is typed as CSS writes it: one number for all four sides, two
 // for top/bottom and left/right, or four in top-right-bottom-left order.
 // anything else (or out of range) is left empty, i.e. unset

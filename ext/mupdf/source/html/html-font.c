@@ -23,6 +23,8 @@
 #include "mupdf/fitz.h"
 #include "html-imp.h"
 
+#include "ebook_font_slots.h"
+
 #include <string.h>
 
 static fz_font *
@@ -93,6 +95,22 @@ fz_load_html_font(fz_context *ctx, fz_html_font_set *set,
 	fz_font *best_font = NULL;
 	fz_font *font;
 	int size;
+
+	/* SumatraPDF: the reader's font slots come first, before the document's
+	   own @font-face entries, so that picking a font in the settings also
+	   replaces a font the book ships. EbookFontSlotFont() returns NULL while
+	   no slots are set (and on non-Windows builds). */
+	font = EbookFontSlotFont(ctx, family, is_bold, is_italic);
+	if (font)
+	{
+		fz_try(ctx)
+			fz_add_html_font_face(ctx, set, family, is_bold, is_italic, is_small_caps, "<slots>", font);
+		fz_always(ctx)
+			fz_drop_font(ctx, font);
+		fz_catch(ctx)
+			fz_rethrow(ctx);
+		return font;
+	}
 
 	for (custom = set->custom; custom; custom = custom->next)
 	{
