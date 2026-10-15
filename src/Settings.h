@@ -251,6 +251,18 @@ struct FileEBookUI {
     // additional CSS applied to this document; empty uses
     // EBookUI.CustomCSS
     Str customCSS;
+    // serif-slot font for this document: a font file or an installed font
+    // family. empty uses EBookUI.FontSerif
+    Str fontSerif;
+    // sans-serif-slot font for this document: a font file or an installed
+    // font family. empty uses EBookUI.FontSans
+    Str fontSans;
+    // monospace-slot font for this document: a font file or an installed
+    // font family. empty uses EBookUI.FontMono
+    Str fontMono;
+    // CJK-slot font for this document: a font file or an installed font
+    // family. empty uses EBookUI.FontCjk
+    Str fontCjk;
 };
 
 // history of opened files, most recently used first. A closed file
@@ -567,6 +579,21 @@ struct EBookUI {
     // name that can't be loaded is reported with a notification when the
     // document opens
     Str fontName;
+    // path to a font file (ttf, otf, ttc) used for serif text in ebooks
+    // (e.g. C:/fonts/Literata.ttf); a document family that looks like a
+    // serif is drawn with this file instead, empty keeps the document's
+    // own font
+    Str fontSerif;
+    // path to a font file used for sans-serif text in ebooks; empty keeps
+    // the document's own font
+    Str fontSans;
+    // path to a font file used for monospace text (code, pre, kbd) in
+    // ebooks; empty keeps the document's own font
+    Str fontMono;
+    // path to a font file used for Chinese, Japanese and Korean text in
+    // ebooks, including glyphs the other slots don't have; empty keeps the
+    // engine's usual system fallback
+    Str fontCjk;
     // font size in points; 0 means the default (8.0)
     float fontSize;
     // white space around the text, in points (not screen pixels), like

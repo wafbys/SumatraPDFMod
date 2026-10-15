@@ -5,6 +5,8 @@
 #include "mupdf/ucdn.h"
 #include "mupdf/pdf.h"
 
+#include "ebook_font_slots.h"
+
 #ifdef _WIN32
 
 #ifndef UNICODE
@@ -18,6 +20,328 @@
 #include <assert.h>
 
 typedef uint32_t u32;
+
+/* ---- reader font slots (EBookUI.FontSerif / FontSans / FontMono / FontCjk) ----
+
+   A reflowable document names fonts by family; mupdf asks the callbacks below
+   for each of those names. While the reader lays out or draws an ebook
+   (EbookFontSlotsBegin/End) a name can be answered from one of the four font
+   files the user picked instead of from the fonts named by the document: the
+   family picks the slot, and CJK scripts missing from the other slots fall back
+   to the CJK slot. Nothing else consults the slots, so fixed-page documents
+   (PDF) keep their own fonts. */
+
+#define EBOOK_SLOT_SERIF 0
+#define EBOOK_SLOT_SANS 1
+#define EBOOK_SLOT_MONO 2
+#define EBOOK_SLOT_CJK 3
+#define EBOOK_SLOT_COUNT 4
+
+// one configured font file and its contents. The bytes are read once: a CJK face
+// is tens of MB and every distinct style in a document asks for its own fz_font,
+// which can't be shared between fz_contexts
+typedef struct ebook_slot_file {
+    struct ebook_slot_file* next;
+    char* path;
+    void* data;
+    size_t size;
+} ebook_slot_file;
+
+static ebook_slot_file* g_ebook_slot_files = NULL;
+
+// the slot files the current thread lays out / draws with. A stack, so a call
+// that guards its own work (a page load inside a chapter layout) can push and
+// pop without clearing what its caller set up
+typedef struct ebook_slot_scope {
+    struct ebook_slot_scope* prev;
+    char* path[EBOOK_SLOT_COUNT];
+} ebook_slot_scope;
+
+static __declspec(thread) ebook_slot_scope* g_ebook_slot_scope = NULL;
+
+static const char* ebook_slot_path(int slot) {
+    ebook_slot_scope* s = g_ebook_slot_scope;
+    return s ? s->path[slot] : NULL;
+}
+
+static CRITICAL_SECTION cs_ebook_slots;
+
+static int ebook_has_cjk_char(const char* s) {
+    int c;
+    while (*s) {
+        s += fz_chartorune(&c, s);
+        if ((c >= 0x1100 && c <= 0x11FF) || (c >= 0x2E80 && c <= 0x30FF) || (c >= 0x3400 && c <= 0x4DBF) ||
+            (c >= 0x4E00 && c <= 0x9FFF) || (c >= 0xAC00 && c <= 0xD7AF) || (c >= 0xF900 && c <= 0xFAFF) ||
+            (c >= 0xFF00 && c <= 0xFFEF) || c >= 0x20000) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// lower case, without the spaces / dashes / commas, so that "Times New Roman",
+// "Times-New-Roman" and "timesnewroman" compare equal
+static void ebook_name_normalize(const char* name, char* out, size_t outSize) {
+    size_t n = 0;
+    for (; *name && n + 1 < outSize; name++) {
+        char c = *name;
+        if (c == ' ' || c == '-' || c == '_' || c == ',') {
+            continue;
+        }
+        if (c >= 'A' && c <= 'Z') {
+            c = (char)(c - 'A' + 'a');
+        }
+        out[n++] = c;
+    }
+    out[n] = 0;
+}
+
+static int ebook_name_matches(const char* name, const char* const* needles, int nNeedles) {
+    for (int i = 0; i < nNeedles; i++) {
+        if (strstr(name, needles[i])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// families meant for CJK text even when they spell their name in latin
+static const char* ebook_cjk_names[] = {
+    "microsoftyahei", "microsoftjhenghei",
+    "pingfang",       "songtisc",
+    "songtist",       "simsun",
+    "nsimsun",        "simhei",
+    "kaiti",          "fangsong",
+    "mingliu",        "pmingliu",
+    "msmincho",       "msgothic",
+    "yugothic",       "malgungothic",
+    "malgun",         "batang",
+    "gulim",          "dotum",
+    "heiti",          "hiragino",
+    "notosanscjk",    "notoserifcjk",
+    "sourcehansans",  "sourcehanserif",
+};
+
+static const char* ebook_mono_names[] = {
+    "monospace", "uimonospace", "courier",       "consol",       "menlo",         "monaco",
+    "fixed",     "firacode",    "jetbrainsmono", "cascadiamono", "sourcecodepro", "dejavusansmono",
+};
+
+static const char* ebook_sans_names[] = {
+    "sansserif", "uisansserif", "systemui", "helvetica", "arial",  "verdana",   "tahoma",
+    "segoe",     "roboto",      "calibri",  "candara",   "corbel", "trebuchet", "lucida",
+    "geneva",    "futura",      "frutiger", "optimist",  "yahei",  "pingfang",
+};
+
+// which slot a family name from a stylesheet belongs to
+static int ebook_slot_from_family(const char* family) {
+    if (ebook_has_cjk_char(family)) {
+        return EBOOK_SLOT_CJK;
+    }
+    char name[128];
+    ebook_name_normalize(family, name, sizeof(name));
+    if (ebook_name_matches(name, ebook_cjk_names, nelem(ebook_cjk_names))) {
+        return EBOOK_SLOT_CJK;
+    }
+    if (ebook_name_matches(name, ebook_mono_names, nelem(ebook_mono_names))) {
+        return EBOOK_SLOT_MONO;
+    }
+    if (ebook_name_matches(name, ebook_sans_names, nelem(ebook_sans_names))) {
+        return EBOOK_SLOT_SANS;
+    }
+    return EBOOK_SLOT_SERIF;
+}
+
+static int ebook_slots_active(void) {
+    for (int i = 0; i < EBOOK_SLOT_COUNT; i++) {
+        if (ebook_slot_path(i)) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// the contents of a slot file, read on first use
+static ebook_slot_file* ebook_slot_file_read(fz_context* ctx, const char* path) {
+    ebook_slot_file* sf;
+    fz_buffer* buffer = NULL;
+    unsigned char* data = NULL;
+    size_t size = 0;
+
+    EnterCriticalSection(&cs_ebook_slots);
+    for (sf = g_ebook_slot_files; sf; sf = sf->next) {
+        if (!strcmp(sf->path, path)) {
+            break;
+        }
+    }
+    LeaveCriticalSection(&cs_ebook_slots);
+    if (sf) {
+        return sf->data ? sf : NULL;
+    }
+
+    // read outside the lock; fz_read_file() can throw
+    fz_var(buffer);
+    fz_try(ctx) {
+        buffer = fz_read_file(ctx, path);
+        if (buffer) {
+            size = fz_buffer_extract(ctx, buffer, &data);
+        }
+    }
+    fz_always(ctx) {
+        fz_drop_buffer(ctx, buffer);
+    }
+    fz_catch(ctx) {
+        fz_report_error(ctx);
+        data = NULL;
+        size = 0;
+    }
+    if (!data) {
+        fz_warn(ctx, "couldn't read ebook font '%s'", path);
+    }
+
+    sf = (ebook_slot_file*)calloc(1, sizeof(ebook_slot_file));
+    if (!sf) {
+        free(data);
+        return NULL;
+    }
+    sf->path = (char*)malloc(strlen(path) + 1);
+    if (!sf->path) {
+        free(data);
+        free(sf);
+        return NULL;
+    }
+    strcpy(sf->path, path);
+    sf->data = data;
+    sf->size = size;
+
+    EnterCriticalSection(&cs_ebook_slots);
+    sf->next = g_ebook_slot_files;
+    g_ebook_slot_files = sf;
+    LeaveCriticalSection(&cs_ebook_slots);
+    return data ? sf : NULL;
+}
+
+// A slot is either a path to a font file or the family name of an installed
+// font: picking a family means the file stays where Windows keeps it and no
+// copy is needed next to the executable.
+static fz_font* load_windows_font_by_name(fz_context* ctx, const char* orig_name, int needs_exact_metrics);
+
+static int ebook_slot_spec_is_path(const char* spec) {
+    if (strchr(spec, '/') || strchr(spec, '\\')) {
+        return 1;
+    }
+    static const char* exts[] = {".ttf", ".otf", ".ttc", ".otc", ".woff", ".woff2"};
+    size_t n = strlen(spec);
+    for (int i = 0; i < nelem(exts); i++) {
+        size_t en = strlen(exts[i]);
+        if (n > en && n - en <= 8) {
+            if (!_stricmp(spec + n - en, exts[i])) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+static fz_font* ebook_slot_load_font(fz_context* ctx, const char* spec, const char* name, int is_serif) {
+    if (!ebook_slot_spec_is_path(spec)) {
+        // an installed font, by family name, through the regular Windows
+        // font table (this stays clear of the slot hook: it calls the
+        // name lookup, not load_windows_font)
+        fz_font* font = NULL;
+        fz_try(ctx) {
+            font = load_windows_font_by_name(ctx, spec, 0);
+        }
+        fz_catch(ctx) {
+            fz_report_error(ctx);
+            font = NULL;
+        }
+        if (!font) {
+            fz_warn(ctx, "ebook font slot: no installed font named '%s'", spec);
+            return NULL;
+        }
+        fz_font_flags(font)->is_serif = is_serif;
+        return font;
+    }
+
+    ebook_slot_file* sf = ebook_slot_file_read(ctx, spec);
+    if (!sf) {
+        return NULL;
+    }
+    fz_buffer* buffer = fz_new_buffer_from_shared_data(ctx, sf->data, sf->size);
+    fz_font* font = NULL;
+    fz_var(font);
+    fz_try(ctx) {
+        font = fz_new_font_from_buffer(ctx, name, buffer, 0, 0);
+    }
+    fz_always(ctx) {
+        fz_drop_buffer(ctx, buffer);
+    }
+    fz_catch(ctx) {
+        fz_report_error(ctx);
+        font = NULL;
+    }
+    if (font) {
+        fz_font_flags(font)->is_serif = is_serif;
+    }
+    return font;
+}
+
+// Called by the patched fz_load_html_font() (see ext/patches) as well as by
+// load_windows_font() below: a stylesheet family the reader's slots cover.
+fz_font* EbookFontSlotFont(fz_context* ctx, const char* family, int is_bold, int is_italic) {
+    (void)is_bold;
+    (void)is_italic;
+    if (!ebook_slots_active()) {
+        return NULL;
+    }
+    int slot = ebook_slot_from_family(family);
+    const char* spec = ebook_slot_path(slot);
+    if (!spec) {
+        return NULL;
+    }
+    int is_serif = slot != EBOOK_SLOT_SANS && slot != EBOOK_SLOT_MONO;
+    return ebook_slot_load_font(ctx, spec, family, is_serif);
+}
+
+static void ebook_slots_push(const char* const* paths) {    ebook_slot_scope* s = (ebook_slot_scope*)calloc(1, sizeof(ebook_slot_scope));
+    if (!s) {
+        return;
+    }
+    for (int i = 0; i < EBOOK_SLOT_COUNT; i++) {
+        const char* path = paths[i];
+        if (!path || !*path) {
+            continue;
+        }
+        size_t n = strlen(path) + 1;
+        s->path[i] = (char*)malloc(n);
+        if (s->path[i]) {
+            memcpy(s->path[i], path, n);
+        }
+    }
+    s->prev = g_ebook_slot_scope;
+    g_ebook_slot_scope = s;
+}
+
+static void ebook_scope_pop(void) {
+    ebook_slot_scope* s = g_ebook_slot_scope;
+    if (!s) {
+        return;
+    }
+    g_ebook_slot_scope = s->prev;
+    for (int i = 0; i < EBOOK_SLOT_COUNT; i++) {
+        free(s->path[i]);
+    }
+    free(s);
+}
+
+void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk) {
+    const char* paths[EBOOK_SLOT_COUNT] = {serif, sans, mono, cjk};
+    ebook_slots_push(paths);
+}
+void EbookFontSlotsEnd(void) {
+    ebook_scope_pop();
+}
 
 // TODO: Use more of FreeType for TTF parsing (for performance reasons,
 //       the fonts can't be parsed completely, though)
@@ -894,6 +1218,14 @@ ExitNoFree:
 
 static fz_font* load_windows_font(fz_context* ctx, const char* fontname, int bold, int italic,
                                   int needs_exact_metrics) {
+    /* the reader's font slots answer for every family an ebook names */
+    if (ebook_slots_active()) {
+        fz_font* slot_font = EbookFontSlotFont(ctx, fontname, bold, italic);
+        if (slot_font) {
+            return slot_font;
+        }
+    }
+
     fz_font* font;
     const char* clean_name = pdf_clean_font_name(fontname);
     int is_base_14 = clean_name != fontname;
@@ -1020,6 +1352,34 @@ static fz_font* load_windows_fallback_font(fz_context* ctx, int script, int lang
     fz_font* font = NULL;
     const char* font_name = NULL;
 
+    const char* cjk_path = ebook_slot_path(EBOOK_SLOT_CJK);
+
+    /* CJK text the other slots can't draw comes from the reader's CJK font */
+    if (cjk_path) {
+        switch (script) {
+            case UCDN_SCRIPT_HAN:
+            case UCDN_SCRIPT_BOPOMOFO:
+            case UCDN_SCRIPT_HIRAGANA:
+            case UCDN_SCRIPT_KATAKANA:
+            case UCDN_SCRIPT_HANGUL: {
+                font = ebook_slot_load_font(ctx, cjk_path, "ebook-cjk", 1);
+                if (font) {
+                    fz_warn(ctx, "ebook font slot CJK answers for script %d", script);
+                    /* mupdf caches this per style, so faking it here is safe */
+                    if (bold && !fz_font_flags(font)->is_bold) {
+                        fz_font_flags(font)->fake_bold = 1;
+                    }
+                    if (italic && !fz_font_flags(font)->is_italic) {
+                        fz_font_flags(font)->fake_italic = 1;
+                    }
+                    return font;
+                }
+            } break;
+            default:
+                break;
+        }
+    }
+
     // TODO: more scripts
     switch (script) {
         case UCDN_SCRIPT_BENGALI: // bangla
@@ -1137,6 +1497,7 @@ void init_system_font_list(void) {
         return;
     }
     InitializeCriticalSection(&cs_fonts);
+    InitializeCriticalSection(&cs_ebook_slots);
     g_win_fonts = NULL;
     g_win_fonts_last = NULL;
     g_font_files = NULL;
@@ -1166,6 +1527,7 @@ void destroy_system_font_list(void) {
     g_font_files = NULL;
     g_font_files_last = NULL;
     DeleteCriticalSection(&cs_fonts);
+    DeleteCriticalSection(&cs_ebook_slots);
 }
 
 void install_load_windows_font_funcs(fz_context* ctx) {
@@ -1344,3 +1706,21 @@ void* sumatra_hb_realloc(void* ptr, size_t size) {
 void sumatra_hb_free(void* ptr) {
     free(ptr);
 }
+
+#ifndef _WIN32
+/* the reader's font slots (EBOOK_SLOT_* above) are Windows-only for now */
+fz_font* EbookFontSlotFont(fz_context* ctx, const char* family, int is_bold, int is_italic) {
+    (void)ctx;
+    (void)family;
+    (void)is_bold;
+    (void)is_italic;
+    return NULL;
+}
+void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk) {
+    (void)serif;
+    (void)sans;
+    (void)mono;
+    (void)cjk;
+}
+void EbookFontSlotsEnd(void) {}
+#endif

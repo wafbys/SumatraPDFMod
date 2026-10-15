@@ -2110,3 +2110,8 @@ EXPORTS
 
 	deskey
 	des
+
+; the reader's ebook font slots (EngineMupdf.cpp, see src/shared/mupdf/ebook_font_slots.h)
+
+	EbookFontSlotsBegin
+	EbookFontSlotsEnd
