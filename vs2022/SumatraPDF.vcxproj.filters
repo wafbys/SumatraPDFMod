@@ -612,6 +612,9 @@
     <ClInclude Include="..\src\shared\SvgIcons.h">
       <Filter>src\shared</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\shared\SystemFonts.h">
+      <Filter>src\shared</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\shared\TabGroupsManage.h">
       <Filter>src\shared</Filter>
     </ClInclude>
@@ -1503,6 +1506,9 @@
       <Filter>src\shared</Filter>
     </ClCompile>
     <ClCompile Include="..\src\shared\SvgIcons.cpp">
+      <Filter>src\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shared\SystemFonts.cpp">
       <Filter>src\shared</Filter>
     </ClCompile>
     <ClCompile Include="..\src\shared\TableOfContentsCommon.cpp">

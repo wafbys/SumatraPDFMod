@@ -291,6 +291,7 @@ function sumatrapdf_files()
     "SignDocumentDialogCommon.*",
     "EbookSettingsDialog.*",
     "EbookSettingsDialogCommon.*",
+    "SystemFonts.*",
     "GetPasswordDialog.*",
     "GoToPageDialog.*",
     "InverseSearchDialog.*",

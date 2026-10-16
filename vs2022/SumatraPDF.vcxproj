@@ -1575,6 +1575,7 @@
     <ClInclude Include="..\src\shared\SumatraPDFCommon.h" />
     <ClInclude Include="..\src\shared\SumatraTest.h" />
     <ClInclude Include="..\src\shared\SvgIcons.h" />
+    <ClInclude Include="..\src\shared\SystemFonts.h" />
     <ClInclude Include="..\src\shared\TabGroupsManage.h" />
     <ClInclude Include="..\src\shared\TableOfContents.h" />
     <ClInclude Include="..\src\shared\TableOfContentsCommon.h" />
@@ -2274,6 +2275,7 @@
     <ClCompile Include="..\src\shared\SumatraPDFCommon.cpp" />
     <ClCompile Include="..\src\shared\SumatraTestCommon.cpp" />
     <ClCompile Include="..\src\shared\SvgIcons.cpp" />
+    <ClCompile Include="..\src\shared\SystemFonts.cpp" />
     <ClCompile Include="..\src\shared\TableOfContentsCommon.cpp" />
     <ClCompile Include="..\src\shared\TabsCommon.cpp" />
     <ClCompile Include="..\src\shared\TextSearch.cpp">

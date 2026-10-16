@@ -40,6 +40,7 @@ void parseCommandsTest();
 void DocPropertiesTest();
 void ParseFileArgsTest();
 void RestrictedUseConfigTest();
+void SystemFontNamesTest();
 
 // in src/base/tests/
 void ArchiveTest();
@@ -250,6 +251,7 @@ static void SumatraPDF_UnitTests() {
     versioncheck_test();
     hexstrTest();
     ExpandPDFScriptTest();
+    SystemFontNamesTest();
 }
 
 static void ParseTipExpectWordsLinks(Str input, int expWords, int expLinks) {

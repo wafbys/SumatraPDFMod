@@ -18,6 +18,7 @@
 static int CALLBACK EnumFontFamilyCb(const LOGFONTW* lf, const TEXTMETRICW*, DWORD, LPARAM lp) {
     auto* names = (StrVec*)lp;
     const WCHAR* face = lf->lfFaceName;
+    // "@Name" is the vertical-writing variant of a CJK font, not a font to pick
     if (!face[0] || face[0] == L'@') {
         return 1;
     }
@@ -28,6 +29,28 @@ static int CALLBACK EnumFontFamilyCb(const LOGFONTW* lf, const TEXTMETRICW*, DWO
     return 1;
 }
 #endif
+
+// GDI returns a family's variant faces ("Foo OsF", "Foo SC") as the synthesized
+// family "Foo " next to the real "Foo"; a picker shows the raw name, so the
+// padded one reads as a duplicate. Merge such look-alikes, keeping the name
+// that spells out the whole family.
+static void MergeLookAlikeNames(StrVec& names) {
+    StrVec res;
+    for (int pass = 0; pass < 2; pass++) {
+        for (Str name : names) {
+            Str trimmed = name;
+            str::TrimWsBoth(trimmed);
+            bool padded = len(trimmed) < len(name);
+            if (len(trimmed) == 0 || padded != (pass == 1)) {
+                continue;
+            }
+            if (res.FindI(trimmed) < 0) {
+                res.Append(trimmed);
+            }
+        }
+    }
+    names = res;
+}
 
 void GetInstalledFontNames(StrVec& names) {
 #if OS_WIN
@@ -91,5 +114,6 @@ void GetInstalledFontNames(StrVec& names) {
 #else
     (void)names;
 #endif
+    MergeLookAlikeNames(names);
     SortNoCase(&names);
 }
