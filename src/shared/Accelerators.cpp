@@ -91,6 +91,9 @@ static Accel gBuiltInAccelerators[] = {
     {{kCtrl | kVirt, 'G'}, CmdGoToPage},
     {{kVirt, 'G'}, CmdGoToPage},
     {{kCtrl | kVirt, 'K'}, CmdCommandPalette},
+    // the mod: opens the eBook Settings dialog directly (it has no menu entry
+    // of its own; upstream reaches it only through the palette's command list)
+    {{kShift | kCtrl | kVirt, 'K'}, CmdChangeEbookSettings},
     //{{kAlt | kVirt, 'K'}, CmdCommandPaletteOnlyTabs}, // removed in 3.6
     // the palette's mode prefixes, typed as ASCII accelerators (any layout)
     {{0, '>'}, CmdCommandPalette},
