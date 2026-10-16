@@ -25,16 +25,16 @@ To build run: `bun cmd/build.ts -dbg` (or `-rel`, `-asan`, and the other modes s
 Keep `cmd/build.ts` as the original app's build entry point and `cmd/ng-build.ts`
 as ng's. Build internals live under `cmd/helper/` and are not invoked directly.
 
-This creates ./out/dbg64/SumatraPDF.exe executable. The static build target is SumatraPDF-static and produces ./out/<config>/SumatraPDF-static.exe.
+This creates ./out/dbg64/SumatraPDFMod.exe executable. The static build target is SumatraPDF-static and produces ./out/<config>/SumatraPDF-static.exe.
 
 MinGW/Wine builds are retired. Use the native ng Linux build, including WSL
 Ubuntu from Windows: `bun cmd/ng-build.ts -linux -dbg`.
 
-Unit tests are compiled into `SumatraPDF.exe` in **debug builds only** and run with `-unit-tests`. To run them with AI-friendly diagnostics, run `bun cmd/run-unit-tests.ts -dbg` (or `-32` / `-asan`). It builds the debug exe, runs it with `-unit-tests -for-ai`, captures output under the matching `out/<config>/unit-tests-*.txt`, and prints assertion/crash callstacks without waiting for debugger UI.
+Unit tests are compiled into `SumatraPDFMod.exe` in **debug builds only** and run with `-unit-tests`. To run them with AI-friendly diagnostics, run `bun cmd/run-unit-tests.ts -dbg` (or `-32` / `-asan`). It builds the debug exe, runs it with `-unit-tests -for-ai`, captures output under the matching `out/<config>/unit-tests-*.txt`, and prints assertion/crash callstacks without waiting for debugger UI.
 
-To debug run: `windbgx -Q -o -g ./out/dbg64/SumatraPDF.exe`
+To debug run: `windbgx -Q -o -g ./out/dbg64/SumatraPDFMod.exe`
 
-When launching SumatraPDF.exe for ad-hoc testing, always pass the `-for-testing` cmd-line flag. It starts a new instance (won't interfere with an already running SumatraPDF), doesn't restore the previous session (only loads files given on the cmd-line) and doesn't save settings (won't overwrite the settings of the user).
+When launching SumatraPDFMod.exe for ad-hoc testing, always pass the `-for-testing` cmd-line flag. It starts a new instance (won't interfere with an already running SumatraPDF), doesn't restore the previous session (only loads files given on the cmd-line) and doesn't save settings (won't overwrite the settings of the user).
 
 After making a change to a .cpp, .c or .h file under `src/` (and before running build.ts), run clang-format on those files to reformat them in place. Do **not** clang-format third-party / vendored code (`ext/`, etc.) — keep edits there minimal and match the existing local style.
 
@@ -473,7 +473,7 @@ Example: `tests/ad-hoc-exif.ts` clones/updates `../exif-py` and compares `-dump-
 
 Guidelines for test scripts:
 
-- build the app the same way cmd/build.ts does (via `buildApp`/`runStandalone` in tests/util.ts) and test the resulting out/dbg64/SumatraPDF.exe
+- build the app the same way cmd/build.ts does (via `buildApp`/`runStandalone` in tests/util.ts) and test the resulting out/dbg64/SumatraPDFMod.exe
 - if a needed external tool (e.g. MiKTeX) isn't installed, don't fail the test: print a clear message (with instructions to install it) and skip that part, returning normally so `tests/run-almost-all.ts` continues
 - a good test fails when the fix is reverted (verify this) — not just passes with the fix present
 - write ad-hoc GUI automation (driving the app via window messages, screenshots) in **Bun TypeScript, not PowerShell** — bun has FFI. Put raw Win32 wrappers in `tests/winapi.ts` and higher-level actions in `tests/win-automation.ts`; extend and reuse those rather than re-declaring FFI per script. The ad-hoc scripts themselves don't need to be checked in, but the reusable helpers in those two files do.
@@ -482,7 +482,7 @@ Guidelines for test scripts:
   - on this machine injected SendInput mouse/keyboard is dropped, but posting (and sending) window messages cross-process works. There is no interactive desktop, so real-cursor probes prove nothing, and a canvas text selection can't be driven at all — check a suspicious result against a clean build before blaming your change.
 - resolve command ids by name with `cmdId("CmdName")` (from `tests/util.ts`), never hardcode the numeric id. Command ids are auto-numbered in `src/Commands.h` and shift whenever commands are added or removed, so a hardcoded constant silently starts sending a _different_ command. This broke `tests/issue-5780.ts` (it sent `CmdCommandPalette` instead of `CmdOpenNextFileInFolder` after ids shifted) and had stale ids lurking in several ad-hoc tests. `tests/lint-command-ids.ts` (runs first in `tests/run-almost-all.ts`) enforces this — it fails the suite on any hardcoded `const Cmd... = <number>` or numeric `sendCommand(win, <number>)`.
 - to read the app's log from a test, pass `-log-to-file <path>`. On exit the app shell-opens the log it wrote unless the path came from `-log-to-file`, the run is `-for-testing`, or it's the debug build's automatic `sumlog.txt` — so a bare `-log` in a release build pops an editor window (Notepad) per run, and before that exception existed `-log-to-file` did too. That is easy to miss because `-for-testing` hides it, and a test that needs settings saved (`saveSettings: true`) or ReuseInstance cannot pass that flag. A stray Notepad per run is not just noise: depending on the .txt association it could launch another non-testing SumatraPDF that saves settings.
-- prefer driving the app through `-dbg-control <named-pipe>` and `tests/control.ts` over GUI automation or adding new test-only command-line flags. Tests should pick a unique pipe name, launch `SumatraPDF.exe -for-testing -dbg-control <name>`, send binary request/response commands, and quit the app through the control client.
+- prefer driving the app through `-dbg-control <named-pipe>` and `tests/control.ts` over GUI automation or adding new test-only command-line flags. Tests should pick a unique pipe name, launch `SumatraPDFMod.exe -for-testing -dbg-control <name>`, send binary request/response commands, and quit the app through the control client.
 - `-dbg-control` protocol: requests are `[u32 payloadSize][u16 command][u16 requestId][args...]`; responses are `[u32 payloadSize][u16 requestId][results...]`. Arguments/results are encoded as `[u16 type]` where `0=end`, `1=i32` plus 4 bytes, `2=bytes` plus u32 length and data, `3=utf8 string` plus u32 length, bytes, and a zero terminator, and `4=list` plus u16 element count followed by encoded elements.
 - never write runtime scratch / result files directly into `tests/` — that leaves the repo dirty. Write them under `tests/tmp/` (gitignored), using `tmpPath("name")` from `tests/util.ts` (it creates the dir on demand); the OS temp dir (`os.tmpdir()`) is also fine if you clean up after
 - if a binary test fixture (e.g. a .pdf) is generated from source (LaTeX, a script, etc.), commit the source alongside it (e.g. `tests/issue-<number>.tex` next to `tests/issue-<number>.pdf`) with a comment on how to regenerate it, so the fixture can be modified later
