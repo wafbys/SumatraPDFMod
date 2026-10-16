@@ -246,6 +246,136 @@ static int ebook_slot_spec_is_path(const char* spec) {
     return 0;
 }
 
+/* --- GDI fallback for names our font table does not know ------------------ */
+
+// The table above is built from the fonts' own name tables, so a name only GDI
+// knows - a variable font's instance ("Inter Variable Text"), or a family whose
+// file spells it differently - is missing from it. CreateFontW() resolves such a
+// name the way any Windows program does and GetFontData() hands back the font's
+// bytes, which is all we need. Cached per name: the data can be tens of MB.
+
+typedef struct ebook_slot_gdi_font_file {
+    struct ebook_slot_gdi_font_file* next;
+    char* family;
+    void* data;
+    size_t size;
+} ebook_slot_gdi_font_file;
+
+static ebook_slot_gdi_font_file* g_ebook_slot_gdi_font_files = NULL;
+
+// the font's bytes for a family name GDI can resolve, NULL if it can't (the
+// name is longer than a LOGFONT holds, or the font keeps its outlines in a CFF
+// table that GetFontData() returns without an SFNT header - then the slot just
+// falls back as before)
+static void* ebook_slot_gdi_font_data(const char* family, size_t* sizeOut) {
+    ebook_slot_gdi_font_file* gf;
+    WCHAR face[LF_FACESIZE];
+    HDC dc;
+    HFONT hfont;
+    HGDIOBJ old;
+    DWORD size, got;
+    void* data = NULL;
+
+    *sizeOut = 0;
+    if (MultiByteToWideChar(CP_UTF8, 0, family, -1, face, LF_FACESIZE) <= 0) {
+        return NULL;
+    }
+
+    EnterCriticalSection(&cs_ebook_slots);
+    for (gf = g_ebook_slot_gdi_font_files; gf; gf = gf->next) {
+        if (!strcmp(gf->family, family)) {
+            data = gf->data;
+            *sizeOut = gf->size;
+            break;
+        }
+    }
+    LeaveCriticalSection(&cs_ebook_slots);
+    if (gf) {
+        return data;
+    }
+
+    dc = CreateCompatibleDC(NULL);
+    if (!dc) {
+        return NULL;
+    }
+    hfont = CreateFontW(-20, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
+                        CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, face);
+    old = hfont ? SelectObject(dc, hfont) : NULL;
+    if (hfont && old) {
+        // GDI silently substitutes a font when it doesn't know the name; ask it
+        // which face it actually picked and reject the substitutes
+        WCHAR actual[LF_FACESIZE] = {0};
+        if (GetTextFaceW(dc, LF_FACESIZE, actual) > 0 && _wcsicmp(actual, face) == 0) {
+            size = GetFontData(dc, 0, 0, NULL, 0);
+            if (size != GDI_ERROR && size > 0) {
+                data = malloc(size);
+                if (data) {
+                    got = GetFontData(dc, 0, 0, data, size);
+                    if (got == GDI_ERROR || got == 0) {
+                        free(data);
+                        data = NULL;
+                    } else {
+                        *sizeOut = got;
+                    }
+                }
+            }
+        }
+    }
+    if (old) {
+        SelectObject(dc, old);
+    }
+    if (hfont) {
+        DeleteObject(hfont);
+    }
+    DeleteDC(dc);
+
+    gf = (ebook_slot_gdi_font_file*)calloc(1, sizeof(ebook_slot_gdi_font_file));
+    if (!gf) {
+        free(data);
+        return NULL;
+    }
+    gf->family = (char*)malloc(strlen(family) + 1);
+    if (!gf->family) {
+        free(data);
+        free(gf);
+        return NULL;
+    }
+    strcpy(gf->family, family);
+    gf->data = data;
+    gf->size = *sizeOut;
+
+    EnterCriticalSection(&cs_ebook_slots);
+    gf->next = g_ebook_slot_gdi_font_files;
+    g_ebook_slot_gdi_font_files = gf;
+    LeaveCriticalSection(&cs_ebook_slots);
+    return data;
+}
+
+static fz_font* ebook_slot_gdi_font(fz_context* ctx, const char* family, const char* name, int is_serif) {
+    size_t size = 0;
+    void* data = ebook_slot_gdi_font_data(family, &size);
+    if (!data) {
+        return NULL;
+    }
+    fz_buffer* buffer = fz_new_buffer_from_shared_data(ctx, data, size);
+    fz_font* font = NULL;
+    fz_var(font);
+    fz_try(ctx) {
+        font = fz_new_font_from_buffer(ctx, name, buffer, 0, 0);
+    }
+    fz_always(ctx) {
+        fz_drop_buffer(ctx, buffer);
+    }
+    fz_catch(ctx) {
+        fz_report_error(ctx);
+        font = NULL;
+    }
+    if (font) {
+        fz_font_flags(font)->is_serif = is_serif;
+    }
+    return font;
+}
+
 static fz_font* ebook_slot_load_font(fz_context* ctx, const char* spec, const char* name, int is_serif) {
     if (!ebook_slot_spec_is_path(spec)) {
         // an installed font, by family name, through the regular Windows
@@ -258,6 +388,13 @@ static fz_font* ebook_slot_load_font(fz_context* ctx, const char* spec, const ch
         fz_catch(ctx) {
             fz_report_error(ctx);
             font = NULL;
+        }
+        if (!font) {
+            // the name may still be one GDI knows: variable font instances
+            // ("Inter Variable Text") are listed by the font pickers but do not
+            // appear in the font file's name table, which is what the table
+            // above is built from (see ebook_slot_gdi_font_data)
+            font = ebook_slot_gdi_font(ctx, spec, name, is_serif);
         }
         if (!font) {
             fz_warn(ctx, "ebook font slot: no installed font named '%s'", spec);
@@ -293,17 +430,21 @@ static fz_font* ebook_slot_load_font(fz_context* ctx, const char* spec, const ch
 // Called by the patched fz_load_html_font() (see ext/patches) as well as by
 // load_windows_font() below: a stylesheet family the reader's slots cover.
 fz_font* EbookFontSlotFont(fz_context* ctx, const char* family, int is_bold, int is_italic) {
+    int slot;
+    int is_serif;
+    const char* spec;
+
     (void)is_bold;
     (void)is_italic;
     if (!ebook_slots_active()) {
         return NULL;
     }
-    int slot = ebook_slot_from_family(family);
-    const char* spec = ebook_slot_path(slot);
+    slot = ebook_slot_from_family(family);
+    spec = ebook_slot_path(slot);
     if (!spec) {
         return NULL;
     }
-    int is_serif = slot != EBOOK_SLOT_SANS && slot != EBOOK_SLOT_MONO;
+    is_serif = slot != EBOOK_SLOT_SANS && slot != EBOOK_SLOT_MONO;
     return ebook_slot_load_font(ctx, spec, family, is_serif);
 }
 

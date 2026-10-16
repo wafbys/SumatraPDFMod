@@ -35,6 +35,16 @@ EBookUI [
 读者的四槽 → 书内 `@font-face` 字体 → 内置字体 → 系统字体。
 （书内字体优先于四槽是上游行为；本分支的 `ext/patches/0065` 把它反过来。）
 
+## 字体名怎么解析
+
+填族名时先查 SumatraPDF 自己的字体表（按字体文件的 name 表建的）；查不到再问一次 GDI：
+`CreateFontW` + `GetFontData` 取字体字节。变量字体的**实例名**（如 `Inter Variable Text`）
+只出现在系统字体列表里、不在文件的 name 表里，靠这一层兜住，效果与直接填 `Inter Variable`
+逐像素相同。GDI 对不认识的名字会悄悄换成默认字体，所以取到字节后用 `GetTextFace` 核对实际
+选中的 face，不一致就当没找到（照旧告警 + 回退）。名字超过 31 字符（LOGFONT 上限）、或字体把
+轮廓放在 CFF 表里（`GetFontData` 不给 SFNT 头）时这一层救不了，行为与以前一致。
+实现在 `src/shared/mupdf/mupdf_load_system_font.c`（本分支自有文件，不动 vendored mupdf）。
+
 ## 英文直引号
 
 `EBookUI.StraightQuotes`（默认 `true`）：拉丁文字里的 `“ ”` `‘ ’` 一律显示成直引号，
@@ -56,5 +66,7 @@ bun cmd/build.ts -rel                 # 需要 VS 2022 + bun，见上游 agents.
 
 ## 验证入口（本机脚本，未入库）
 
-仓库根的 `.work/`（gitignore）里有做过的自检脚本：`slot-sig.ts`（按槽渲染样张并比像素）、
-`slot-verify2.ts`（族名 / 每书覆盖）、`dialog-check.ts`、`dialog-save-check.ts`（面板链路）。
+仓库根的 `.work/`（gitignore）里有做过的自检脚本：`slot-sig.ts`（按槽渲染样张并比像素；
+用 `-window-pos` 让窗口开窗即最终尺寸，否则两次运行可能落在不同的布局状态）、
+`slot-verify2.ts`（族名 / 每书覆盖）、`dialog-check.ts`、`dialog-save-check.ts`（面板链路）、
+`bands.ts` / `page-rect.ts`（量行带与页面矩形，先确认两次运行在同一状态再比像素）。
