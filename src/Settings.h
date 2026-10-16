@@ -284,7 +284,7 @@ struct FileState {
     // that only a diff has to be saved instead of all states for the whole
     // tree (which can be quite large) (internal)
     Vec<int>* tocState;
-    // thumbnails are saved as PNG files in sumatrapdfcache directory
+    // thumbnails are saved as PNG files in SumatraPDFMod-cache directory
     Pixmap* thumbnail;
     // image list holding the file's shell icon
     HIMAGELIST himl;

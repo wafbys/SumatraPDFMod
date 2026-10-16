@@ -167,16 +167,16 @@ bool KillProcWithIdAndModule(DWORD processId, Str modulePath, bool waitUntilTerm
 }
 
 // Kill processes that have any of our install-dir modules loaded:
-// libsumatrapdf.dll, PdfFilter.dll, PdfPreview.dll, SumatraPDF.exe.
+// libsumatrapdfMod.dll, PdfFilter.dll, PdfPreview.dll, SumatraPDFMod.exe.
 // dllhost/prevhost/SearchFilterHost load the shell-extension DLLs; they may
-// keep PdfFilter.dll locked even after libsumatrapdf.dll was renamed aside.
+// keep PdfFilter.dll locked even after libsumatrapdfMod.dll was renamed aside.
 // returns false if there are processes and we failed to kill them
 bool KillProcessesUsingInstallationDir(Str dir) {
     logf("KillProcessesUsingInstallationDir('%s')\n", dir);
     if (len(dir) == 0) {
         return true;
     }
-    TempStr libsumatrapdf = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
+    TempStr libsumatrapdf = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
     TempStr libmupdfLegacy = path::JoinTemp(dir, StrL("libmupdf.dll")); // through 3.6
     TempStr filterDll = path::JoinTemp(dir, Str(kSearchFilterDllName));
     TempStr previewDll = path::JoinTemp(dir, Str(kPreviewDllName));
@@ -283,14 +283,14 @@ void RestoreShellExtensions(const ShellExtInstallState& state) {
 }
 
 // return names of processes that are running part of the installation
-// (i.e. have libsumatrapdf.dll, PdfFilter.dll, or PdfPreview.dll loaded)
+// (i.e. have libsumatrapdfMod.dll, PdfFilter.dll, or PdfPreview.dll loaded)
 void ProcessesUsingInstallation(StrVec& names) {
     log(StrL("ProcessesUsingInstallation()\n"));
     TempStr dir = GetExistingInstallationDirTemp();
     if (len(dir) == 0) {
         return;
     }
-    TempStr libsumatrapdf = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
+    TempStr libsumatrapdf = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
     TempStr libmupdfLegacy = path::JoinTemp(dir, StrL("libmupdf.dll")); // through 3.6
     TempStr filterDll = path::JoinTemp(dir, Str(kSearchFilterDllName));
     TempStr previewDll = path::JoinTemp(dir, Str(kPreviewDllName));

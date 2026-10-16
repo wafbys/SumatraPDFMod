@@ -18,15 +18,17 @@ PDF、封面图、扫描页不变。附带一个开关，把拉丁文字里的�
 | 东西 | 名字 |
 | --- | --- |
 | 产物（`out/rel64/`、`out/dbg64/`） | `SumatraPDFMod.exe`（静态版 `SumatraPDFMod-static.exe`） |
+| 引擎 DLL / 命令行工具 | `libsumatrapdfMod.dll`、`SumatraPDFMod-tool.exe` |
 | 窗口标题、关于页、exe 文件属性 | `SumatraPDFMod`（`kAppName`、`kSumatraWindowTitle`） |
 | 便携设置文件 | `SumatraPDFMod-settings.txt`（exe 旁；见下） |
 | 本分支自己的设置项 | 一律 `Mod` 前缀，且排在各自结构（`EBookUI` / `FileEBookUI`）**最前面**、按字母序 |
-| 随附组件 | `libsumatrapdf.dll`、`PdfFilter.dll`、`PdfPreview.dll`、`sumatrapdf-tool.exe` 仍是上游名（内部组件，改名要动延迟加载） |
+| 不变的名字 | `PdfFilter.dll`、`PdfPreview.dll`（Windows 搜索/预览组件，名字里本来就没有 SumatraPDF）；premake 工程名与源文件名（`SumatraPDF.vcxproj`、`src/SumatraPDF.cpp`…）也是原样，改它们只动开发环境、不动产物 |
 
-产物的名字有两处，premake 重新生成时会保持一致：`premake5.lua` 里两个工程的
-`targetname`，以及已提交的 `vs2022/SumatraPDF.vcxproj`、`vs2022/SumatraPDF-static.vcxproj`
-里的 `<TargetName>`（`cmd/build.ts` 默认走 MSBuild + vcxproj；`-ninja` 时走
-`cmd/ninja.ts` 的资源表，同样已改）。
+产物的名字有两处，premake 重新生成时会保持一致：`premake5.lua` 里各工程的
+`targetname`，以及已提交的 `vs2022/*.vcxproj` 里的 `<TargetName>`（`cmd/build.ts` 默认
+走 MSBuild + vcxproj；`-ninja` 时走 `cmd/ninja.ts` 的资源表，同样已改）。exe 的
+`/DELAYLOAD:libsumatrapdfMod.dll`、预打包命令里的文件名、`EmbeddedResources.cpp` 里
+"DLL 找同目录的 exe 读嵌入资源"的那一处，也都跟着改了。
 
 **设置文件**：便携版把设置放在 exe 旁，所以本 mod 用**自己的文件名**，免得和官方
 SumatraPDF 放在一个目录时互相覆盖（官方版保存时会丢掉它不认识的 `Mod*` 字段）。
@@ -34,8 +36,9 @@ SumatraPDF 放在一个目录时互相覆盖（官方版保存时会丢掉它不
 `SumatraPDFMod-settings.txt`（改名失败就照旧读旧文件，不丢数据）。实现在
 `src/shared/AppSettings.cpp`（`GetSettingsFileNameTemp` + `LoadSettings` 里的搬迁）。
 
-改名前写的字段名（`FontSerif` 等）不会被解析，但文件里会原样保留 —— 把
-`EBookUI` / `FileEBookUI` 块里的键名前面加上 `Mod` 即可（本仓库的部署目录已经改好）。
+改名前写的旧键名（`FontSerif` 等）**不保留、不兼容**：本分支里已经没有这些名字，
+配置文件里也不会有（本仓库的部署目录已经改成 `Mod*`）。要在自己的文件里改：
+`EBookUI` / `FileEBookUI` 块里的键名前面加上 `Mod` 即可，没改的按未知设置忽略。
 
 ## 在界面里设置
 

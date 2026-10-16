@@ -114,7 +114,7 @@
 
 #include "SumatraLog.h"
 
-constexpr const char* kRestrictionsFileName = "sumatrapdfrestrict.ini";
+constexpr const char* kRestrictionsFileName = "SumatraPDFMod-restrict.ini";
 
 // in restricted mode, some features can be disabled (such as
 // opening files, printing, following URLs), so that SumatraPDF
@@ -167,14 +167,14 @@ void InitializePolicies(bool restrict) {
     ReportIf(gPolicyRestrictions != Perm::All);
     ReportIf(len(gAllowedLinkProtocols) != 0 || len(gAllowedFileTypes) != 0);
 
-    // the -restrict command line flag overrides any sumatrapdfrestrict.ini configuration
+    // the -restrict command line flag overrides any SumatraPDFMod-restrict.ini configuration
     if (restrict) {
         gPolicyRestrictions = Perm::RestrictedUse;
         return;
     }
 
     // allow to restrict SumatraPDF's functionality from an INI file in the
-    // same directory as SumatraPDF.exe (see ../docs/sumatrapdfrestrict.ini)
+    // same directory as SumatraPDFMod.exe (see ../docs/SumatraPDFMod-restrict.ini)
     // (if the file isn't there, everything is allowed)
     TempStr restrictPath = GetPathInExeDirTemp(Str(kRestrictionsFileName));
     if (!file::Exists(restrictPath)) {
@@ -199,7 +199,7 @@ void InitializePolicies(bool restrict) {
         "InternetAccess\0DiskAccess\0SavePreferences\0RegistryAccess\0PrinterAccess\0CopySelection\0"
         "FullscreenAccess\0AIChat\0";
 
-    // enable policies as indicated in sumatrapdfrestrict.ini
+    // enable policies as indicated in SumatraPDFMod-restrict.ini
     for (int i = 0; i < dimofi(perms); i++) {
         Str name = SeqStrByIndex(permNames, i);
         Str val = polsec->GetValue(name);
@@ -2489,7 +2489,7 @@ bool SetupPluginMode(Flags& i) {
     // don't save preferences for plugin windows (and don't allow fullscreen mode)
     // TODO: Perm::DiskAccess is required for saving viewed files and printing and
     //       Perm::InternetAccess is required for crash reports
-    // (they can still be disabled through sumatrapdfrestrict.ini or -restrict)
+    // (they can still be disabled through SumatraPDFMod-restrict.ini or -restrict)
     RestrictPolicies(Perm::SavePreferences | Perm::FullscreenAccess);
 
     i.reuseDdeInstance = i.exitWhenDone = false;

@@ -166,7 +166,7 @@ bool IsPreviewInstalled() {
 
 // --- opt-in PdfPreview.dll file logging ---------------------------------------
 
-#define kRegKeySumatra "Software\\SumatraPDF"
+#define kRegKeySumatra "Software\\SumatraPDFMod"
 #define kRegValLogPdfPreview "LogPdfPreview"
 
 bool IsPdfPreviewLoggingEnabled() {
@@ -182,17 +182,17 @@ void SetPdfPreviewLoggingEnabled(bool enable) {
     logf("SetPdfPreviewLoggingEnabled: %d\n", (int)enable);
 }
 
-// Per-build data dir, keyed on the sha1 of the SumatraPDF.exe sitting next to
-// this module: in SumatraPDF.exe that's the running exe, in PdfPreview.dll it's
-// the sibling exe -- either way it resolves to the same directory SumatraPDF.exe
+// Per-build data dir, keyed on the sha1 of the SumatraPDFMod.exe sitting next to
+// this module: in SumatraPDFMod.exe that's the running exe, in PdfPreview.dll it's
+// the sibling exe -- either way it resolves to the same directory SumatraPDFMod.exe
 // uses (see GetSumatraBuildSpecificDirTemp), so logs land next to its crashinfo/logs.
-// per-build data dir, same one SumatraPDF.exe uses (...\SumatraPDF-data\<sha1>)
+// per-build data dir, same one SumatraPDFMod.exe uses (...\SumatraPDFMod-data\<sha1>)
 TempStr GetPdfPreviewLogDirTemp() {
     TempStr exeDir = GetSelfExeDirTemp();
     if (len(exeDir) == 0) {
         return {};
     }
-    TempStr exePath = path::JoinTemp(exeDir, StrL("SumatraPDF.exe"));
+    TempStr exePath = path::JoinTemp(exeDir, StrL("SumatraPDFMod.exe"));
     Str d = file::ReadFile(exePath);
     if (len(d) == 0) {
         return {};
@@ -208,7 +208,7 @@ TempStr GetPdfPreviewLogDirTemp() {
     if (len(local) == 0) {
         return {};
     }
-    TempStr dir = path::JoinTemp(local, StrL("SumatraPDF-data"));
+    TempStr dir = path::JoinTemp(local, StrL("SumatraPDFMod-data"));
     return path::JoinTemp(dir, Str(id));
 }
 

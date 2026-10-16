@@ -35,14 +35,14 @@ static lzma::SimpleArchive gEmbeddedArchive{};
 static bool gEmbeddedTried = false;
 
 #if OS_WIN
-// PdfPreview.dll, PdfFilter.dll and sumatrapdf-tool.exe carry no archive of
-// their own: they read the one in SumatraPDF.exe installed next to them.
+// PdfPreview.dll, PdfFilter.dll and SumatraPDFMod-tool.exe carry no archive of
+// their own: they read the one in SumatraPDFMod.exe installed next to them.
 static HMODULE GetArchiveModule() {
     HMODULE self = (HMODULE)&__ImageBase;
     if (FindResourceW(self, MAKEINTRESOURCEW(IDR_EMBEDDED_PAK), RT_RCDATA)) {
         return self;
     }
-    TempStr path = GetPathInExeDirTemp(StrL("SumatraPDF.exe"));
+    TempStr path = GetPathInExeDirTemp(StrL("SumatraPDFMod.exe"));
     WStr wpath = ToWStrTemp(path);
     return LoadLibraryExW(wpath.s, nullptr, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE);
 }

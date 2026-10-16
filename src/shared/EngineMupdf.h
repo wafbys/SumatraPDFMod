@@ -257,13 +257,13 @@ class EngineMupdf : public EngineBase {
     float ebookLayoutH = 0;
     float ebookLayoutEm = 0;
 
-    // the font files the reader picked for this document (EBookUI.FontSerif /
-    // FontSans / FontMono / FontCjk); empty keeps the document's own fonts
+    // the font files the reader picked for this document (EBookUI.ModFontSerif /
+    // ModFontSans / ModFontMono / ModFontCjk); empty keeps the document's own fonts
     Str ebookFontSerif;
     Str ebookFontSans;
     Str ebookFontMono;
     Str ebookFontCjk;
-    // straight quotes in Latin text (EBookUI.StraightQuotes)
+    // straight quotes in Latin text (EBookUI.ModStraightQuotes)
     bool ebookStraightQuotes = true;
 
     void ApplyReflowThemeCss();

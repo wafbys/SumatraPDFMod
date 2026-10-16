@@ -43,14 +43,14 @@ static Str gUninstallerLogPath;
 // file is still correctly removed when SumatraPDF is eventually uninstalled.
 // clang-format off
 const char* gInstalledFiles[] = {
-    "libsumatrapdf.dll",
+    "libsumatrapdfMod.dll",
     "PdfFilter.dll",
     "PdfPreview.dll",
     // those probably won't delete because in use
     "SumatraPDFMod.exe",
     "RA-MICRO PDF Viewer.exe",
     // files no longer shipped, to be deleted
-    "libmupdf.dll", // renamed to libsumatrapdf.dll in 3.7
+    "libmupdf.dll", // renamed to libsumatrapdfMod.dll in 3.7
     "DroidSansFallback.ttf",
     "uninstall.exe",
     "UnRar.dll",

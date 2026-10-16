@@ -86,9 +86,9 @@ export async function testit(): Promise<void> {
   writeFileSync(fixture, makeFixture(), "ascii");
   checkMatchesPagesApart(fixture);
 
-  const tool = join(dirname(EXE), "sumatrapdf-tool.exe");
+  const tool = join(dirname(EXE), "SumatraPDFMod-tool.exe");
   if (!existsSync(tool)) {
-    console.log("  skipping console check: no sumatrapdf-tool.exe from the tested build");
+    console.log("  skipping console check: no SumatraPDFMod-tool.exe from the tested build");
     return;
   }
 

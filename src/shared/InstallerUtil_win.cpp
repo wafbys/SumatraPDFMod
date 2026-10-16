@@ -777,7 +777,7 @@ TempStr GetInstalledExePathTemp() {
     return path::JoinTemp(dir, Str(kExeName));
 }
 
-// Copy the running installer to installDir\SumatraPDF.exe. Retries and uses
+// Copy the running installer to installDir\SumatraPDFMod.exe. Retries and uses
 // temp+rename like WriteInstallerFileRobust: a single CopyFileW often fails
 // with ACCESS_DENIED (AV / Controlled Folder Access) or a sharing race after
 // TerminateProcess of the previous instance.
@@ -852,21 +852,21 @@ bool CopySelfToDir(Str destDir) {
     logf("  failed to copy '%s' to '%s' lastError=%u\n", exePath, dstPath, lastErr);
     if (lastErr == ERROR_ACCESS_DENIED) {
         NotifyFailed(
-            Tr("Couldn't copy SumatraPDF.exe to the installation directory (access denied). "
+            Tr("Couldn't copy SumatraPDFMod.exe to the installation directory (access denied). "
                "Temporarily disable antivirus or Controlled Folder Access for this folder, "
                "run the installer as administrator, or choose a different install folder. "
                "See https://www.sumatrapdfreader.org/docs/Installation"));
     } else if (lastErr == ERROR_SHARING_VIOLATION || lastErr == ERROR_LOCK_VIOLATION) {
         NotifyFailed(
-            Tr("Couldn't copy SumatraPDF.exe to the installation directory (file in use). "
+            Tr("Couldn't copy SumatraPDFMod.exe to the installation directory (file in use). "
                "Close all SumatraPDF windows and Explorer PDF previews, then try again. "
                "See https://www.sumatrapdfreader.org/docs/Installation"));
     } else if (IsDiskFullError(lastErr)) {
         NotifyFailed(
-            Tr("Not enough free disk space to copy SumatraPDF.exe to the installation directory.\n\n"
+            Tr("Not enough free disk space to copy SumatraPDFMod.exe to the installation directory.\n\n"
                "Free up space on this drive and try again."));
     } else {
-        NotifyFailed(Tr("Couldn't copy SumatraPDF.exe to the installation directory"));
+        NotifyFailed(Tr("Couldn't copy SumatraPDFMod.exe to the installation directory"));
     }
     return false;
 }

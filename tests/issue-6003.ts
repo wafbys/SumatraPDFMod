@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { IS_WIN } from "./host.ts";
 import { EXE, USE_NG, runStandalone, tmpPath } from "./util.ts";
 
-const PAYLOAD = ["libsumatrapdf.dll", "PdfFilter.dll", "PdfPreview.dll", "sumatrapdf-tool.exe"];
+const PAYLOAD = ["libsumatrapdfMod.dll", "PdfFilter.dll", "PdfPreview.dll", "SumatraPDFMod-tool.exe"];
 
 function runExtract(copied: string, cwd: string, args: string[]): { out: string; exitCode: number } {
   const p = Bun.spawnSync({

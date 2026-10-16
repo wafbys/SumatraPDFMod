@@ -7,7 +7,7 @@ REM   pack-embedded-prebuild.cmd <staging dir> <archive> [<file>[:<in-archive na
 REM
 REM   SumatraPDF-static:  out\<cfg>\embedded-static  ->  out\<cfg>\embedded-static.lzsa
 REM   SumatraPDF:         out\<cfg>\embedded         ->  out\<cfg>\embedded.lzsa
-REM                       plus libsumatrapdf.dll & co (the installer payload)
+REM                       plus libsumatrapdfMod.dll & co (the installer payload)
 REM                       passed as extra files
 REM
 REM Staged (in-archive names are relative to the staging dir):

@@ -3513,7 +3513,7 @@ bool RegisterOrUnregisterServerDLL(Str dllPath, bool install, Str args) {
     }
 
     // make sure that the DLL can find any DLLs it depends on and
-    // which reside in the same directory (in this case: libsumatrapdf.dll)
+    // which reside in the same directory (in this case: libsumatrapdfMod.dll)
     TempStr dllDir = path::GetDirTemp(dllPath);
     SetDllDirectoryW(CWStrTemp(dllDir));
 

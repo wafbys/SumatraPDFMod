@@ -2,7 +2,7 @@
    License: GPLv3 */
 
 // Plugin test: hosts SumatraPDF in plugin mode inside a child window.
-// Activated with -test-plugin [<SumatraPDF.exe>] [<URL>] <filename.ext>
+// Activated with -test-plugin [<SumatraPDFMod.exe>] [<URL>] <filename.ext>
 // Only available in debug builds.
 
 #include "base/Base.h"
@@ -104,7 +104,7 @@ static LRESULT CALLBACK PluginParentWndProc(HWND hwnd, UINT msg, WPARAM wp, LPAR
     return DefWindowProc(hwnd, msg, wp, lp);
 }
 
-// Parse args after -test-plugin: [<SumatraPDF.exe>] [<URL>] <filename.ext>
+// Parse args after -test-plugin: [<SumatraPDFMod.exe>] [<URL>] <filename.ext>
 void TestPlugin(WStr cmdLine) {
     StrNode* argList = ParseCmdLine(cmdLine);
     AutoFreeStrNode freeArgList(argList);
@@ -131,7 +131,7 @@ void TestPlugin(WStr cmdLine) {
     }
 
     if (len(args) == 0) {
-        MsgBox(nullptr, StrL("Syntax: SumatraPDF.exe -test-plugin [<SumatraPDF.exe>] [<URL>] <filename.ext>"),
+        MsgBox(nullptr, StrL("Syntax: SumatraPDFMod.exe -test-plugin [<SumatraPDFMod.exe>] [<URL>] <filename.ext>"),
                StrL("SumatraPDF Plugin Test"), MB_OK | MB_ICONINFORMATION);
         return;
     }
@@ -147,7 +147,7 @@ void TestPlugin(WStr cmdLine) {
     }
 
     if (len(args) < 3) {
-        MsgBox(nullptr, StrL("Syntax: SumatraPDF.exe -test-plugin [<SumatraPDF.exe>] [<URL>] <filename.ext>"),
+        MsgBox(nullptr, StrL("Syntax: SumatraPDFMod.exe -test-plugin [<SumatraPDFMod.exe>] [<URL>] <filename.ext>"),
                StrL("SumatraPDF Plugin Test"), MB_OK | MB_ICONINFORMATION);
         return;
     }

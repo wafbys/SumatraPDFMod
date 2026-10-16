@@ -102,13 +102,13 @@ export function prepareTestEnvironment(): void {
   copyFileSync(sourceExe, testExe);
   if (IS_WIN) {
     copyFileSync(sourcePdb, join(TESTS_TMP_DIR, basename(sourcePdb)));
-    const sourceDll = join(dirname(sourceExe), "libsumatrapdf.dll");
+    const sourceDll = join(dirname(sourceExe), "libsumatrapdfMod.dll");
     if (existsSync(sourceDll)) {
-      copyFileSync(sourceDll, join(TESTS_TMP_DIR, "libsumatrapdf.dll"));
+      copyFileSync(sourceDll, join(TESTS_TMP_DIR, "libsumatrapdfMod.dll"));
     }
-    const sourceTool = join(dirname(sourceExe), "sumatrapdf-tool.exe");
+    const sourceTool = join(dirname(sourceExe), "SumatraPDFMod-tool.exe");
     if (existsSync(sourceTool)) {
-      copyFileSync(sourceTool, join(TESTS_TMP_DIR, "sumatrapdf-tool.exe"));
+      copyFileSync(sourceTool, join(TESTS_TMP_DIR, "SumatraPDFMod-tool.exe"));
     }
   }
   if (!IS_WIN) {
