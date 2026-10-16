@@ -254,12 +254,38 @@ void ParseFileArgsTest() {
 }
 
 void SystemFontNamesTest() {
+    // "Foo " is what GDI reports for the variant faces ("Foo OsF", "Foo SC");
+    // it has to be replaced by the real family names, not dropped as a
+    // look-alike duplicate of "Foo"
+    {
+        StrVec names;
+        names.Append(StrL("Foo"));
+        names.Append(StrL("Foo "));
+        names.Append(StrL("Inter Variable Text"));
+        StrVec families;
+        families.Append(StrL("Foo OsF"));
+        families.Append(StrL("Foo SC"));
+        families.Append(StrL("Unrelated"));
+        ExpandSynthesizedFontNames(names, families);
+        utassert(len(names) == 4);
+        utassert(names.Find(StrL("Foo")) >= 0);
+        utassert(names.Find(StrL("Foo OsF")) >= 0);
+        utassert(names.Find(StrL("Foo SC")) >= 0);
+        utassert(names.Find(StrL("Inter Variable Text")) >= 0);
+        utassert(names.Find(StrL("Unrelated")) < 0);
+    }
+    // nothing to expand to: the name stays as GDI spelled it
+    {
+        StrVec names;
+        names.Append(StrL("Foo "));
+        StrVec families;
+        ExpandSynthesizedFontNames(names, families);
+        utassert(len(names) == 1 && str::Eq(names[0], StrL("Foo ")));
+    }
+    // the installed list itself: no padded names, no look-alikes, sorted
     StrVec names;
     GetInstalledFontNames(names);
     utassert(len(names) > 0);
-    // the font pickers show a name verbatim, so a name padded with whitespace
-    // reads as a duplicate of the same name without it (GDI returns a family's
-    // variant faces as "Foo " next to the real "Foo")
     StrVec seen;
     for (Str name : names) {
         Str trimmed = name;
