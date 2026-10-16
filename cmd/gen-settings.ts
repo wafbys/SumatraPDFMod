@@ -230,6 +230,8 @@ const ebookUI: Field[] = [
     "mod: use straight quotes in Latin text ('...' and \"...\") instead of the " +
       "typographic quotes a book may use; CJK text keeps its own quotes",
   ),
+  // divider: everything above is this mod's, everything below is upstream's
+  comment("---- mod settings above; plain SumatraPDF settings below ----"),
   field(
     "FontName",
     Str,
@@ -1123,6 +1125,8 @@ const fileEBookUI: Field[] = [
     "",
     "mod: straight quotes in Latin text for this document, true or false; empty uses EBookUI.ModStraightQuotes",
   ),
+  // divider: everything above is this mod's, everything below is upstream's
+  comment("---- mod settings above; plain SumatraPDF settings below ----"),
   field(
     "FontName",
     Str,
@@ -1380,6 +1384,12 @@ const sessionData: Field[] = [
 
 const globalPrefs: Field[] = [
   comment(""),
+  emptyLine(),
+
+  // the mod's own section first: EBookUI carries the Mod* fields (four font
+  // slots + straight quotes) at the top of its struct, so the settings file
+  // opens with them instead of burying them under upstream's fields
+  struct("EBookUI", ebookUI, "customization options for the ebook UI (EPUB, MOBI, FB2, PDB and plain text)"),
   emptyLine(),
 
   field(
@@ -2023,8 +2033,6 @@ const globalPrefs: Field[] = [
   emptyLine(),
 
   struct("FixedPageUI", fixedPageUI, "customization options for PDF, XPS, DjVu and PostScript UI"),
-  emptyLine(),
-  struct("EBookUI", ebookUI, "customization options for the ebook UI (EPUB, MOBI, FB2, PDB and plain text)"),
   emptyLine(),
   struct("ComicBookUI", comicBookUI, "customization options for Comic Book UI"),
   emptyLine(),

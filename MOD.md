@@ -21,7 +21,7 @@ PDF、封面图、扫描页不变。附带一个开关，把拉丁文字里的�
 | 引擎 DLL / 命令行工具 | `libsumatrapdfMod.dll`、`SumatraPDFMod-tool.exe` |
 | 窗口标题、关于页、exe 文件属性 | `SumatraPDFMod`（`kAppName`、`kSumatraWindowTitle`） |
 | 便携设置文件 | `SumatraPDFMod-settings.txt`（exe 旁；见下） |
-| 本分支自己的设置项 | 一律 `Mod` 前缀，且排在各自结构（`EBookUI` / `FileEBookUI`）**最前面**、按字母序 |
+| 本分支自己的设置项 | 一律 `Mod` 前缀，排在各自结构（`EBookUI` / `FileEBookUI`）**最前面**、按字母序；`EBookUI` 块本身也排在设置文件最前，Mod 组之后有一条分割线注释 `# ---- mod settings above; plain SumatraPDF settings below ----` |
 | 不变的名字 | `PdfFilter.dll`、`PdfPreview.dll`（Windows 搜索/预览组件，名字里本来就没有 SumatraPDF）；premake 工程名与源文件名（`SumatraPDF.vcxproj`、`src/SumatraPDF.cpp`…）也是原样，改它们只动开发环境、不动产物 |
 
 产物的名字有两处，premake 重新生成时会保持一致：`premake5.lua` 里各工程的
