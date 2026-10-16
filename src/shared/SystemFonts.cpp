@@ -4,6 +4,8 @@
 #include "base/Base.h"
 #if OS_WIN
 #include "base/Win.h"
+#include <dwrite.h>
+#pragma comment(lib, "dwrite.lib")
 #elif OS_LINUX
 #include <fontconfig/fontconfig.h>
 #elif defined(__APPLE__)
@@ -28,25 +30,99 @@ static int CALLBACK EnumFontFamilyCb(const LOGFONTW* lf, const TEXTMETRICW*, DWO
     }
     return 1;
 }
-#endif
 
-// GDI returns a family's variant faces ("Foo OsF", "Foo SC") as the synthesized
-// family "Foo " next to the real "Foo"; a picker shows the raw name, so the
-// padded one reads as a duplicate. Merge such look-alikes, keeping the name
-// that spells out the whole family.
-static void MergeLookAlikeNames(StrVec& names) {
-    StrVec res;
-    for (int pass = 0; pass < 2; pass++) {
-        for (Str name : names) {
-            Str trimmed = name;
-            str::TrimWsBoth(trimmed);
-            bool padded = len(trimmed) < len(name);
-            if (len(trimmed) == 0 || padded != (pass == 1)) {
+// GDI reports a family's variant faces ("Foo OsF", "Foo SC") as one synthesized
+// family named after their common prefix plus a space ("Foo "); DirectWrite
+// knows the real family names, so ask it for them (en-us spelling)
+static void CollectDWriteFamilyNames(StrVec& out) {
+    HRESULT hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+    bool uninit = SUCCEEDED(hr);
+    IDWriteFactory* factory = nullptr;
+    hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)&factory);
+    if (FAILED(hr)) {
+        if (uninit) {
+            CoUninitialize();
+        }
+        return;
+    }
+    IDWriteFontCollection* fonts = nullptr;
+    hr = factory->GetSystemFontCollection(&fonts, FALSE);
+    if (SUCCEEDED(hr)) {
+        UINT32 n = fonts->GetFontFamilyCount();
+        for (UINT32 i = 0; i < n; i++) {
+            IDWriteFontFamily* family = nullptr;
+            if (FAILED(fonts->GetFontFamily(i, &family))) {
                 continue;
             }
+            IDWriteLocalizedStrings* names = nullptr;
+            if (SUCCEEDED(family->GetFamilyNames(&names))) {
+                UINT32 idx = 0;
+                BOOL found = FALSE;
+                names->FindLocaleName(L"en-us", &idx, &found);
+                if (!found) {
+                    idx = 0;
+                }
+                UINT32 cch = 0;
+                if (SUCCEEDED(names->GetStringLength(idx, &cch)) && cch > 0) {
+                    auto* buf = AllocArray<WCHAR>((int)cch + 1);
+                    if (buf && SUCCEEDED(names->GetString(idx, buf, cch + 1))) {
+                        Str name = ToUtf8Temp(WStr(buf, (int)cch));
+                        if (len(name) > 0 && out.FindI(name) < 0) {
+                            out.Append(name);
+                        }
+                    }
+                    free(buf);
+                }
+                names->Release();
+            }
+            family->Release();
+        }
+        fonts->Release();
+    }
+    factory->Release();
+    if (uninit) {
+        CoUninitialize();
+    }
+}
+
+static bool HasSynthesizedFontName(const StrVec& names) {
+    for (Str name : names) {
+        Str trimmed = name;
+        str::TrimWsBoth(trimmed);
+        if (len(trimmed) != len(name)) {
+            return true;
+        }
+    }
+    return false;
+}
+#endif
+
+// Replace each synthesized name with the families it stands for (the ones it is
+// a prefix of), so the variant faces stay pickable under their real names;
+// when nothing matches, keep the name as GDI spelled it
+void ExpandSynthesizedFontNames(StrVec& names, const StrVec& families) {
+    StrVec res;
+    for (Str name : names) {
+        Str trimmed = name;
+        str::TrimWsBoth(trimmed);
+        if (len(trimmed) == len(name)) {
             if (res.FindI(trimmed) < 0) {
                 res.Append(trimmed);
             }
+            continue;
+        }
+        bool found = false;
+        for (Str family : families) {
+            if (!str::StartsWithI(family, name)) {
+                continue;
+            }
+            found = true;
+            if (res.FindI(family) < 0) {
+                res.Append(family);
+            }
+        }
+        if (!found && res.FindI(name) < 0) {
+            res.Append(name);
         }
     }
     names = res;
@@ -59,6 +135,11 @@ void GetInstalledFontNames(StrVec& names) {
     lf.lfCharSet = DEFAULT_CHARSET;
     EnumFontFamiliesExW(hdc, &lf, EnumFontFamilyCb, (LPARAM)&names, 0);
     ReleaseDC(nullptr, hdc);
+    if (HasSynthesizedFontName(names)) {
+        StrVec families;
+        CollectDWriteFamilyNames(families);
+        ExpandSynthesizedFontNames(names, families);
+    }
 #elif OS_LINUX
     if (!FcInit()) {
         return;
@@ -114,6 +195,5 @@ void GetInstalledFontNames(StrVec& names) {
 #else
     (void)names;
 #endif
-    MergeLookAlikeNames(names);
     SortNoCase(&names);
 }
