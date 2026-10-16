@@ -54,6 +54,9 @@ static ebook_slot_file* g_ebook_slot_files = NULL;
 // pop without clearing what its caller set up
 typedef struct ebook_slot_scope {
     struct ebook_slot_scope* prev;
+    // "dumb" quotes: replace the typographic quotes in Latin text with the
+    // straight ones while laying out (see EbookTextWantsStraightQuotes)
+    int straight_quotes;
     char* path[EBOOK_SLOT_COUNT];
 } ebook_slot_scope;
 
@@ -304,10 +307,12 @@ fz_font* EbookFontSlotFont(fz_context* ctx, const char* family, int is_bold, int
     return ebook_slot_load_font(ctx, spec, family, is_serif);
 }
 
-static void ebook_slots_push(const char* const* paths) {    ebook_slot_scope* s = (ebook_slot_scope*)calloc(1, sizeof(ebook_slot_scope));
+static void ebook_slots_push(const char* const* paths, int straight_quotes) {
+    ebook_slot_scope* s = (ebook_slot_scope*)calloc(1, sizeof(ebook_slot_scope));
     if (!s) {
         return;
     }
+    s->straight_quotes = straight_quotes;
     for (int i = 0; i < EBOOK_SLOT_COUNT; i++) {
         const char* path = paths[i];
         if (!path || !*path) {
@@ -335,9 +340,18 @@ static void ebook_scope_pop(void) {
     free(s);
 }
 
-void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk) {
+void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk, int straight_quotes) {
     const char* paths[EBOOK_SLOT_COUNT] = {serif, sans, mono, cjk};
-    ebook_slots_push(paths);
+    ebook_slots_push(paths, straight_quotes);
+}
+
+// Latched by EbookFontSlotsBegin(); read by the patched html parser (see
+// ext/patches) to decide whether Latin text gets "dumb" quotes. Independent of
+// the font slots: a reader who wants straight quotes can have them without
+// picking any font.
+int EbookTextWantsStraightQuotes(void) {
+    ebook_slot_scope* s = g_ebook_slot_scope;
+    return s ? s->straight_quotes : 0;
 }
 void EbookFontSlotsEnd(void) {
     ebook_scope_pop();
@@ -1709,6 +1723,9 @@ void sumatra_hb_free(void* ptr) {
 
 #ifndef _WIN32
 /* the reader's font slots (EBOOK_SLOT_* above) are Windows-only for now */
+int EbookTextWantsStraightQuotes(void) {
+    return 0;
+}
 fz_font* EbookFontSlotFont(fz_context* ctx, const char* family, int is_bold, int is_italic) {
     (void)ctx;
     (void)family;

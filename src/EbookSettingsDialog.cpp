@@ -79,6 +79,7 @@ struct EbookSettingsWnd : WindowBase {
     VirtText* labelSlotCjk = nullptr;
     DropDown* ddSlotCjk = nullptr;
     Checkbox* cbIgnoreCss = nullptr;
+    Checkbox* cbStraightQuotes = nullptr;
     Checkbox* cbCustomCss = nullptr;
     Edit* editCss = nullptr;
     Checkbox* radioThisFile = nullptr;
@@ -97,6 +98,7 @@ struct EbookSettingsWnd : WindowBase {
     void SetValues(Str fontName, float fontSize, const Vec<float>* margin, float lineSpacing, bool ignoreCss,
                    Str customCss);
     void SetSlotValues(Str serif, Str sans, Str mono, Str cjk);
+    void SetStraightQuotes(bool on);
     void LoadFromTarget();
     void ReadControls(EbookVals& out);
     void UpdateCssPreview();
@@ -204,6 +206,7 @@ void EbookSettingsWnd::LoadFromTarget() {
     Str fontSans = g->fontSans;
     Str fontMono = g->fontMono;
     Str fontCjk = g->fontCjk;
+    bool straightQuotes = g->straightQuotes;
     if (f) {
         if (f->fontName) {
             fontName = f->fontName;
@@ -235,10 +238,14 @@ void EbookSettingsWnd::LoadFromTarget() {
         if (f->fontCjk) {
             fontCjk = f->fontCjk;
         }
+        if (f->straightQuotes) {
+            straightQuotes = str::EqI(f->straightQuotes, StrL("true"));
+        }
     }
 
     SetValues(fontName, fontSize, margin, lineSpacing, ignoreCss, customCss);
     SetSlotValues(fontSerif, fontSans, fontMono, fontCjk);
+    SetStraightQuotes(straightQuotes);
 }
 
 static void SetSlotText(DropDown* dd, Str value) {
@@ -254,6 +261,14 @@ void EbookSettingsWnd::SetSlotValues(Str serif, Str sans, Str mono, Str cjk) {
     SetSlotText(ddSlotSans, sans);
     SetSlotText(ddSlotMono, mono);
     SetSlotText(ddSlotCjk, cjk);
+    updating = false;
+}
+
+void EbookSettingsWnd::SetStraightQuotes(bool on) {
+    updating = true;
+    if (cbStraightQuotes) {
+        cbStraightQuotes->SetIsChecked(on);
+    }
     updating = false;
 }
 
@@ -314,6 +329,7 @@ void EbookSettingsWnd::ReadControls(EbookVals& out) {
     out.fontSans = readSlot(ddSlotSans);
     out.fontMono = readSlot(ddSlotMono);
     out.fontCjk = readSlot(ddSlotCjk);
+    out.straightQuotes = cbStraightQuotes && cbStraightQuotes->IsChecked();
 }
 
 void EbookSettingsWnd::SetCssEditable(bool editable) {
@@ -396,6 +412,7 @@ void EbookSettingsWnd::Apply() {
         str::ReplaceWithCopy(&g->fontSans, v.fontSans);
         str::ReplaceWithCopy(&g->fontMono, v.fontMono);
         str::ReplaceWithCopy(&g->fontCjk, v.fontCjk);
+        g->straightQuotes = v.straightQuotes;
         // the global values are what the user wants to see, so this document's
         // overrides have to go (same as Change Background Color -> all files)
         FileState* fs = FileHistoryFindByPath(filePath);
@@ -416,7 +433,7 @@ void EbookSettingsWnd::Apply() {
                    v.lineSpacing != g->lineSpacing || v.ignoreDocumentCSS != g->ignoreDocumentCSS ||
                    !str::Eq(v.customCSS, g->customCSS) || !str::Eq(v.fontSerif, g->fontSerif) ||
                    !str::Eq(v.fontSans, g->fontSans) || !str::Eq(v.fontMono, g->fontMono) ||
-                   !str::Eq(v.fontCjk, g->fontCjk);
+                   !str::Eq(v.fontCjk, g->fontCjk) || v.straightQuotes != g->straightQuotes;
     if (!differs) {
         // nothing left that isn't the global setting: drop the block entirely
         // so it stops being written out
@@ -447,6 +464,11 @@ void EbookSettingsWnd::Apply() {
     str::ReplaceWithCopy(&f->fontSans, str::Eq(v.fontSans, g->fontSans) ? Str{} : v.fontSans);
     str::ReplaceWithCopy(&f->fontMono, str::Eq(v.fontMono, g->fontMono) ? Str{} : v.fontMono);
     str::ReplaceWithCopy(&f->fontCjk, str::Eq(v.fontCjk, g->fontCjk) ? Str{} : v.fontCjk);
+    Str straight{};
+    if (v.straightQuotes != g->straightQuotes) {
+        straight = v.straightQuotes ? StrL("true") : StrL("false");
+    }
+    str::ReplaceWithCopy(&f->straightQuotes, straight);
     ScheduleSaveSettings();
 }
 
@@ -463,10 +485,12 @@ void EbookSettingsWnd::OnReset(VirtMouseEvent*) {
         auto* g = &gSettings->eBookUI;
         SetValues(g->fontName, g->fontSize, g->margin, g->lineSpacing, g->ignoreDocumentCSS, g->customCSS);
         SetSlotValues(g->fontSerif, g->fontSans, g->fontMono, g->fontCjk);
+        SetStraightQuotes(g->straightQuotes);
         return;
     }
     SetValues({}, 0, nullptr, 0, false, {});
     SetSlotValues({}, {}, {}, {});
+    SetStraightQuotes(true);
 }
 
 void EbookSettingsWnd::OnOk(VirtMouseEvent*) {
@@ -621,6 +645,15 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
         VirtText* hint = label(Tr("Empty keeps the book's font; CJK covers the rest."));
         slots->AddChild(hint);
         vbox->AddChild(NewDlgSection(slots));
+        vbox->AddChild(new VirtLine());
+    }
+
+    // quotes: straight in Latin text, the book's own in CJK text
+    {
+        cbStraightQuotes = NewDlgCheckbox(hwnd, Tr("Straight quotes in &English text"), fontText, true);
+        HBox* row = NewDlgFieldRow();
+        row->AddChild(cbStraightQuotes);
+        vbox->AddChild(NewDlgSection(row));
         vbox->AddChild(new VirtLine());
     }
 

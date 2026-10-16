@@ -263,6 +263,9 @@ struct FileEBookUI {
     // CJK-slot font for this document: a font file or an installed font
     // family. empty uses EBookUI.FontCjk
     Str fontCjk;
+    // straight quotes in Latin text for this document: true or false;
+    // empty uses EBookUI.StraightQuotes
+    Str straightQuotes;
 };
 
 // history of opened files, most recently used first. A closed file
@@ -600,6 +603,9 @@ struct EBookUI {
     // ebooks, including glyphs the other slots don't have; empty keeps the
     // engine's usual system fallback
     Str fontCjk;
+    // use straight quotes in Latin text ('...' and "...") instead of the
+    // typographic quotes a book may use; CJK text keeps its own quotes
+    bool straightQuotes;
     // font size in points; 0 means the default (8.0)
     float fontSize;
     // white space around the text, in points (not screen pixels), like

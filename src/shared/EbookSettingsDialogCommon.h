@@ -25,4 +25,6 @@ struct EbookVals {
     Str fontSans;
     Str fontMono;
     Str fontCjk;
+    // straight quotes in Latin text (CJK keeps its own)
+    bool straightQuotes = true;
 };

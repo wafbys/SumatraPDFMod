@@ -35,6 +35,13 @@ EBookUI [
 读者的四槽 → 书内 `@font-face` 字体 → 内置字体 → 系统字体。
 （书内字体优先于四槽是上游行为；本分支的 `ext/patches/0065` 把它反过来。）
 
+## 英文直引号
+
+`EBookUI.StraightQuotes`（默认 `true`）：拉丁文字里的 `“ ”` `‘ ’` 一律显示成直引号，
+中文/日文/韩文里的引号保持原样（那里的弯引号才是正确用法）。面板上有勾选框
+「Straight quotes in English text」，也支持按书覆盖（`FileStates → EBookUI → StraightQuotes`）。
+实现是 `ext/patches/0062`：排版前按文本节点的 script 就地改写，只缩短字符串。
+
 ## 跟随上游
 
 ```sh

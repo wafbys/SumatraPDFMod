@@ -3993,6 +3993,7 @@ struct EBookUISettings {
     Str fontSans;
     Str fontMono;
     Str fontCjk;
+    bool straightQuotes; // straight quotes in Latin text (CJK keeps its own)
 
     bool HasFontSlots() const { return fontSerif || fontSans || fontMono || fontCjk; }
 };
@@ -4011,6 +4012,7 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     res.fontSans = global->fontSans;
     res.fontMono = global->fontMono;
     res.fontCjk = global->fontCjk;
+    res.straightQuotes = global->straightQuotes;
     if (!perFile) {
         return res;
     }
@@ -4055,6 +4057,12 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     if (perFile->fontCjk) {
         res.fontCjk = perFile->fontCjk;
     }
+    // same tri-state as ignoreDocumentCSS: empty inherits, true/false override
+    if (perFile->straightQuotes) {
+        res.straightQuotes = str::EqI(perFile->straightQuotes, StrL("true")) ||
+                             str::EqI(perFile->straightQuotes, StrL("yes")) ||
+                             str::Eq(perFile->straightQuotes, StrL("1"));
+    }
     return res;
 }
 
@@ -4071,7 +4079,7 @@ struct ScopedEbookFontSlots {
         }
         auto path = [](Str s) -> const char* { return s ? CStrTemp(s) : nullptr; };
         EbookFontSlotsBegin(path(e->ebookFontSerif), path(e->ebookFontSans), path(e->ebookFontMono),
-                            path(e->ebookFontCjk));
+                            path(e->ebookFontCjk), e->ebookStraightQuotes ? 1 : 0);
     }
     ~ScopedEbookFontSlots() { EbookFontSlotsEnd(); }
 };
@@ -4311,9 +4319,9 @@ bool EngineMupdf::LoadFromStream(fz_stream* stm, Str nameHint, PasswordUI* pwdUI
         ebookFontSans = str::Dup(arena, s.fontSans);
         ebookFontMono = str::Dup(arena, s.fontMono);
         ebookFontCjk = str::Dup(arena, s.fontCjk);
+        ebookStraightQuotes = s.straightQuotes;
         if (s.HasFontSlots()) {
-            logf("ebook font slots: '%s' '%s' '%s' '%s'\n", ebookFontSerif, ebookFontSans, ebookFontMono,
-                 ebookFontCjk);
+            logf("ebook font slots: '%s' '%s' '%s' '%s'\n", ebookFontSerif, ebookFontSans, ebookFontMono, ebookFontCjk);
         }
     }
     ebookUserCss = str::Dup(arena, userCss);
