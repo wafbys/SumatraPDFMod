@@ -21,7 +21,7 @@ void _uploadDebugReport(Str, Str, bool) {}
 constexpr const WCHAR* kPluginTestName = L"SumatraPDF Plugin Test";
 
 struct PluginStartData {
-    // path to SumatraPDF.exe
+    // path to SumatraPDFMod.exe
     Str sumatraPath;
     // path to the (downloaded) document to display
     Str filePath;
@@ -33,7 +33,7 @@ struct PluginStartData {
 // handle the following messages for it:
 LRESULT CALLBACK PluginParentWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     if (WM_CREATE == msg) {
-        // run SumatraPDF.exe with the -plugin command line argument
+        // run SumatraPDFMod.exe with the -plugin command line argument
         PluginStartData* data = (PluginStartData*)((CREATESTRUCT*)lp)->lpCreateParams;
         auto path = data->filePath;
         TempStr cmdLine = fmt("-plugin %d \"%s\"", hwnd, path);
@@ -88,10 +88,10 @@ LRESULT CALLBACK PluginParentWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) 
 }
 
 WStr GetSumatraExePath() {
-    // run SumatraPDF.exe either from plugin-test.exe's or the current directory
-    TempStr path = GetPathInExeDirTemp(StrL("SumatraPDF.exe"));
+    // run SumatraPDFMod.exe either from plugin-test.exe's or the current directory
+    TempStr path = GetPathInExeDirTemp(StrL("SumatraPDFMod.exe"));
     if (!file::Exists(path)) {
-        return wstr::Dup(WStrL(L"SumatraPDF.exe"));
+        return wstr::Dup(WStrL(L"SumatraPDFMod.exe"));
     }
     return ToWStr(path);
 }
@@ -106,7 +106,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nShowCmd) {
 
     if (len(args) == 1) {
         TempStr name = path::GetBaseNameTemp(args[0]);
-        TempStr msg = fmt("Syntax: %s [<SumatraPDF.exe>] [<URL>] <filename.ext>", name);
+        TempStr msg = fmt("Syntax: %s [<SumatraPDFMod.exe>] [<URL>] <filename.ext>", name);
         MsgBox(nullptr, msg, StrL(kPluginTestNameA), MB_OK | MB_ICONINFORMATION);
         return 1;
     }

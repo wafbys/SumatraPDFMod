@@ -212,10 +212,10 @@ function printBinaries(dir: string, targets: Set<string>): void {
   const paths: string[] = [];
   const dynamicFiles = new Set([
     "SumatraPDFMod.exe",
-    "libsumatrapdf.dll",
+    "libsumatrapdfMod.dll",
     "PdfFilter.dll",
     "PdfPreview.dll",
-    "sumatrapdf-tool.exe",
+    "SumatraPDFMod-tool.exe",
   ]);
   const walk = (path: string): void => {
     for (const entry of readdirSync(path, { withFileTypes: true })) {

@@ -1289,7 +1289,7 @@ const fileState: Field[] = [
     "Thumbnail",
     { name: "", ctype: "Pixmap *" },
     "NULL",
-    "thumbnails are saved as PNG files in sumatrapdfcache directory",
+    "thumbnails are saved as PNG files in SumatraPDFMod-cache directory",
   ).notSaved(),
   field("Index", Int, 0, "temporary value needed for FileHistory::cmpOpenCount").notSaved(),
   field("Himl", { name: "", ctype: "HIMAGELIST" }, "NULL", "image list holding the file's shell icon").notSaved(),

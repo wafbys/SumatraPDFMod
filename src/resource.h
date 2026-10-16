@@ -31,8 +31,8 @@
 // LzSA archive with everything embedded in the exe: translations.txt,
 // marked.min.js, mermaid.min.js, fonts\* (mupdf's built-in fonts), in-app
 // manual and (non-static builds only)
-// the installer payload: libsumatrapdf.dll, PdfFilter.dll, PdfPreview.dll,
-// sumatrapdf-tool.exe. Packed by cmd/pack-embedded-prebuild.cmd.
+// the installer payload: libsumatrapdfMod.dll, PdfFilter.dll, PdfPreview.dll,
+// SumatraPDFMod-tool.exe. Packed by cmd/pack-embedded-prebuild.cmd.
 #define IDR_EMBEDDED_PAK 1
 
 // Next default values for new objects

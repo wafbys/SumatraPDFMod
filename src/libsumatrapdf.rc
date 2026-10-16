@@ -18,7 +18,7 @@ BEGIN
       VALUE "FileDescription",  "MuPDF rendering library, DjVu rendering library and various helper libraries"
       VALUE "FileVersion",      VER_RESOURCE_STR
       VALUE "LegalCopyright",   kCopyrightStr
-      VALUE "OriginalFilename", "libsumatrapdf.dll"
+      VALUE "OriginalFilename", "libsumatrapdfMod.dll"
       VALUE "ProductName",      "SumatraPDF"
       VALUE "ProductVersion",   VER_RESOURCE_STR
       VALUE "CompanyName",      "Artifex Software et al."

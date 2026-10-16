@@ -1644,7 +1644,7 @@ void RestrictedUseWnd::OnCancel(VirtMouseEvent*) {
 
 void RestrictedUseWnd::OnSave(VirtMouseEvent*) {
     if (!SaveRestrictedUseConfig(config)) {
-        MsgBox(hwnd, Tr("Failed to save sumatrapdfrestrict.ini."), Tr("Error"), MB_OK | MB_ICONERROR);
+        MsgBox(hwnd, Tr("Failed to save SumatraPDFMod-restrict.ini."), Tr("Error"), MB_OK | MB_ICONERROR);
         return;
     }
     ScheduleDelete();
@@ -1652,12 +1652,12 @@ void RestrictedUseWnd::OnSave(VirtMouseEvent*) {
 
 void RestrictedUseWnd::OnDelete(VirtMouseEvent*) {
     int res =
-        MsgBox(hwnd, Tr("Delete sumatrapdfrestrict.ini?"), Tr("Configure Restricted Use"), MB_YESNO | MB_ICONQUESTION);
+        MsgBox(hwnd, Tr("Delete SumatraPDFMod-restrict.ini?"), Tr("Configure Restricted Use"), MB_YESNO | MB_ICONQUESTION);
     if (res != IDYES) {
         return;
     }
     if (!DeleteRestrictedUseConfig()) {
-        MsgBox(hwnd, Tr("Failed to delete sumatrapdfrestrict.ini."), Tr("Error"), MB_OK | MB_ICONERROR);
+        MsgBox(hwnd, Tr("Failed to delete SumatraPDFMod-restrict.ini."), Tr("Error"), MB_OK | MB_ICONERROR);
         return;
     }
     ScheduleDelete();

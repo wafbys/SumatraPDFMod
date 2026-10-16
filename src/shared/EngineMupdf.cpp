@@ -3889,7 +3889,7 @@ bool EngineMupdf::Load(Str path, PasswordUI* pwdUI) {
     return FinishLoading();
 }
 
-// is implemented in SumatraPDF.exe, PdfFilter and PdfPreview
+// is implemented in SumatraPDFMod.exe, PdfFilter and PdfPreview
 // TODO: allow setting per
 extern EBookUI* GetEBookUI();
 // per-document overrides (FileStates -> EBookUI), null unless the document has them

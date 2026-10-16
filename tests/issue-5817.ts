@@ -15,7 +15,7 @@ const FULL = { dx: 150, dy: 212 };
 // mirrors GetThumbnailPathTemp: md5 of the path, lowercase hex, .png
 function thumbnailPath(appData: string, docPath: string): string {
   const hash = new Bun.CryptoHasher("md5").update(docPath).digest("hex");
-  return join(appData, "sumatrapdfcache", `${hash}.png`);
+  return join(appData, "SumatraPDFMod-cache", `${hash}.png`);
 }
 
 function writeSettings(appData: string, thumbnailsType: string): void {

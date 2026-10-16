@@ -21,9 +21,9 @@ const kCertSubject = "CN=SumatraPDF StoreSignTest";
 
 function findToolExe(): string | null {
   const candidates = [
-    join(dirname(EXE), "sumatrapdf-tool.exe"),
-    join(ROOT, "out", "dbg64", "sumatrapdf-tool.exe"),
-    join(ROOT, "out", "rel64", "sumatrapdf-tool.exe"),
+    join(dirname(EXE), "SumatraPDFMod-tool.exe"),
+    join(ROOT, "out", "dbg64", "SumatraPDFMod-tool.exe"),
+    join(ROOT, "out", "rel64", "SumatraPDFMod-tool.exe"),
   ];
   return candidates.find((p) => existsSync(p)) ?? null;
 }
@@ -75,7 +75,7 @@ function verifySignedPdf(path: string): void {
   if (!/\/Type\s*\/Sig/.test(text) || !/\/ByteRange/.test(text) || !/\/Contents/.test(text)) {
     throw new Error("issue-5965: signed file has no signature dictionary");
   }
-  console.log("  signed PDF has a signature dictionary (no sumatrapdf-tool.exe) ✓");
+  console.log("  signed PDF has a signature dictionary (no SumatraPDFMod-tool.exe) ✓");
 }
 
 export async function testit(): Promise<void> {

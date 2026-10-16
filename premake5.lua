@@ -287,7 +287,7 @@ end
 
 -- out/<cfg>/ holds only shipping binaries (*.exe, *.dll, *.pdb). Everything
 -- else (.obj, .lib, .map, .exp, .ilk, static-lib .pdb, ...) lives under obj-s
--- (static SumatraPDF.exe chain) or obj (SumatraPDF-dll / libsumatrapdf chain) so the
+-- (static SumatraPDFMod.exe chain) or obj (SumatraPDF-dll / libsumatrapdf chain) so the
 -- two flavors never share intermediates.
 local function for_each_out_config(fn)
   fn("platforms:x86", "configurations:Release", "out/rel32")
@@ -547,7 +547,7 @@ workspace "SumatraPDF"
       "ext/a-unrar/version.txt", "ext/a-unrar/license.txt",
     }
 
-  -- chmdec: linked into libsumatrapdf.dll (and static EXE). SumatraPDF.exe /
+  -- chmdec: linked into libsumatrapdfMod.dll (and static EXE). SumatraPDFMod.exe /
   -- PdfFilter / PdfPreview import chm_* via libsumatrapdf.def; do not also link here.
   project "chmdec"
     static_intermediate_dirs()
@@ -559,7 +559,7 @@ workspace "SumatraPDF"
     files { "ext/chmdec/*.c", "ext/chmdec/*.h" }
 
   -- msdes: public domain d3des, used by LitDoc.cpp to unseal .lit DRM1.
-  -- Linked into libsumatrapdf.dll (and the static EXE); dynamic consumers
+  -- Linked into libsumatrapdfMod.dll (and the static EXE); dynamic consumers
   -- import the required functions through libsumatrapdf.def.
   project "msdes"
     static_intermediate_dirs()
@@ -570,8 +570,8 @@ workspace "SumatraPDF"
     disablewarnings { "4131", "4244" }
     files { "ext/msdes/*.c", "ext/msdes/*.h" }
 
-  -- cmark-gfm: linked into mupdf → libsumatrapdf.dll (md.c + MarkdownToc imports).
-  -- Do not also link into SumatraPDF.exe; re-export via libsumatrapdf.def instead.
+  -- cmark-gfm: linked into mupdf → libsumatrapdfMod.dll (md.c + MarkdownToc imports).
+  -- Do not also link into SumatraPDFMod.exe; re-export via libsumatrapdf.def instead.
   project "cmark-gfm"
     dll_intermediate_dirs()
     kind "StaticLib"
@@ -611,8 +611,8 @@ workspace "SumatraPDF"
       "ext/a-zopfli/COPYING",
     }
 
-  -- libarchive: linked into mupdf → libsumatrapdf.dll (and into static EXE).
-  -- Do not also link into SumatraPDF.exe / PdfFilter / PdfPreview; re-export
+  -- libarchive: linked into mupdf → libsumatrapdfMod.dll (and into static EXE).
+  -- Do not also link into SumatraPDFMod.exe / PdfFilter / PdfPreview; re-export
   -- the Archive.cpp symbols via libsumatrapdf.def instead (same as cmark-gfm).
   project "a-libarchive"
     static_intermediate_dirs()
@@ -637,7 +637,7 @@ workspace "SumatraPDF"
     includedirs { "ext/a-bzip2" }
     files { "ext/a-bzip2/bzip2.c", "ext/a-bzip2/bzlib.h", "ext/a-bzip2/version.txt", "ext/a-bzip2/LICENSE" }
     -- LzmaDec/Bra* for LzSA live in base/exe (not here): installer must extract
-    -- libsumatrapdf.dll without calling into the delay-loaded DLL.
+    -- libsumatrapdfMod.dll without calling into the delay-loaded DLL.
     -- liblzma for LZMA/LZMA2/XZ decompression (needed for 7zip support in libarchive)
     defines { "HAVE_CONFIG_H", "LZMA_API_STATIC" }
     includedirs { "ext/liblzma/api", "ext/liblzma/common", "ext/liblzma/check",
@@ -913,7 +913,7 @@ workspace "SumatraPDF"
     includedirs { "ext/a-extract" }
     uses_zlib()
     -- mupdf provides memento.obj; skip extract's amalgamated memento body so the
-    -- final link of libsumatrapdf.dll / SumatraPDF-static does not LNK4006 Memento
+    -- final link of libsumatrapdfMod.dll / SumatraPDF-static does not LNK4006 Memento
     defines { "EXTRACT_NO_OWN_MEMENTO" }
     files {
       "ext/a-extract/extract.c", "ext/a-extract/memento.h",
@@ -1039,7 +1039,7 @@ workspace "SumatraPDF"
     }
 
     mupdf_files()
-    -- Third-party code lives in its own static libs; link them so libsumatrapdf.dll
+    -- Third-party code lives in its own static libs; link them so libsumatrapdfMod.dll
     -- / SumatraPDF-static pick them up via project references.
     links {
       "cmark-gfm", "a-mujs", "a-extract", "a-harfbuzz", "a-freetype", "a-brotli",
@@ -1051,11 +1051,14 @@ workspace "SumatraPDF"
     -- this fixes "NAN" is not a constant in some version of msvc
     -- without this it's #define _UCRT_NAN (__ucrt_int_to_float(0x7FC00000))
     -- CMARK_GFM_STATIC_DEFINE: md.c includes cmark-gfm headers; we link the
-    -- cmark-gfm static lib into this project so libsumatrapdf.dll contains cmark
+    -- cmark-gfm static lib into this project so libsumatrapdfMod.dll contains cmark
     -- (and re-exports MarkdownToc's symbols via libsumatrapdf.def).
     defines { "_UCRT_NOISY_NAN", "CMARK_GFM_STATIC_DEFINE" }
 
   project "libsumatrapdf"
+    -- the mod's artifact name; the committed vs2022/libsumatrapdf.vcxproj carries
+    -- the same TargetName (premake regeneration keeps both in sync)
+    targetname "libsumatrapdfMod"
     build_defines()
     dll_shared_lib_dirs()
     kind "SharedLib"
@@ -1153,7 +1156,7 @@ workspace "SumatraPDF"
     includedirs { "ext/heicdec", "ext/a-libwebp", "ext/jxldec", "ext/msdes" }
     test_engines_files()
     links_zlib()
-    -- static link (no libsumatrapdf.dll): same image-codec set as libsumatrapdf.dll
+    -- static link (no libsumatrapdfMod.dll): same image-codec set as libsumatrapdfMod.dll
     links { "base", "djvudec", "a-libarchive", "a-unrar", "mupdf", "tesseract", "leptonica", "zxing" }
     links { "a-libwebp", "dav1d", "heicdec", "jxldec", "a-brotli" }
     -- LitDoc.cpp: DES decryption of DRM-free .lit sections, LZX section decompression
@@ -1264,9 +1267,12 @@ workspace "SumatraPDF"
 
   -- small console app that runs the mupdf command-line tools (draw, convert,
   -- info, ...). Console subsystem (so it works with cmd.exe / PowerShell) and
-  -- links libsumatrapdf.dll for everything, so the exe itself is tiny. It's embedded
-  -- in SumatraPDF.exe's IDR_EMBEDDED_PAK (see the embedded.lzsa prebuild).
+  -- links libsumatrapdfMod.dll for everything, so the exe itself is tiny. It's embedded
+  -- in SumatraPDFMod.exe's IDR_EMBEDDED_PAK (see the embedded.lzsa prebuild).
   project "sumatrapdf-tool"
+    -- the mod's artifact name; the committed vs2022/sumatrapdf-tool.vcxproj carries
+    -- the same TargetName (premake regeneration keeps both in sync)
+    targetname "SumatraPDFMod-tool"
     build_defines()
     dll_app_objdir()
     dll_linker_intermediates()
@@ -1276,7 +1282,7 @@ workspace "SumatraPDF"
     mixed_dbg_rel_conf()
     includedirs { "src" }
     sumatrapdf_tool_files()
-    -- base: EmbeddedResources.cpp (mupdf's built-in fonts from SumatraPDF.exe's archive)
+    -- base: EmbeddedResources.cpp (mupdf's built-in fonts from SumatraPDFMod.exe's archive)
     links { "base", "libsumatrapdf" }
     links_base_win()
     links { "shell32" }
@@ -1295,7 +1301,7 @@ workspace "SumatraPDF"
     filter {}
     includedirs { "src", "src/gui", "ext/mupdf/include", "ext/a-libarchive" }
     search_filter_files()
-    -- libarchive + unrar live in libsumatrapdf.dll (re-exported); do not link second copies
+    -- libarchive + unrar live in libsumatrapdfMod.dll (re-exported); do not link second copies
     links { "base", "libsumatrapdf" }
     links_base_win()
     links { "comctl32", "gdiplus", "shlwapi", "version", "wininet", "wintrust", "crypt32" }
@@ -1331,7 +1337,7 @@ workspace "SumatraPDF"
     mixed_dbg_rel_conf()
     disablewarnings { "4100", "4838" }
     defines { "HAVE_LIBARCHIVE", "LIBARCHIVE_STATIC" }
-    -- image codecs (webp/jxl/heic/dav1d) live in libsumatrapdf.dll and are imported
+    -- image codecs (webp/jxl/heic/dav1d) live in libsumatrapdfMod.dll and are imported
     -- via libsumatrapdf.def; only headers are needed here to compile the readers.
     includedirs {
       "src", "src/gui", "ext/mupdf/include",
@@ -1340,7 +1346,7 @@ workspace "SumatraPDF"
       "ext/heicdec", "ext/a-libwebp", "ext/jxldec",
     }
     pdf_preview_files()
-    -- djvudec / chmdec / libarchive / unrar live in libsumatrapdf.dll (re-exported);
+    -- djvudec / chmdec / libarchive / unrar live in libsumatrapdfMod.dll (re-exported);
     -- do not link second copies
     links { "base", "libsumatrapdf" }
     links_base_win()
@@ -1454,7 +1460,7 @@ workspace "SumatraPDF"
       "call " .. rootDirWin .. "\\cmd\\pack-embedded-prebuild.cmd %{cfg.targetdir}\\embedded-static %{cfg.targetdir}\\embedded-static.lzsa",
     }
 
-  -- a dll version where most functionality is in libsumatrapdf.dll
+  -- a dll version where most functionality is in libsumatrapdfMod.dll
   project "SumatraPDF"
     -- the mod's artifact name; the committed vs2022/SumatraPDF.vcxproj carries
     -- the same TargetName (premake regeneration keeps both in sync)
@@ -1474,7 +1480,7 @@ workspace "SumatraPDF"
     includedirs { "src", "ext/mupdf/include" }
     includedirs { "ext/synctex", "ext/djvudec", "ext/chmdec", "ext/a-libarchive", "ext/a-zopfli", "ext/msdes" }
     includedirs { "ext/darkmodelib/include" }
-    -- headers only: webp/jxl/heic/chm/DES symbols come from libsumatrapdf.dll (libsumatrapdf.def)
+    -- headers only: webp/jxl/heic/chm/DES symbols come from libsumatrapdfMod.dll (libsumatrapdf.def)
     includedirs { "ext/heicdec", "ext/a-libwebp", "ext/jxldec" }
 
     -- MSVC's dynamic asan runtime ignores __asan_default_options/suppressions(),
@@ -1534,7 +1540,7 @@ workspace "SumatraPDF"
     files { "src/MuPDF_Exports.cpp" }
 
     -- MarkdownToc / Archive.cpp / ChmFile use cmark + libarchive + unrar +
-    -- chmdec via libsumatrapdf.def exports (all live in libsumatrapdf.dll; do not link
+    -- chmdec via libsumatrapdf.def exports (all live in libsumatrapdfMod.dll; do not link
     -- second copies into the EXE).
     includedirs { "ext/cmark-gfm/src", "ext/cmark-gfm/extensions", "ext/mupdf/scripts/cmark-gfm" }
     defines { "CMARK_GFM_STATIC_DEFINE" }
@@ -1548,13 +1554,13 @@ workspace "SumatraPDF"
     }
     links_base_win()
     -- this is to prevent dll hijacking
-    linkoptions { "/DELAYLOAD:libsumatrapdf.dll" }
+    linkoptions { "/DELAYLOAD:libsumatrapdfMod.dll" }
     linkoptions { "/DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll" }
     linkoptions { "/DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll" }
     linkoptions { "/DELAYLOAD:uiautomationcore.dll" }
     -- resolve static imports (uxtheme.dll etc.) from System32 only, so that
     -- a DLL planted next to the exe can't be side-loaded. doesn't affect
-    -- delay-loaded libsumatrapdf.dll which LoadLibsumatrapdf() loads by full path
+    -- delay-loaded libsumatrapdfMod.dll which LoadLibsumatrapdf() loads by full path
     linkoptions { "/DEPENDENTLOADFLAG:0x800" }
     dependson { "PdfFilter", "PdfPreview", "sumatrapdf-tool" }
     -- stage translations + marked/mermaid + manual under out/<cfg>/embedded and
@@ -1564,13 +1570,13 @@ workspace "SumatraPDF"
     -- builds sign the DLLs in place before this prebuild runs (with
     -- BuildProjectReferences=false).
     prebuildcommands {
-      "call " .. rootDirWin .. "\\cmd\\pack-embedded-prebuild.cmd %{cfg.targetdir}\\embedded %{cfg.targetdir}\\embedded.lzsa %{cfg.targetdir}\\libsumatrapdf.dll:libsumatrapdf.dll %{cfg.targetdir}\\PdfFilter.dll:PdfFilter.dll %{cfg.targetdir}\\PdfPreview.dll:PdfPreview.dll %{cfg.targetdir}\\sumatrapdf-tool.exe:sumatrapdf-tool.exe",
+      "call " .. rootDirWin .. "\\cmd\\pack-embedded-prebuild.cmd %{cfg.targetdir}\\embedded %{cfg.targetdir}\\embedded.lzsa %{cfg.targetdir}\\libsumatrapdfMod.dll:libsumatrapdfMod.dll %{cfg.targetdir}\\PdfFilter.dll:PdfFilter.dll %{cfg.targetdir}\\PdfPreview.dll:PdfPreview.dll %{cfg.targetdir}\\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe",
     }
     -- /INFERASANLIBS pulls in the *dynamic* ASan runtime, so
     -- clang_rt.asan_dynamic-x86_64.dll must sit next to the exe or it
     -- won't launch. Nothing copies it automatically, so do it here.
     -- $(VCToolsInstallDir) avoids hardcoding the MSVC toolset version.
-    -- libsumatrapdf.dll (also asan, delay-loaded from this exe's dir) is
+    -- libsumatrapdfMod.dll (also asan, delay-loaded from this exe's dir) is
     -- covered too since it shares this OutDir.
     filter "platforms:x64_asan"
       postbuildcommands {
@@ -1592,9 +1598,9 @@ workspace "SumatraPDF"
       "a-extract", "a-gumbo", "a-jbig2dec", "a-mujs", "a-openjpeg",
       "a-freetype", "a-harfbuzz", "a-lcms2",
     })
-    -- libsumatrapdf.dll + extra codecs / archives linked only into it (and static EXE).
-    -- Folder named "libsumatrapdf.dll" so it does not collide with project "libsumatrapdf".
-    set_group("libsumatrapdf.dll", {
+    -- libsumatrapdfMod.dll + extra codecs / archives linked only into it (and static EXE).
+    -- Folder named "libsumatrapdfMod.dll" so it does not collide with project "libsumatrapdf".
+    set_group("libsumatrapdfMod.dll", {
       "libsumatrapdf", "chmdec", "djvudec", "dav1d", "heicdec", "jxldec", "a-libwebp", "a-unrar",
     })
     set_group("tools", {

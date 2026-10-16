@@ -45,7 +45,7 @@ export const excludedTests: Record<string, string> = {
   "issue-2254": "depends on keyboard focus, flaky without an interactive desktop",
   "issue-6279": "drives the system Save dialog on an administrative share, untried on a runner",
   // the daily job builds SumatraPDFMod-static.exe, which embeds no installer payload
-  "issue-6025": "installer UI needs the embedded libsumatrapdf.dll, which the static CI exe does not have",
+  "issue-6025": "installer UI needs the embedded libsumatrapdfMod.dll, which the static CI exe does not have",
 };
 
 export function ciTests(): NamedTest[] {
