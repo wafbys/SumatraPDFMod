@@ -228,6 +228,13 @@ const ebookUI: Field[] = [
       "including glyphs the other slots don't have; empty keeps the engine's " +
       "usual system fallback",
   ),
+  field(
+    "StraightQuotes",
+    Bool,
+    true,
+    "use straight quotes in Latin text ('...' and \"...\") instead of the " +
+      "typographic quotes a book may use; CJK text keeps its own quotes",
+  ),
   field("FontSize", Float, 0, "font size in points; 0 means the default (8.0)"),
   compactArray(
     "Margin",
@@ -1138,6 +1145,12 @@ const fileEBookUI: Field[] = [
     Str,
     "",
     "CJK-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontCjk",
+  ),
+  field(
+    "StraightQuotes",
+    Str,
+    "",
+    "straight quotes in Latin text for this document: true or false; empty uses EBookUI.StraightQuotes",
   ),
 ];
 

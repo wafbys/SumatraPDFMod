@@ -7,10 +7,16 @@
 #ifndef EBOOK_FONT_SLOTS_H
 #define EBOOK_FONT_SLOTS_H
 
-// Each argument is the path of a font file, or NULL/"" for "slot not set".
-// Applies to this thread until EbookFontSlotsEnd().
-void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk);
+// Each argument is the path of a font file (or the family name of an installed
+// font), or NULL/"" for "slot not set". `straight_quotes` asks for "dumb"
+// quotes in Latin text (CJK keeps its own). Applies to this thread until
+// EbookFontSlotsEnd().
+void EbookFontSlotsBegin(const char* serif, const char* sans, const char* mono, const char* cjk, int straight_quotes);
 void EbookFontSlotsEnd(void);
+
+// Whether the thread currently laying out wants straight quotes in Latin text;
+// read by the patched html parser (ext/patches/0062-*).
+int EbookTextWantsStraightQuotes(void);
 
 // The font the slots answer with for a stylesheet family, or NULL when no slot
 // covers it (or no slots are set at all). Called by the patched

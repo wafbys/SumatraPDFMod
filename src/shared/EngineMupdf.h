@@ -258,6 +258,8 @@ class EngineMupdf : public EngineBase {
     Str ebookFontSans;
     Str ebookFontMono;
     Str ebookFontCjk;
+    // straight quotes in Latin text (EBookUI.StraightQuotes)
+    bool ebookStraightQuotes = true;
 
     void ApplyReflowThemeCss();
 

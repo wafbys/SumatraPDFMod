@@ -24,6 +24,8 @@
 #include "mupdf/ucdn.h"
 #include "html-imp.h"
 
+#include "ebook_font_slots.h"
+
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
@@ -1968,13 +1970,73 @@ detect_flow_directionality(fz_context *ctx, fz_pool *pool, uni_buf *buffer, fz_b
 	return bidi_dir;
 }
 
+/* SumatraPDF: "dumb" quotes for Latin text, asked for by the reader's settings
+   (EbookTextWantsStraightQuotes). The typographic quotes are three bytes each
+   in UTF-8 while their straight replacements are one, so the text can be
+   rewritten in place; every other character is written back as it was. CJK text
+   is left alone - there the curly quotes are the correct ones.
+
+   The script of a run comes from the bidi fragmentation, which is about the
+   characters, not about the document's language: a “...” inside an English
+   sentence is Latin wherever it sits. A run that is nothing but punctuation
+   (a quote with spaces around it) has no script of its own, so it follows its
+   nearest word. */
+static void
+straighten_latin_quotes(fz_html_flow *flow)
+{
+	fz_html_flow *prev_word = NULL, *f;
+
+	for (f = flow; f; f = f->next)
+	{
+		char *src, *dst;
+		int latin;
+
+		if (f->type != FLOW_WORD)
+			continue;
+
+		latin = f->script == UCDN_SCRIPT_LATIN;
+		if (!latin && (f->script == UCDN_SCRIPT_COMMON || f->script == UCDN_SCRIPT_INHERITED ||
+				f->script == UCDN_SCRIPT_UNKNOWN))
+		{
+			fz_html_flow *next_word = f->next;
+
+			while (next_word && next_word->type != FLOW_WORD)
+				next_word = next_word->next;
+			latin = (prev_word && prev_word->script == UCDN_SCRIPT_LATIN) ||
+				(next_word && next_word->script == UCDN_SCRIPT_LATIN);
+		}
+		prev_word = f;
+		if (!latin)
+			continue;
+
+		src = dst = f->content.text;
+		while (*src)
+		{
+			int c;
+			const char *next = src + fz_chartorune(&c, src);
+
+			if (c == 0x2018 || c == 0x2019)
+				c = '\'';
+			else if (c == 0x201C || c == 0x201D)
+				c = '"';
+			dst += fz_runetochar(dst, c);
+			src = (char *)next;
+		}
+		*dst = 0;
+	}
+}
+
 static void
 detect_box_directionality(fz_context *ctx, fz_pool *pool, uni_buf *buffer, fz_html_box *box)
 {
 	while (box)
 	{
 		if (box->type == BOX_FLOW)
+		{
 			box->markup_dir = detect_flow_directionality(ctx, pool, buffer, box->markup_dir, box->u.flow.head);
+			if (EbookTextWantsStraightQuotes())
+				straighten_latin_quotes(box->u.flow.head);
+		}
 		detect_box_directionality(ctx, pool, buffer, box->down);
 		box = box->next;
 	}

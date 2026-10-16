@@ -62,6 +62,7 @@ relative to `ext/mupdf`, so `-p1` from inside that directory.
 | `0059-svg-text-path` | SVG `<textPath>` places glyphs along the referenced path; such text used to pile up at the origin (#6332) |
 | `0060-pdf-update-object-keeps-stream` | `pdf_update_object` carries a stream over when the entry moves to a new xref section; a stream added in the session lost its data on a `garbage=3` save |
 | `0061-html-font-slots-first` | the reader's ebook font slots are asked before the document's own `@font-face` fonts, so picking a font in the settings also replaces a font the book ships |
+| `0062-html-straight-quotes` | Latin text can get straight quotes (`EBookUI.StraightQuotes`, on by default here) instead of the typographic ones; CJK text keeps its own |
 
 That is the whole list: `ext/mupdf` is byte-for-byte `1.28.5` plus these
 patches, and nothing else.
