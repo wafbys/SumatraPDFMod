@@ -60,6 +60,31 @@ EBookUI [
 
 每本书的覆盖写在 `FileStates → [ → FilePath = … → EBookUI [ … ]`，字段同名。
 
+## 每项设置详解
+
+**上半区（本 mod 的四槽字体 + 直引号）**
+
+| 控件 | 含义 |
+| --- | --- |
+| `Serif:` / `Sans:` / `Mono:` / `CJK:` | 四槽。可填**系统已安装的字体族名**（下拉里挑或手输；变量字体的实例名如 `Inter Variable Text` 也认，GDI 兜底）或**字体文件路径**。留空 = `(the book's font)` = 不覆盖这一档。书里声明的族名按名字归类：中日韩族名/表意文字 → CJK，等宽族名 → Mono，无衬线族名 → Sans，**其余全部 → Serif**（Serif 是兜底档）。CJK 槽还负责**缺字回退**。优先级：四槽 → 书内 `@font-face` → 内置字体 → 系统字体。只对重排文档生效；粗体斜体由引擎合成。 |
+| `Straight quotes in English text` | 拉丁文字里的 `“ ” ‘ ’` → 直引号 `" '`，中日韩引号不动；按字符的文字系统判定，与书的语言无关。默认开。 |
+
+**下半区（原生 SumatraPDF 的设置，长度单位是排版点）**
+
+| 控件 | 含义 |
+| --- | --- |
+| `Font:` | 整本书的默认字体族（空 = 引擎默认，通常衬线）；以 `!important` 注入 CSS 盖过书里的 `font-family`；加载不到会弹通知。填的名字同样过四槽（如填 `Georgia` → 用 `Serif:` 槽的字体）。 |
+| `Size:` | 正文字号（点）；空/0 = 8.0。 |
+| `Margin:` | 四周留白：1 数 = 四边相同，2 数 = 上下/左右，4 数 = 上/右/下/左；空 = 默认（3 em / 2 em，跟随字号）；`0` = 无边距；单值上限 200。 |
+| `Line spacing:` | 行高倍数（如 `1.5`）；`0` = 默认；接受 0.5–5。 |
+| `Ignore the document's own styling` | 丢弃书自己的 CSS，只用自定义 CSS。 |
+| `Custom CSS` | 勾上 → 下面的框可编辑，且 `Font:` / `Margin:` / `Line spacing:` 变灰失效（字号仍有效）；不勾 → 框只读，显示将要注入的 CSS，什么都没设时显示 `The document's own styling is used.`。 |
+| `◎ This file` / `○ For all ebooks` | 值写到哪：这本书的 `FileStates → EBookUI`（等于全局值的项不写）还是全局 `EBookUI`；OK 后立刻重排。 |
+| `Reset to defaults` | 按当前范围重置：`This file` = 恢复成全局值；`For all ebooks` = 全清成默认（直引号回默认为开）。都要再按 OK 才写盘。 |
+| `Cancel` / `OK` | Cancel 不保存；OK 保存并重排。 |
+
+打开方式：`Ctrl+Shift+K`，或 `Ctrl+K` → `>Change eBook Settings` → 回车。
+
 ## 优先级
 
 读者的四槽 → 书内 `@font-face` 字体 → 内置字体 → 系统字体。
