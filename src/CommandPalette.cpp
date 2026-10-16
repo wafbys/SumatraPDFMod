@@ -536,6 +536,12 @@ void CommandPaletteWnd::OnSelectionChange() {
     HighlightTab(win, data->tab);
 }
 
+// settings this mod adds are named EBookUI.Mod*: they go first in the
+// "= settings" list, above a divider row, so they're visible without scrolling
+static bool IsModSettingPath(Str path) {
+    return str::StartsWith(path, StrL("EBookUI.Mod"));
+}
+
 bool CommandPaletteWnd::AdvanceSelection(int dir) {
     if (dir == 0) {
         return false;
@@ -544,16 +550,25 @@ bool CommandPaletteWnd::AdvanceSelection(int dir) {
     if (n == 0) {
         return false;
     }
+    auto* m = (ListBoxModelCP*)listBox->model;
     int currSel = listBox->GetCurrentSelection();
-    int sel = currSel + dir;
-    if (sel < 0) {
-        sel = n - 1;
+    int sel = currSel;
+    // step over display-only rows (the divider above the mod's settings)
+    for (int i = 0; i < n; i++) {
+        sel += dir;
+        if (sel < 0) {
+            sel = n - 1;
+        }
+        if (sel >= n) {
+            sel = 0;
+        }
+        ItemDataCP* d = m->strings.AtData(sel);
+        if (d && !d->isDivider) {
+            CommandPaletteSetCurrentSelection(this, sel);
+            return true;
+        }
     }
-    if (sel >= n) {
-        sel = 0;
-    }
-    CommandPaletteSetCurrentSelection(this, sel);
-    return true;
+    return false;
 }
 
 // Delete selected list item when it is removable: file-history entry, open tab,
@@ -759,6 +774,9 @@ void CommandPaletteWnd::ExecuteCurrentSelection() {
     }
     auto* m = (ListBoxModelCP*)listBox->model;
     ItemDataCP* data = m->strings.AtData(idx);
+    if (data->isDivider) {
+        return;
+    }
     i32 cmdId = data->cmdId;
     if (cmdId == CmdToggleBoolSetting) {
         SwitchToSettings();
@@ -1667,10 +1685,26 @@ void CommandPaletteWnd::CollectSettings() {
     CollectSettingRows(settings);
     SortNoCase(&settings);
 
-    // changed values first, then the rest; both groups stay alphabetical
+    // changed values first, then the rest; both groups stay alphabetical. The
+    // mod's own settings (EBookUI.Mod*) come before all of them, under a
+    // divider row, so they're what this list shows first.
     StrVecCP ordered;
+    for (int i = 0; i < len(settings); i++) {
+        if (IsModSettingPath(settings.At(i))) {
+            ordered.AppendFrom(&settings, i);
+        }
+    }
+    if (len(ordered) > 0) {
+        ItemDataCP divider;
+        divider.isDivider = true;
+        divider.settingComment = StrL("the settings this mod adds (EBookUI.Mod*)");
+        ordered.Append(StrL("──────── mod settings ────────"), divider);
+    }
     for (int pass = 0; pass < 2; pass++) {
         for (int i = 0; i < len(settings); i++) {
+            if (IsModSettingPath(settings.At(i))) {
+                continue;
+            }
             bool changed = SettingDiffersFromDefault(settings.AtData(i));
             if (changed == (pass == 0)) {
                 ordered.AppendFrom(&settings, i);
