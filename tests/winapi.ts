@@ -2152,7 +2152,7 @@ function readWideZ(buf: Uint8Array, byteOff: number): string {
   return s;
 }
 
-// PIDs whose image name matches (case-insensitive), e.g. "SumatraPDF.exe"
+// PIDs whose image name matches (case-insensitive), e.g. "SumatraPDFMod.exe"
 export function listPidsByExeName(exeName: string): number[] {
   const snap = kernel32.symbols.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
   if (!snap || snap === INVALID_HANDLE_VALUE) {

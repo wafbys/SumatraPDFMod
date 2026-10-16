@@ -102,7 +102,7 @@ async function run(pdf: string, ignoreDestinationZoom: boolean): Promise<Nav[]> 
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   writeFileSync(
-    join(dir, "SumatraPDF-settings.txt"),
+    join(dir, "SumatraPDFMod-settings.txt"),
     `${SETTINGS}IgnoreDestinationZoom = ${ignoreDestinationZoom ? "true" : "false"}\n`,
   );
   return withControlledSumatra(

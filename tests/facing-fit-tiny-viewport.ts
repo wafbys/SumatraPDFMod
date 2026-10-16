@@ -41,7 +41,7 @@ export async function testit(): Promise<void> {
   const appdata = tmpPath("facing-fit-tiny-viewport-appdata");
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), SETTINGS);
+  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), SETTINGS);
 
   const { proc, client, frame } = await launchControlled(["-appdata", appdata, pdf]);
   try {

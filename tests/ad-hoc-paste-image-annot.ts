@@ -83,7 +83,7 @@ export async function testit(): Promise<void> {
     throw new Error(`failed to set clipboard image: ${set.stderr.toString()}`);
   }
 
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   const proc = launchSumatra([pdf]);
   try {
     const frame = await waitForFrame(proc.pid!);

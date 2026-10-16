@@ -1348,6 +1348,9 @@ workspace "SumatraPDF"
 
   -- a single static executable
   project "SumatraPDF-static"
+    -- the mod's artifact name; the committed vs2022/*.vcxproj carries the same
+    -- TargetName (premake regeneration keeps both in sync)
+    targetname "SumatraPDFMod-static"
     build_defines()
     static_app_objdir()
     static_linker_intermediates()
@@ -1453,6 +1456,9 @@ workspace "SumatraPDF"
 
   -- a dll version where most functionality is in libsumatrapdf.dll
   project "SumatraPDF"
+    -- the mod's artifact name; the committed vs2022/SumatraPDF.vcxproj carries
+    -- the same TargetName (premake regeneration keeps both in sync)
+    targetname "SumatraPDFMod"
     build_defines()
     dll_app_objdir()
     dll_linker_intermediates()

@@ -57,7 +57,7 @@ export async function testit(): Promise<void> {
   const appdata = join(dir, "appdata");
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDF-settings.txt"),
+    join(appdata, "SumatraPDFMod-settings.txt"),
     ["RestoreSession = false", "ShowStartPage = false", "MouseWheelTurnsPage = false", ""].join("\n"),
   );
 

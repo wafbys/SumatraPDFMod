@@ -125,7 +125,7 @@ export async function testit(): Promise<void> {
   copyFileSync(SRC_PDF, pdfA);
   copyFileSync(SRC_PDF, pdfB);
   writeFileSync(
-    join(appData, "SumatraPDF-settings.txt"),
+    join(appData, "SumatraPDFMod-settings.txt"),
     [
       "UiLanguage = en",
       "CheckForUpdates = false",

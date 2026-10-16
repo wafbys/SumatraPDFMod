@@ -119,7 +119,7 @@ export async function testit(): Promise<void> {
   const appDataDir = tmpPath("issue-1106-appdata");
   rmSync(appDataDir, { recursive: true, force: true });
   mkdirSync(appDataDir, { recursive: true });
-  writeFileSync(join(appDataDir, "SumatraPDF-settings.txt"), SETTINGS);
+  writeFileSync(join(appDataDir, "SumatraPDFMod-settings.txt"), SETTINGS);
   if (IS_MAC) {
     await testMac(appDataDir);
     return;

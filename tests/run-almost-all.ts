@@ -7,7 +7,7 @@
 // keep one instance. Isolated tests (custom -appdata, session restore, their
 // own window placement) come after.
 //
-// Run:  bun tests/run-almost-all.ts [--no-build] [-silent] [-ng] [-exe <SumatraPDF.exe>]
+// Run:  bun tests/run-almost-all.ts [--no-build] [-silent] [-ng] [-exe <SumatraPDFMod.exe>]
 //
 // Register a new fast test here. Inherently-slow ones go in tests/run-all.ts.
 //

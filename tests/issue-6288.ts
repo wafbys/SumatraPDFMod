@@ -35,7 +35,7 @@ export async function testit(): Promise<void> {
   const appdata = join(dir, "appdata");
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDF-settings.txt"),
+    join(appdata, "SumatraPDFMod-settings.txt"),
     "UiLanguage = en\nRestoreSession = false\nCheckForUpdates = false\n",
   );
   const { proc, client, frame } = await launchControlled([

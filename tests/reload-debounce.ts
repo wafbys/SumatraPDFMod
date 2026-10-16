@@ -35,7 +35,7 @@ export async function testit(): Promise<void> {
   mkdirSync(dir, { recursive: true });
   const doc = join(dir, "paper.pdf");
   copyFileSync(src, doc);
-  writeFileSync(join(dir, "SumatraPDF-settings.txt"), SETTINGS);
+  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), SETTINGS);
 
   const logPath = join(dir, "reload.log");
   const proc = Bun.spawn(

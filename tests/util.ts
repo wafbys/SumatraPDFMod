@@ -45,7 +45,7 @@ function exeFromArgv(argv: string[]): string {
   };
   const path = argv[i + 1];
   if (!path || path.startsWith("-")) {
-    bail("expected a path to SumatraPDF.exe");
+    bail("expected a path to SumatraPDFMod.exe");
   }
   const full = resolve(path!);
   if (!existsSync(full) || !statSync(full).isFile()) {
@@ -57,7 +57,7 @@ function exeFromArgv(argv: string[]): string {
   if (!/\.exe$/i.test(full)) {
     bail(`not an executable: ${full}`);
   }
-  // the name can be anything (SumatraPDF-static.exe, a renamed copy), so ask
+  // the name can be anything (SumatraPDFMod-static.exe, a renamed copy), so ask
   // the file itself what it is
   const ps = `(Get-Item -LiteralPath '${full}').VersionInfo.ProductName`;
   const p = Bun.spawnSync(["powershell", "-NoProfile", "-Command", ps]);
@@ -70,7 +70,7 @@ function exeFromArgv(argv: string[]): string {
 
 // The exe under test: the debug build, unless `-exe <path>` or SUMATRA_TEST_EXE
 // names another one. The GitHub CI job sets the environment variable to the
-// debug ASan build (out/dbg64_asan/SumatraPDF-static.exe), which is the same app
+// debug ASan build (out/dbg64_asan/SumatraPDFMod-static.exe), which is the same app
 // plus ASan. Both are read at import time, before any test runs.
 export const EXE_FROM_ARGV = exeFromArgv(process.argv);
 const SOURCE_EXE =
@@ -78,7 +78,7 @@ const SOURCE_EXE =
   (IS_MAC ? join(ROOT, "out", "mac", "dbg-asan", "SumatraPDF") : "") ||
   (USE_NG ? join(ROOT, "out", "win", "dbg", "SumatraPDF.exe") : "") ||
   process.env.SUMATRA_TEST_EXE ||
-  join(ROOT, "out", "dbg64", "SumatraPDF.exe");
+  join(ROOT, "out", "dbg64", "SumatraPDFMod.exe");
 
 // Keep the executable and its portable settings file in a fresh directory for
 // every test run. This prevents a manual run, or an earlier test that saves
@@ -114,7 +114,7 @@ export function prepareTestEnvironment(): void {
   if (!IS_WIN) {
     // ng is portable only with a settings file next to it; without one it
     // reads the settings of the user running the tests
-    writeFileSync(join(TESTS_TMP_DIR, "SumatraPDF-settings.txt"), "");
+    writeFileSync(join(TESTS_TMP_DIR, "SumatraPDFMod-settings.txt"), "");
   }
   EXE = testExe;
 }
@@ -155,7 +155,7 @@ export function runAppUnitTests(): Promise<void> {
   }
 
   appUnitTests = (async () => {
-    // ng's unit tests are the test_util target, not SumatraPDF.exe -unit-tests
+    // ng's unit tests are the test_util target, not SumatraPDFMod.exe -unit-tests
     const unitName = IS_WIN ? "test_util.exe" : "test_util";
     const unitExe = USE_NG ? join(dirname(resolve(SOURCE_EXE)), unitName) : EXE;
     const unitArgs = USE_NG ? ["-for-ai"] : ["-unit-tests", "-for-ai"];
@@ -394,14 +394,14 @@ export function writePdfWithEmptySigField(path: string): void {
   writeFileSync(path, assemblePdf(objs, { header: "%PDF-1.7\n" }), "latin1");
 }
 
-// Fresh -appdata directory with SumatraPDF-settings.txt. Tests that need extra
+// Fresh -appdata directory with SumatraPDFMod-settings.txt. Tests that need extra
 // files write them into the returned path.
 export function writeAppdata(name: string, settings: string): string {
   const dir = tmpPath(name);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const body = settings.endsWith("\n") ? settings : `${settings}\n`;
-  writeFileSync(join(dir, "SumatraPDF-settings.txt"), body);
+  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), body);
   return dir;
 }
 
@@ -902,7 +902,7 @@ export function buildApp(opts?: { silent?: boolean }): void {
       ? ["-dbg", "SumatraPDF", "test_util"]
       : ["-dbg"];
   if (!opts?.silent) {
-    console.log(`• building ${IS_WIN ? "SumatraPDF.exe" : "SumatraPDF"} (cmd/${script}) ...`);
+    console.log(`• building ${IS_WIN ? "SumatraPDFMod.exe" : "SumatraPDF"} (cmd/${script}) ...`);
   }
   const p = Bun.spawnSync({
     cmd: ["bun", join(ROOT, "cmd", script), ...args],

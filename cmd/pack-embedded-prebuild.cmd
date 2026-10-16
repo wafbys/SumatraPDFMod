@@ -1,5 +1,5 @@
 @echo off
-REM VS / ninja prebuild helper: stages everything SumatraPDF.exe embeds under
+REM VS / ninja prebuild helper: stages everything SumatraPDFMod.exe embeds under
 REM out\<cfg>\ and packs it into one LzSA archive linked as IDR_EMBEDDED_PAK
 REM (SumatraPDF.rc gets its path via the EMBEDDED_PAK resdefine, see premake5.lua).
 REM

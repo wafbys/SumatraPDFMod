@@ -16,7 +16,7 @@ import { runLogged } from "./util";
 // Pass -for-testing when opening a document to poke at: it starts a fresh
 // instance and won't overwrite the settings you actually use.
 
-const exePath = join("out", "dbg64_asan", "SumatraPDF-static.exe");
+const exePath = join("out", "dbg64_asan", "SumatraPDFMod-static.exe");
 const usage = `Usage: bun cmd/dbg.ts [-windbg] [-clean] [-- <SumatraPDF args>]`;
 
 class CliError extends Error {}

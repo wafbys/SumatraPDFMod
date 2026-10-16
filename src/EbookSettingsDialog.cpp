@@ -1,4 +1,4 @@
-﻿/* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
+/* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
    License: GPLv3 */
 
 #include "base/Base.h"
@@ -202,11 +202,11 @@ void EbookSettingsWnd::LoadFromTarget() {
     float lineSpacing = g->lineSpacing;
     bool ignoreCss = g->ignoreDocumentCSS;
     Str customCss = g->customCSS;
-    Str fontSerif = g->fontSerif;
-    Str fontSans = g->fontSans;
-    Str fontMono = g->fontMono;
-    Str fontCjk = g->fontCjk;
-    bool straightQuotes = g->straightQuotes;
+    Str fontSerif = g->modFontSerif;
+    Str fontSans = g->modFontSans;
+    Str fontMono = g->modFontMono;
+    Str fontCjk = g->modFontCjk;
+    bool straightQuotes = g->modStraightQuotes;
     if (f) {
         if (f->fontName) {
             fontName = f->fontName;
@@ -226,20 +226,20 @@ void EbookSettingsWnd::LoadFromTarget() {
         if (f->customCSS) {
             customCss = f->customCSS;
         }
-        if (f->fontSerif) {
-            fontSerif = f->fontSerif;
+        if (f->modFontSerif) {
+            fontSerif = f->modFontSerif;
         }
-        if (f->fontSans) {
-            fontSans = f->fontSans;
+        if (f->modFontSans) {
+            fontSans = f->modFontSans;
         }
-        if (f->fontMono) {
-            fontMono = f->fontMono;
+        if (f->modFontMono) {
+            fontMono = f->modFontMono;
         }
-        if (f->fontCjk) {
-            fontCjk = f->fontCjk;
+        if (f->modFontCjk) {
+            fontCjk = f->modFontCjk;
         }
-        if (f->straightQuotes) {
-            straightQuotes = str::EqI(f->straightQuotes, StrL("true"));
+        if (f->modStraightQuotes) {
+            straightQuotes = str::EqI(f->modStraightQuotes, StrL("true"));
         }
     }
 
@@ -408,11 +408,11 @@ void EbookSettingsWnd::Apply() {
         g->lineSpacing = v.lineSpacing;
         g->ignoreDocumentCSS = v.ignoreDocumentCSS;
         str::ReplaceWithCopy(&g->customCSS, v.customCSS);
-        str::ReplaceWithCopy(&g->fontSerif, v.fontSerif);
-        str::ReplaceWithCopy(&g->fontSans, v.fontSans);
-        str::ReplaceWithCopy(&g->fontMono, v.fontMono);
-        str::ReplaceWithCopy(&g->fontCjk, v.fontCjk);
-        g->straightQuotes = v.straightQuotes;
+        str::ReplaceWithCopy(&g->modFontSerif, v.fontSerif);
+        str::ReplaceWithCopy(&g->modFontSans, v.fontSans);
+        str::ReplaceWithCopy(&g->modFontMono, v.fontMono);
+        str::ReplaceWithCopy(&g->modFontCjk, v.fontCjk);
+        g->modStraightQuotes = v.straightQuotes;
         // the global values are what the user wants to see, so this document's
         // overrides have to go (same as Change Background Color -> all files)
         FileState* fs = FileHistoryFindByPath(filePath);
@@ -431,9 +431,9 @@ void EbookSettingsWnd::Apply() {
     }
     bool differs = !str::Eq(v.fontName, g->fontName) || v.fontSize != g->fontSize || !MarginEq(v.margin, g->margin) ||
                    v.lineSpacing != g->lineSpacing || v.ignoreDocumentCSS != g->ignoreDocumentCSS ||
-                   !str::Eq(v.customCSS, g->customCSS) || !str::Eq(v.fontSerif, g->fontSerif) ||
-                   !str::Eq(v.fontSans, g->fontSans) || !str::Eq(v.fontMono, g->fontMono) ||
-                   !str::Eq(v.fontCjk, g->fontCjk) || v.straightQuotes != g->straightQuotes;
+                   !str::Eq(v.customCSS, g->customCSS) || !str::Eq(v.fontSerif, g->modFontSerif) ||
+                   !str::Eq(v.fontSans, g->modFontSans) || !str::Eq(v.fontMono, g->modFontMono) ||
+                   !str::Eq(v.fontCjk, g->modFontCjk) || v.straightQuotes != g->modStraightQuotes;
     if (!differs) {
         // nothing left that isn't the global setting: drop the block entirely
         // so it stops being written out
@@ -460,15 +460,15 @@ void EbookSettingsWnd::Apply() {
     }
     str::ReplaceWithCopy(&f->ignoreDocumentCSS, ignore);
     str::ReplaceWithCopy(&f->customCSS, str::Eq(v.customCSS, g->customCSS) ? Str{} : v.customCSS);
-    str::ReplaceWithCopy(&f->fontSerif, str::Eq(v.fontSerif, g->fontSerif) ? Str{} : v.fontSerif);
-    str::ReplaceWithCopy(&f->fontSans, str::Eq(v.fontSans, g->fontSans) ? Str{} : v.fontSans);
-    str::ReplaceWithCopy(&f->fontMono, str::Eq(v.fontMono, g->fontMono) ? Str{} : v.fontMono);
-    str::ReplaceWithCopy(&f->fontCjk, str::Eq(v.fontCjk, g->fontCjk) ? Str{} : v.fontCjk);
+    str::ReplaceWithCopy(&f->modFontSerif, str::Eq(v.fontSerif, g->modFontSerif) ? Str{} : v.fontSerif);
+    str::ReplaceWithCopy(&f->modFontSans, str::Eq(v.fontSans, g->modFontSans) ? Str{} : v.fontSans);
+    str::ReplaceWithCopy(&f->modFontMono, str::Eq(v.fontMono, g->modFontMono) ? Str{} : v.fontMono);
+    str::ReplaceWithCopy(&f->modFontCjk, str::Eq(v.fontCjk, g->modFontCjk) ? Str{} : v.fontCjk);
     Str straight{};
-    if (v.straightQuotes != g->straightQuotes) {
+    if (v.straightQuotes != g->modStraightQuotes) {
         straight = v.straightQuotes ? StrL("true") : StrL("false");
     }
-    str::ReplaceWithCopy(&f->straightQuotes, straight);
+    str::ReplaceWithCopy(&f->modStraightQuotes, straight);
     ScheduleSaveSettings();
 }
 
@@ -484,8 +484,8 @@ void EbookSettingsWnd::OnReset(VirtMouseEvent*) {
     if (thisFile) {
         auto* g = &gSettings->eBookUI;
         SetValues(g->fontName, g->fontSize, g->margin, g->lineSpacing, g->ignoreDocumentCSS, g->customCSS);
-        SetSlotValues(g->fontSerif, g->fontSans, g->fontMono, g->fontCjk);
-        SetStraightQuotes(g->straightQuotes);
+        SetSlotValues(g->modFontSerif, g->modFontSans, g->modFontMono, g->modFontCjk);
+        SetStraightQuotes(g->modStraightQuotes);
         return;
     }
     SetValues({}, 0, nullptr, 0, false, {});

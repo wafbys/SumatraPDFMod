@@ -36,7 +36,7 @@ async function tocVisibleOnOpen(pdf: string, alwaysShow: boolean): Promise<boole
     "]",
     "",
   ].join("\n");
-  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), settings);
+  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), settings);
   let vis = false;
   await withControlledSumatra(
     EXE,

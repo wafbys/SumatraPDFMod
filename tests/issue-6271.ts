@@ -22,7 +22,7 @@ function makePdf(): string {
 
 function seedSettings(dir: string, pdf: string): void {
   writeFileSync(
-    join(dir, "SumatraPDF-settings.txt"),
+    join(dir, "SumatraPDFMod-settings.txt"),
     `UiLanguage = en
 CheckForUpdates = false
 RestoreSession = true
@@ -77,7 +77,7 @@ export async function testit(): Promise<void> {
     console.log("SKIP issue-6271: virtual desktops are a Windows shell feature");
     return;
   }
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   const dir = tmpPath("issue-6271");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
@@ -95,7 +95,7 @@ export async function testit(): Promise<void> {
     rmSync(dir, { recursive: true, force: true });
     return;
   }
-  const settings = readFileSync(join(dir, "SumatraPDF-settings.txt"), "utf8");
+  const settings = readFileSync(join(dir, "SumatraPDFMod-settings.txt"), "utf8");
   const m = /^\s*VirtualDesktopId = (\S+)/m.exec(settings);
   const got = m ? m[1]! : "";
   if (got.toUpperCase() !== want.toUpperCase()) {

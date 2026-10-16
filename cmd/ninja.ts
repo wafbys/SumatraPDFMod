@@ -11,8 +11,8 @@ const generatedFile = join(ninjaDir, ".generated");
 // must re-generate them from scratch (the fixups are not idempotent).
 const premakeFiles = ["premake5.lua", "premake5.files.lua", "cmd/ninja.ts"];
 const resources = [
-  ["SumatraPDF", "SumatraPDF.exe", "../../src/SumatraPDF.rc"],
-  ["SumatraPDF-static", "SumatraPDF-static.exe", "../../src/SumatraPDF.rc"],
+  ["SumatraPDF", "SumatraPDFMod.exe", "../../src/SumatraPDF.rc"],
+  ["SumatraPDF-static", "SumatraPDFMod-static.exe", "../../src/SumatraPDF.rc"],
   ["libsumatrapdf", "libsumatrapdf.dll", "../../src/libsumatrapdf.rc"],
   ["PdfFilter", "PdfFilter.dll", "../../src/ifilter/PdfFilter.rc"],
   ["PdfPreview", "PdfPreview.dll", "../../src/previewer/PdfPreview.rc"],
@@ -79,7 +79,7 @@ function addResources(text: string, path: string): string {
       // The prebuild packs IDR_EMBEDDED_PAK into out/<cfg>/, so the .res waits
       // for that stamp and gets the archive path via the EMBEDDED_PAK resdefine
       // premake sets: embedded.lzsa (also holding libsumatrapdf.dll & co) for
-      // SumatraPDF.exe, embedded-static.lzsa for SumatraPDF-static.exe.
+      // SumatraPDFMod.exe, embedded-static.lzsa for SumatraPDFMod-static.exe.
       // Mixed slashes on purpose: QM() turns the path into an RC string, and
       // rc mangles ".." after "/" into "..." (./../../out -> ./.../.../out)
       // while a backslash before the config name is an escape (out\rel64

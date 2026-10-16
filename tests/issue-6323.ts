@@ -71,7 +71,7 @@ export async function testit(): Promise<void> {
   mkdirSync(appdata);
   writeFileSync(md, "# Printer selection\n\nMarkdown print test.\n");
   writeFileSync(
-    join(appdata, "SumatraPDF-settings.txt"),
+    join(appdata, "SumatraPDFMod-settings.txt"),
     ["MarkdownUI [", "\tUseFixedPageUI = false", "]", "RestoreSession = false", ""].join("\n"),
   );
 
