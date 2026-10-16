@@ -21,7 +21,6 @@
 #include "Flags.h"
 #include "Commands.h"
 #include "AIChatCommon.h"
-#include "SystemFonts.h"
 
 #if OS_LINUX || OS_DARWIN
 extern "C" {
@@ -49,6 +48,7 @@ void RestrictedUseConfigTest();
 void ControlFrameActionTest();
 void OpenDdeCmdTest();
 void UpdateCheckDecisionTest();
+void SystemFontNamesTest();
 
 void CachedObjects_UnitTests();
 void CommandPaletteModel_UnitTests();
@@ -160,18 +160,6 @@ static void PlatformSystemFontTest() {
     font = fz_load_system_font(ctx, "SumatraMissingFont-7FA26D", 0, 0, 1);
     utassert(!font);
     fz_drop_context(ctx);
-}
-#endif
-
-#if OS_WIN || OS_LINUX || defined(__APPLE__)
-static void SystemFontNamesTest() {
-    StrVec names;
-    GetInstalledFontNames(names);
-    utassert(len(names) > 0);
-    for (int i = 1; i < len(names); i++) {
-        utassert(!StrLessNoCase(names[i], names[i - 1]));
-        utassert(!str::EqI(names[i], names[i - 1]));
-    }
 }
 #endif
 

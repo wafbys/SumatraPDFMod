@@ -35,6 +35,7 @@ OpenDdeArgs ParseOpenDdeCmd(Str cmd);
 int ApplyOpenNewWindow(int newWindow, int inCurrentTab);
 int FindDebounceDelayMs(int nChars);
 TempStr ForwardSearchFailTextTemp(int ret, Str fileName, int line, int page);
+#include "SystemFonts.h"
 
 // must be last to over-write assert()
 #include "base/tests/UtAssert.h"
@@ -391,4 +392,23 @@ void ParseFileArgsTest() {
     utassert(!ParseFileArgs(StrL("\\\\?\\C:\\foo.pdf")));
     // a garbled drive letter: no file before the '?'
     utassert(!ParseFileArgs(StrL("?:\\foo.pdf")));
+}
+
+void SystemFontNamesTest() {
+    StrVec names;
+    GetInstalledFontNames(names);
+    utassert(len(names) > 0);
+    // the font pickers show a name verbatim, so a name padded with whitespace
+    // reads as a duplicate of the same name without it (GDI returns a family's
+    // variant faces as "Foo " next to the real "Foo")
+    StrVec seen;
+    for (Str name : names) {
+        Str trimmed = name;
+        utassert(str::TrimWsBoth(trimmed) == 0);
+        utassert(seen.FindI(trimmed) < 0);
+        seen.Append(trimmed);
+    }
+    for (int i = 1; i < len(names); i++) {
+        utassert(!StrLessNoCase(names[i], names[i - 1]));
+    }
 }

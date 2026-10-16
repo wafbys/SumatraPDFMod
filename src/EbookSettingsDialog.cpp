@@ -28,6 +28,7 @@
 #include "DarkMode.h"
 #include "SumatraDialogs.h"
 #include "shared/PdfToolsCommon.h"
+#include "SystemFonts.h"
 #include "EbookSettingsDialogCommon.h"
 
 // Font, size and line spacing for reflowable documents (EPUB, MOBI, FB2, ...),
@@ -141,34 +142,16 @@ static float ParseFloatTemp(Edit* e) {
     return (float)atof(CStrTemp(s));
 }
 
-static int CALLBACK EnumFontFamilyCb(const LOGFONTW* lf, const TEXTMETRICW*, DWORD, LPARAM lp) {
-    auto* names = (StrVec*)lp;
-    const WCHAR* face = lf->lfFaceName;
-    // "@Name" is the vertical-writing variant of a CJK font, not a font to pick
-    if (!face[0] || face[0] == L'@') {
-        return 1;
-    }
-    TempStr name = ToUtf8Temp(face);
-    if (!IsSafeEbookFontName(name) || names->Contains(name)) {
-        return 1;
-    }
-    names->Append(name);
-    return 1;
-}
-
 void EbookSettingsWnd::FillFontList() {
     StrVec names;
     names.Append(FontDefaultLabel());
     {
         StrVec fonts;
-        HDC hdc = GetDC(nullptr);
-        LOGFONTW lf{};
-        lf.lfCharSet = DEFAULT_CHARSET;
-        EnumFontFamiliesExW(hdc, &lf, EnumFontFamilyCb, (LPARAM)&fonts, 0);
-        ReleaseDC(nullptr, hdc);
-        SortNoCase(&fonts);
+        GetInstalledFontNames(fonts);
         for (Str s : fonts) {
-            names.Append(s);
+            if (IsSafeEbookFontName(s)) {
+                names.Append(s);
+            }
         }
     }
     ddFont->SetItems(names);

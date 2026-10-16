@@ -209,6 +209,8 @@ export const sharedFiles = [
   "src/shared/VirtualDesktop.h",
   "src/shared/SumatraTest.h",
   "src/shared/SumatraTestCommon.cpp",
+  "src/shared/SystemFonts.cpp",
+  "src/shared/SystemFonts.h",
   "src/shared/TableOfContentsCommon.cpp",
   "src/shared/TableOfContentsCommon.h",
   "src/shared/TabsCommon.cpp",

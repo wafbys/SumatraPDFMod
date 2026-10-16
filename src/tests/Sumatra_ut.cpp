@@ -48,6 +48,7 @@ void RestrictedUseConfigTest();
 void ControlFrameActionTest();
 void OpenDdeCmdTest();
 void UpdateCheckDecisionTest();
+void SystemFontNamesTest();
 
 // in src/base/tests/
 void ArchiveTest();
@@ -318,6 +319,7 @@ static void SumatraPDF_UnitTests() {
     hexstrTest();
     ExpandPDFScriptTest();
     PDFScriptArgHintTest();
+    SystemFontNamesTest();
 }
 
 static void ParseTipExpectWordsLinks(Str input, int expWords, int expLinks) {
