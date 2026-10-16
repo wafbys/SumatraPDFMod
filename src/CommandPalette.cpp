@@ -310,7 +310,39 @@ void ScheduleDeleteAndExecCommand(i32 cmdId) {
     uitask::Post(fn, "SafeDeleteCommandPaletteWnd");
 }
 
+// selecting a display-only row (the dividers this mod adds) is never useful, so
+// move to the nearest selectable row instead
+static int SkipDividerRows(ListBoxModelCP* m, int idx) {
+    int n = m->ItemsCount();
+    if (n == 0) {
+        return idx;
+    }
+    auto isDivider = [&](int i) {
+        ItemDataCP* d = m->strings.AtData(i);
+        return d && d->isDivider;
+    };
+    if (idx >= 0 && idx < n && !isDivider(idx)) {
+        return idx;
+    }
+    int start = (idx < 0) ? 0 : idx;
+    for (int i = start; i < n; i++) {
+        if (!isDivider(i)) {
+            return i;
+        }
+    }
+    for (int i = start - 1; i >= 0; i--) {
+        if (!isDivider(i)) {
+            return i;
+        }
+    }
+    return idx;
+}
+
 void CommandPaletteSetCurrentSelection(CommandPaletteWnd* wnd, int idx) {
+    auto* m = (ListBoxModelCP*)wnd->listBox->model;
+    if (m) {
+        idx = SkipDividerRows(m, idx);
+    }
     wnd->listBox->SetCurrentSelection(idx);
     wnd->OnSelectionChange();
 }
@@ -1682,19 +1714,29 @@ void CommandPaletteWnd::CollectSettings() {
     SortNoCase(&settings);
 
     // changed values first, then the rest; both groups stay alphabetical. The
-    // mod's own settings (EBookUI.Mod*) come before all of them, under a
-    // divider row, so they're what this list shows first.
+    // mod's own settings (EBookUI.Mod*) sit between two labeled dividers: the
+    // list opens with "mod settings", and "original settings" ends the group.
     StrVecCP ordered;
+    int nMod = 0;
     for (int i = 0; i < len(settings); i++) {
         if (IsModSettingPath(settings.At(i))) {
-            ordered.AppendFrom(&settings, i);
+            nMod++;
         }
     }
-    if (len(ordered) > 0) {
-        ItemDataCP divider;
-        divider.isDivider = true;
-        divider.settingComment = StrL("the settings this mod adds (EBookUI.Mod*)");
-        ordered.Append(StrL("──────── mod settings ────────"), divider);
+    if (nMod > 0) {
+        ItemDataCP header;
+        header.isDivider = true;
+        header.settingComment = StrL("the settings this mod adds (EBookUI.Mod*)");
+        ordered.Append(StrL("──────── mod settings ────────"), header);
+        for (int i = 0; i < len(settings); i++) {
+            if (IsModSettingPath(settings.At(i))) {
+                ordered.AppendFrom(&settings, i);
+            }
+        }
+        ItemDataCP tail;
+        tail.isDivider = true;
+        tail.settingComment = StrL("SumatraPDF's own settings");
+        ordered.Append(StrL("──────── original settings ────────"), tail);
     }
     for (int pass = 0; pass < 2; pass++) {
         for (int i = 0; i < len(settings); i++) {
