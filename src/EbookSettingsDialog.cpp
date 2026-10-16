@@ -542,53 +542,8 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
     auto* vbox = new VBox();
     vbox->alignCross = CrossAxisAlign::Stretch;
 
-    // the font, then its size, the margin and the line spacing
     auto label = [&](Str s) { return NewDlgLabel(s, fontText, colMuted, kToolDlgRowDy); };
     auto numberField = [&]() { return NewDlgEdit(hwnd, fontText, {}, kEbookNumChars); };
-    auto* fields = new VBox();
-    fields->alignCross = CrossAxisAlign::Stretch;
-    {
-        HBox* row = NewDlgFieldRow();
-        labelFont = label(Tr("Font:"));
-        row->AddChild(labelFont);
-        DropDown::CreateArgs args;
-        args.parent = hwnd;
-        args.font = fontText;
-        args.isRtl = isRtl;
-        args.isEditable = true;
-        ddFont = new DropDown();
-        ddFont->Create(args);
-        ddFont->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
-        ddFont->onSelectionChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
-        row->AddChild(ddFont, 1);
-        fields->AddChild(row);
-    }
-    {
-        HBox* row = NewDlgFieldRow();
-        labelSize = label(Tr("Size:"));
-        row->AddChild(labelSize);
-        editSize = numberField();
-        row->AddChild(NewDlgUnderlined(editSize));
-        row->AddChild(new Spacer(DpiScale(kToolDlgGapDx), 0));
-        labelMargin = label(Tr("Margin:"));
-        row->AddChild(labelMargin);
-        editMargin = numberField();
-        editMargin->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
-        row->AddChild(NewDlgUnderlined(editMargin));
-        row->AddChild(new Spacer(DpiScale(kToolDlgGapDx), 0));
-        labelSpacing = label(Tr("Line spacing:"));
-        row->AddChild(labelSpacing);
-        editSpacing = numberField();
-        editSpacing->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
-        row->AddChild(NewDlgUnderlined(editSpacing));
-        fields->AddChild(row);
-    }
-    Vec<VirtText*> labels;
-    VecAppend(labels, labelFont);
-    VecAppend(labels, labelSize);
-    AlignDlgLabels(labels);
-    vbox->AddChild(NewDlgSection(fields));
-    vbox->AddChild(new VirtLine());
 
     // the four font slots: they answer for the families the document names
     // (before its own @font-face entries), so picking a font here also replaces
@@ -645,7 +600,6 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
         VirtText* hint = label(Tr("Empty keeps the book's font; CJK covers the rest."));
         slots->AddChild(hint);
         vbox->AddChild(NewDlgSection(slots));
-        vbox->AddChild(new VirtLine());
     }
 
     // quotes: straight in Latin text, the book's own in CJK text
@@ -654,8 +608,55 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
         HBox* row = NewDlgFieldRow();
         row->AddChild(cbStraightQuotes);
         vbox->AddChild(NewDlgSection(row));
-        vbox->AddChild(new VirtLine());
     }
+    // the mod's own settings end here: below are the settings plain SumatraPDF has
+    vbox->AddChild(new VirtLine());
+
+    // the font, then its size, the margin and the line spacing
+    auto* fields = new VBox();
+    fields->alignCross = CrossAxisAlign::Stretch;
+    {
+        HBox* row = NewDlgFieldRow();
+        labelFont = label(Tr("Font:"));
+        row->AddChild(labelFont);
+        DropDown::CreateArgs args;
+        args.parent = hwnd;
+        args.font = fontText;
+        args.isRtl = isRtl;
+        args.isEditable = true;
+        ddFont = new DropDown();
+        ddFont->Create(args);
+        ddFont->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
+        ddFont->onSelectionChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
+        row->AddChild(ddFont, 1);
+        fields->AddChild(row);
+    }
+    {
+        HBox* row = NewDlgFieldRow();
+        labelSize = label(Tr("Size:"));
+        row->AddChild(labelSize);
+        editSize = numberField();
+        row->AddChild(NewDlgUnderlined(editSize));
+        row->AddChild(new Spacer(DpiScale(kToolDlgGapDx), 0));
+        labelMargin = label(Tr("Margin:"));
+        row->AddChild(labelMargin);
+        editMargin = numberField();
+        editMargin->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
+        row->AddChild(NewDlgUnderlined(editMargin));
+        row->AddChild(new Spacer(DpiScale(kToolDlgGapDx), 0));
+        labelSpacing = label(Tr("Line spacing:"));
+        row->AddChild(labelSpacing);
+        editSpacing = numberField();
+        editSpacing->onTextChanged = MkMethod0<EbookSettingsWnd, &EbookSettingsWnd::OnControlChanged>(this);
+        row->AddChild(NewDlgUnderlined(editSpacing));
+        fields->AddChild(row);
+    }
+    Vec<VirtText*> labels;
+    VecAppend(labels, labelFont);
+    VecAppend(labels, labelSize);
+    AlignDlgLabels(labels);
+    vbox->AddChild(NewDlgSection(fields));
+    vbox->AddChild(new VirtLine());
 
     // the styling: the document's, the generated CSS or the user's
     auto* styling = new VBox();
@@ -720,7 +721,7 @@ bool EbookSettingsWnd::Create(MainWindow* mainWin) {
     UpdateTheme();
 
     SetIsVisible(true);
-    HwndSetFocus(ddFont->hwnd);
+    HwndSetFocus(ddSlotSerif->hwnd);
     return true;
 }
 
