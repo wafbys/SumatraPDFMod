@@ -42,6 +42,9 @@ struct ItemDataCP {
     intptr_t settingDefault = 0;                    // FieldInfo::value, decoded per type
     Str settingPath;
     Str settingComment; // its doc comment, from the settings metadata
+    // a display-only divider row (this mod separates its own settings from the
+    // rest): it names no setting, command or file, and selecting it does nothing
+    bool isDivider = false;
 };
 using StrVecCP = StrVecWithData<ItemDataCP>;
 bool IsSettingRow(const ItemDataCP* d);
