@@ -26,7 +26,7 @@ async function withSectionWatchdog<T>(label: string, fn: () => Promise<T>): Prom
   const timer = setTimeout(() => {
     timedOut = true;
     console.error(`ad-hoc-chapters: ${label} exceeded ${SECTION_TIMEOUT_MS}ms, killing stray SumatraPDF`);
-    void killProcessesNamed("SumatraPDF.exe");
+    void killProcessesNamed("SumatraPDFMod.exe");
   }, SECTION_TIMEOUT_MS);
   try {
     return await fn();
@@ -291,12 +291,12 @@ async function testEpub(): Promise<void> {
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   try {
     await testMobi();
     await testEpub();
   } finally {
-    await killProcessesNamed("SumatraPDF.exe");
+    await killProcessesNamed("SumatraPDFMod.exe");
   }
 }
 

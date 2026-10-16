@@ -96,7 +96,7 @@ async function runSession(opts: {
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDF-settings.txt"),
+    join(appdata, "SumatraPDFMod-settings.txt"),
     [
       "ReuseInstance = false",
       "RestoreSession = false",

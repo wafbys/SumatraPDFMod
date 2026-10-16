@@ -54,7 +54,7 @@ ${tabState(LOADED_PDF)}
   ]
 ]
 `;
-  writeFileSync(join(APPDATA, "SumatraPDF-settings.txt"), seed, "utf8");
+  writeFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), seed, "utf8");
 }
 
 async function currentPath(client: ControlClient): Promise<string> {
@@ -77,7 +77,7 @@ async function placementActive(client: ControlClient): Promise<boolean> {
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   seedSettings();
   const { proc, client, frame } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   try {
@@ -124,7 +124,7 @@ export async function testit(): Promise<void> {
       throw new Error(`lazy-tab-select-paint: exit code ${exitCode}, want 0`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDF.exe");
+    await killProcessesNamed("SumatraPDFMod.exe");
     rmSync(APPDATA, { recursive: true, force: true });
   }
 }

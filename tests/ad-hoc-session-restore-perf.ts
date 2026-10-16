@@ -9,7 +9,7 @@ import { ControlClient, ControlCommand, uniquePipeName } from "./control.ts";
 import { ROOT, tmpPath } from "./util.ts";
 import { killAndWait, waitForExit, waitForFrame, windowPosArgs } from "./win-automation.ts";
 
-const EXE = join(ROOT, "out", "prf64", "SumatraPDF.exe");
+const EXE = join(ROOT, "out", "prf64", "SumatraPDFMod.exe");
 const PDFS = [
   join(ROOT, "ext", "a-zlib", "zlib.3.pdf"),
   join(ROOT, "tests", "issue-1189.pdf"),
@@ -153,7 +153,7 @@ export async function testit(): Promise<void> {
   rmSync(appData, { recursive: true, force: true });
   mkdirSync(appData, { recursive: true });
   writeFileSync(
-    join(appData, "SumatraPDF-settings.txt"),
+    join(appData, "SumatraPDFMod-settings.txt"),
     [
       "UiLanguage = en",
       "CheckForUpdates = false",

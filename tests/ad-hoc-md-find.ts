@@ -82,7 +82,7 @@ export async function testit(): Promise<void> {
   const md = join(dir, "find-test.md");
   writeFileSync(md, "# Find test\n\nzebra one\n\nsome ze**br**a bold\n\nlast Zebra here\n\nnothing else\n");
 
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   const proc = launchSumatra([md]);
   try {
     const frame = await waitForFrame(proc.pid!);

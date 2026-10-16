@@ -4015,11 +4015,11 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     res.layoutDy = global->layoutDy;
     res.ignoreDocumentCSS = global->ignoreDocumentCSS;
     res.customCSS = global->customCSS;
-    res.fontSerif = global->fontSerif;
-    res.fontSans = global->fontSans;
-    res.fontMono = global->fontMono;
-    res.fontCjk = global->fontCjk;
-    res.straightQuotes = global->straightQuotes;
+    res.fontSerif = global->modFontSerif;
+    res.fontSans = global->modFontSans;
+    res.fontMono = global->modFontMono;
+    res.fontCjk = global->modFontCjk;
+    res.straightQuotes = global->modStraightQuotes;
     if (!perFile) {
         return res;
     }
@@ -4052,23 +4052,23 @@ static EBookUISettings MergeEBookUI(const EBookUI* global, const FileEBookUI* pe
     if (perFile->customCSS) {
         res.customCSS = perFile->customCSS;
     }
-    if (perFile->fontSerif) {
-        res.fontSerif = perFile->fontSerif;
+    if (perFile->modFontSerif) {
+        res.fontSerif = perFile->modFontSerif;
     }
-    if (perFile->fontSans) {
-        res.fontSans = perFile->fontSans;
+    if (perFile->modFontSans) {
+        res.fontSans = perFile->modFontSans;
     }
-    if (perFile->fontMono) {
-        res.fontMono = perFile->fontMono;
+    if (perFile->modFontMono) {
+        res.fontMono = perFile->modFontMono;
     }
-    if (perFile->fontCjk) {
-        res.fontCjk = perFile->fontCjk;
+    if (perFile->modFontCjk) {
+        res.fontCjk = perFile->modFontCjk;
     }
     // same tri-state as ignoreDocumentCSS: empty inherits, true/false override
-    if (perFile->straightQuotes) {
-        res.straightQuotes = str::EqI(perFile->straightQuotes, StrL("true")) ||
-                             str::EqI(perFile->straightQuotes, StrL("yes")) ||
-                             str::Eq(perFile->straightQuotes, StrL("1"));
+    if (perFile->modStraightQuotes) {
+        res.straightQuotes = str::EqI(perFile->modStraightQuotes, StrL("true")) ||
+                             str::EqI(perFile->modStraightQuotes, StrL("yes")) ||
+                             str::Eq(perFile->modStraightQuotes, StrL("1"));
     }
     return res;
 }

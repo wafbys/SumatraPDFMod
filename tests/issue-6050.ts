@@ -137,7 +137,7 @@ export async function testit(): Promise<void> {
   const appData = join(dir, "appdata");
   mkdirSync(appData);
   writeFileSync(
-    join(appData, "SumatraPDF-settings.txt"),
+    join(appData, "SumatraPDFMod-settings.txt"),
     [
       "UiLanguage = en",
       "CheckForUpdates = false",

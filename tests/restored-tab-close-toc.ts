@@ -52,11 +52,11 @@ ${tabState(TOC_PDF, true)}
   ]
 ]
 `;
-  writeFileSync(join(APPDATA, "SumatraPDF-settings.txt"), seed, "utf8");
+  writeFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), seed, "utf8");
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   seedSettings();
   const { proc, client, frame } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   let title = "";
@@ -92,7 +92,7 @@ export async function testit(): Promise<void> {
       throw new Error(`restored-tab-close-toc: title '${title}', want the remaining tab issue-1809.pdf`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDF.exe");
+    await killProcessesNamed("SumatraPDFMod.exe");
     rmSync(APPDATA, { recursive: true, force: true });
   }
 }

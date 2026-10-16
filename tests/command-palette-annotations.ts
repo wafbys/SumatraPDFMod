@@ -46,7 +46,7 @@ export async function testit(): Promise<void> {
   const dir = tmpPath("command-palette-annotations");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, "SumatraPDF-settings.txt"), SETTINGS);
+  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), SETTINGS);
   const pdf = join(dir, "annots.pdf");
   writeFileSync(pdf, makePdf(), "latin1");
 

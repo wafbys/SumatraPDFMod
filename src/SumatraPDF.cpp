@@ -154,7 +154,7 @@ using Gdiplus::SolidBrush;
 
 constexpr const WCHAR* kCanvasClassName = L"SUMATRA_PDF_CANVAS";
 
-constexpr const WCHAR* kSumatraWindowTitleW = L"SumatraPDF";
+constexpr const WCHAR* kSumatraWindowTitleW = L"SumatraPDFMod";
 
 // used to show it in debug, but is not very useful,
 // so always disable
@@ -14621,7 +14621,7 @@ static void ShowInstallerHelp() {
         flags |= TDF_RTL_LAYOUT;
     }
     dialogConfig.cbSize = sizeof(TASKDIALOGCONFIG);
-    dialogConfig.pszWindowTitle = L"SumatraPDF installer usage";
+    dialogConfig.pszWindowTitle = L"SumatraPDFMod installer usage";
     dialogConfig.pszMainInstruction = CWStrTemp(msg);
     dialogConfig.pszContent =
         LR"(<a href="https://www.sumatrapdfreader.org/docs/Installer-cmd-line-arguments">Read more on website</a>)";

@@ -1,4 +1,4 @@
-// Run with -exe out/rel64/SumatraPDF.exe; TOC_PROFILE_LABEL names the xperf artifacts.
+// Run with -exe out/rel64/SumatraPDFMod.exe; TOC_PROFILE_LABEL names the xperf artifacts.
 // TOC_PROFILE_PDF optionally replaces the generated large TOC with a real document.
 import { strict as assert } from "node:assert";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";

@@ -189,6 +189,47 @@ function isComment(f: Field): boolean {
 }
 
 const ebookUI: Field[] = [
+  // the mod's own fields come first and carry a Mod prefix, so that they are
+  // easy to spot in the settings file and stay apart from upstream's fields
+  // when this branch is rebased onto a newer upstream
+  field(
+    "ModFontCjk",
+    Str,
+    "",
+    "mod: font for Chinese, Japanese and Korean text in ebooks, given as an " +
+      "installed font family or a font file path; also covers glyphs the other " +
+      "slots don't have. empty keeps the engine's usual system fallback",
+  ),
+  field(
+    "ModFontMono",
+    Str,
+    "",
+    "mod: font for monospace text (code, pre, kbd) in ebooks, given as an " +
+      "installed font family or a font file path; empty keeps the document's own font",
+  ),
+  field(
+    "ModFontSans",
+    Str,
+    "",
+    "mod: font for sans-serif text in ebooks, given as an installed font family " +
+      "or a font file path; empty keeps the document's own font",
+  ),
+  field(
+    "ModFontSerif",
+    Str,
+    "",
+    "mod: font for serif text in ebooks, given as an installed font family (e.g. " +
+      "Literata) or a font file path (e.g. C:/fonts/Literata.ttf); a document " +
+      "family that looks like a serif is drawn with this instead, empty keeps the " +
+      "document's own font",
+  ),
+  field(
+    "ModStraightQuotes",
+    Bool,
+    true,
+    "mod: use straight quotes in Latin text ('...' and \"...\") instead of the " +
+      "typographic quotes a book may use; CJK text keeps its own quotes",
+  ),
   field(
     "FontName",
     Str,
@@ -200,41 +241,6 @@ const ebookUI: Field[] = [
       "fonts. wrapping quotes are stripped. a name that can't be loaded is " +
       "reported with a notification when the document opens",
   ).ver("3.7"),
-  field(
-    "FontSerif",
-    Str,
-    "",
-    "path to a font file (ttf, otf, ttc) used for serif text in ebooks " +
-      "(e.g. C:/fonts/Literata.ttf); a document family that looks like a serif " +
-      "is drawn with this file instead, empty keeps the document's own font",
-  ),
-  field(
-    "FontSans",
-    Str,
-    "",
-    "path to a font file used for sans-serif text in ebooks; empty keeps the " + "document's own font",
-  ),
-  field(
-    "FontMono",
-    Str,
-    "",
-    "path to a font file used for monospace text (code, pre, kbd) in ebooks; " + "empty keeps the document's own font",
-  ),
-  field(
-    "FontCjk",
-    Str,
-    "",
-    "path to a font file used for Chinese, Japanese and Korean text in ebooks, " +
-      "including glyphs the other slots don't have; empty keeps the engine's " +
-      "usual system fallback",
-  ),
-  field(
-    "StraightQuotes",
-    Bool,
-    true,
-    "use straight quotes in Latin text ('...' and \"...\") instead of the " +
-      "typographic quotes a book may use; CJK text keeps its own quotes",
-  ),
   field("FontSize", Float, 0, "font size in points; 0 means the default (8.0)"),
   compactArray(
     "Margin",
@@ -1086,6 +1092,37 @@ const favorite: Field[] = [
 // it's empty / 0, in which case the global EBookUI value is used, so a document
 // can override just the font and keep the rest.
 const fileEBookUI: Field[] = [
+  // the mod's own fields, same names and order as in EBookUI above
+  field(
+    "ModFontCjk",
+    Str,
+    "",
+    "mod: CJK-slot font for this document; empty uses EBookUI.ModFontCjk",
+  ),
+  field(
+    "ModFontMono",
+    Str,
+    "",
+    "mod: monospace-slot font for this document; empty uses EBookUI.ModFontMono",
+  ),
+  field(
+    "ModFontSans",
+    Str,
+    "",
+    "mod: sans-serif-slot font for this document; empty uses EBookUI.ModFontSans",
+  ),
+  field(
+    "ModFontSerif",
+    Str,
+    "",
+    "mod: serif-slot font for this document; empty uses EBookUI.ModFontSerif",
+  ),
+  field(
+    "ModStraightQuotes",
+    Str,
+    "",
+    "mod: straight quotes in Latin text for this document, true or false; empty uses EBookUI.ModStraightQuotes",
+  ),
   field(
     "FontName",
     Str,
@@ -1122,36 +1159,6 @@ const fileEBookUI: Field[] = [
     "whether the CSS in this document is ignored: true or false; " + "empty uses EBookUI.IgnoreDocumentCSS",
   ).ver("3.7"),
   field("CustomCSS", Str, "", "additional CSS applied to this document; empty uses EBookUI.CustomCSS").ver("3.7"),
-  field(
-    "FontSerif",
-    Str,
-    "",
-    "serif-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontSerif",
-  ),
-  field(
-    "FontSans",
-    Str,
-    "",
-    "sans-serif-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontSans",
-  ),
-  field(
-    "FontMono",
-    Str,
-    "",
-    "monospace-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontMono",
-  ),
-  field(
-    "FontCjk",
-    Str,
-    "",
-    "CJK-slot font for this document: a font file or an installed font family. empty uses EBookUI.FontCjk",
-  ),
-  field(
-    "StraightQuotes",
-    Str,
-    "",
-    "straight quotes in Latin text for this document: true or false; empty uses EBookUI.StraightQuotes",
-  ),
 ];
 
 const fileState: Field[] = [
@@ -2348,7 +2355,7 @@ const globalPrefsLayout = [
   "CheckForUpdates",
 ];
 
-const globalPrefsStruct = struct("Settings", globalPrefs, "Preferences are persisted in SumatraPDF-settings.txt");
+const globalPrefsStruct = struct("Settings", globalPrefs, "Preferences are persisted in SumatraPDFMod-settings.txt");
 
 const themes: Field[] = [array("Themes", theme, "color themes").ver("3.6")];
 const themesStruct = struct("Themes", themes, "for parsing themes");
@@ -3007,13 +3014,13 @@ body {
 
 <div class="desc">
 
-<h2>Customizing SumatraPDF %VER%</h2>
+<h2>Customizing SumatraPDFMod %VER%</h2>
 
 <p>You can change the look and behavior of
 <a href="https://www.sumatrapdfreader.org/">SumatraPDF</a>
-by editing the file <code>SumatraPDF-settings.txt</code>. The file is stored in
-<code>%LOCALAPPDATA%\\SumatraPDF</code> directory for the installed version or in the
-same directory as <code>SumatraPDF.exe</code> executable for the portable version.</p>
+by editing the file <code>SumatraPDFMod-settings.txt</code>. The file is stored in
+<code>%LOCALAPPDATA%\\SumatraPDFMod</code> directory for the installed version or in the
+same directory as <code>SumatraPDFMod.exe</code> executable for the portable version.</p>
 
 <p>Use the menu item <code>Settings -> Advanced Settings...</code> to open the settings file
 with your default text editor.</p>

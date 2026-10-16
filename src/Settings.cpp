@@ -112,12 +112,12 @@ static const char* gEnumEBookUIDefaultDisplayMode[] = {
     "",           "automatic",         "single page",          "facing",      "book view",
     "continuous", "continuous facing", "continuous book view", "page aspect", nullptr};
 static const FieldInfo gEBookUIFields[] = {
+    {offsetof(EBookUI, modFontCjk), SettingType::String, (intptr_t)""},
+    {offsetof(EBookUI, modFontMono), SettingType::String, (intptr_t)""},
+    {offsetof(EBookUI, modFontSans), SettingType::String, (intptr_t)""},
+    {offsetof(EBookUI, modFontSerif), SettingType::String, (intptr_t)""},
+    {offsetof(EBookUI, modStraightQuotes), SettingType::Bool, true},
     {offsetof(EBookUI, fontName), SettingType::String, (intptr_t)""},
-    {offsetof(EBookUI, fontSerif), SettingType::String, (intptr_t)""},
-    {offsetof(EBookUI, fontSans), SettingType::String, (intptr_t)""},
-    {offsetof(EBookUI, fontMono), SettingType::String, (intptr_t)""},
-    {offsetof(EBookUI, fontCjk), SettingType::String, (intptr_t)""},
-    {offsetof(EBookUI, straightQuotes), SettingType::Bool, true},
     {offsetof(EBookUI, fontSize), SettingType::Float, (intptr_t)"0"},
     {offsetof(EBookUI, margin), SettingType::FloatArray, 0},
     {offsetof(EBookUI, lineSpacing), SettingType::Float, (intptr_t)"0"},
@@ -133,29 +133,30 @@ static const StructInfo gEBookUIInfo = {
     sizeof(EBookUI),
     15,
     gEBookUIFields,
-    "FontName\0FontSerif\0FontSans\0FontMono\0FontCjk\0StraightQuotes\0FontSize\0Margin\0LineSpacing\0LayoutDx\0LayoutD"
-    "y\0IgnoreDocumentCSS\0CustomCSS\0WindowBgCol\0DefaultDisplayMode",
-    "default font family for ebooks (e.g. Segoe UI, Georgia, Microsoft YaHei). empty uses the engine default "
-    "(typically a serif). applied as user CSS with !important, which beats the document's own font-family even when it "
-    "comes from an inline style attribute; leave empty to keep the publisher's fonts. wrapping quotes are stripped. a "
-    "name that can't be loaded is reported with a notification when the document opens\0path to a font file (ttf, otf, "
-    "ttc) used for serif text in ebooks (e.g. C:/fonts/Literata.ttf); a document family that looks like a serif is "
-    "drawn with this file instead, empty keeps the document's own font\0path to a font file used for sans-serif text "
-    "in ebooks; empty keeps the document's own font\0path to a font file used for monospace text (code, pre, kbd) in "
-    "ebooks; empty keeps the document's own font\0path to a font file used for Chinese, Japanese and Korean text in "
-    "ebooks, including glyphs the other slots don't have; empty keeps the engine's usual system fallback\0use straight "
-    "quotes in Latin text ('...' and \"...\") instead of the typographic quotes a book may use; CJK text keeps its own "
-    "quotes\0font size in points; 0 means the default (8.0)\0white space around the text, in points (not screen "
-    "pixels), like LayoutDx. one number sets all four sides, two are top/bottom and left/right, four are top, right, "
-    "bottom, left - the same order as in CSS. empty keeps the default (3 em above and below, 2 em left and right, so "
-    "it follows the font size); 0 leaves no margin at all. each value can be up to 200\0line-height multiplier for "
-    "ebook text (e.g. 1.5); 0 keeps the document or engine default. values from 0.5 to 5 are accepted\0width of the "
-    "page the ebook is laid out into, in points (not screen pixels); 0 means the default (420)\0height of the page the "
-    "ebook is laid out into, in points (not screen pixels); 0 derives it from the window's shape when the document is "
-    "opened, so Fit Width shows a whole page\0if true, the CSS in the ebook is ignored and only CustomCSS "
-    "applies\0additional CSS applied to ebooks; set IgnoreDocumentCSS = true if the document's own CSS overrides "
-    "it\0if given, sets the canvas background color for ebook documents (epub, mobi etc.)\0default page layout for "
-    "ebooks; empty uses the global DefaultDisplayMode",
+    "ModFontCjk\0ModFontMono\0ModFontSans\0ModFontSerif\0ModStraightQuotes\0FontName\0FontSize\0Margin\0LineSpacing\0La"
+    "youtDx\0LayoutDy\0IgnoreDocumentCSS\0CustomCSS\0WindowBgCol\0DefaultDisplayMode",
+    "mod: font for Chinese, Japanese and Korean text in ebooks, given as an installed font family or a font file path; "
+    "also covers glyphs the other slots don't have. empty keeps the engine's usual system fallback\0mod: font for "
+    "monospace text (code, pre, kbd) in ebooks, given as an installed font family or a font file path; empty keeps the "
+    "document's own font\0mod: font for sans-serif text in ebooks, given as an installed font family or a font file "
+    "path; empty keeps the document's own font\0mod: font for serif text in ebooks, given as an installed font family "
+    "(e.g. Literata) or a font file path (e.g. C:/fonts/Literata.ttf); a document family that looks like a serif is "
+    "drawn with this instead, empty keeps the document's own font\0mod: use straight quotes in Latin text ('...' and "
+    "\"...\") instead of the typographic quotes a book may use; CJK text keeps its own quotes\0default font family for "
+    "ebooks (e.g. Segoe UI, Georgia, Microsoft YaHei). empty uses the engine default (typically a serif). applied as "
+    "user CSS with !important, which beats the document's own font-family even when it comes from an inline style "
+    "attribute; leave empty to keep the publisher's fonts. wrapping quotes are stripped. a name that can't be loaded "
+    "is reported with a notification when the document opens\0font size in points; 0 means the default (8.0)\0white "
+    "space around the text, in points (not screen pixels), like LayoutDx. one number sets all four sides, two are "
+    "top/bottom and left/right, four are top, right, bottom, left - the same order as in CSS. empty keeps the default "
+    "(3 em above and below, 2 em left and right, so it follows the font size); 0 leaves no margin at all. each value "
+    "can be up to 200\0line-height multiplier for ebook text (e.g. 1.5); 0 keeps the document or engine default. "
+    "values from 0.5 to 5 are accepted\0width of the page the ebook is laid out into, in points (not screen pixels); 0 "
+    "means the default (420)\0height of the page the ebook is laid out into, in points (not screen pixels); 0 derives "
+    "it from the window's shape when the document is opened, so Fit Width shows a whole page\0if true, the CSS in the "
+    "ebook is ignored and only CustomCSS applies\0additional CSS applied to ebooks; set IgnoreDocumentCSS = true if "
+    "the document's own CSS overrides it\0if given, sets the canvas background color for ebook documents (epub, mobi "
+    "etc.)\0default page layout for ebooks; empty uses the global DefaultDisplayMode",
     false};
 
 static const FieldInfo gWindowMargin_1_Fields[] = {
@@ -731,6 +732,11 @@ const StructInfo gFavoriteInfo = {
     true};
 
 static const FieldInfo gFileEBookUIFields[] = {
+    {offsetof(FileEBookUI, modFontCjk), SettingType::String, (intptr_t)""},
+    {offsetof(FileEBookUI, modFontMono), SettingType::String, (intptr_t)""},
+    {offsetof(FileEBookUI, modFontSans), SettingType::String, (intptr_t)""},
+    {offsetof(FileEBookUI, modFontSerif), SettingType::String, (intptr_t)""},
+    {offsetof(FileEBookUI, modStraightQuotes), SettingType::String, (intptr_t)""},
     {offsetof(FileEBookUI, fontName), SettingType::String, (intptr_t)""},
     {offsetof(FileEBookUI, fontSize), SettingType::Float, (intptr_t)"0"},
     {offsetof(FileEBookUI, margin), SettingType::FloatArray, 0},
@@ -739,30 +745,24 @@ static const FieldInfo gFileEBookUIFields[] = {
     {offsetof(FileEBookUI, layoutDy), SettingType::Float, (intptr_t)"0"},
     {offsetof(FileEBookUI, ignoreDocumentCSS), SettingType::String, (intptr_t)""},
     {offsetof(FileEBookUI, customCSS), SettingType::String, (intptr_t)""},
-    {offsetof(FileEBookUI, fontSerif), SettingType::String, (intptr_t)""},
-    {offsetof(FileEBookUI, fontSans), SettingType::String, (intptr_t)""},
-    {offsetof(FileEBookUI, fontMono), SettingType::String, (intptr_t)""},
-    {offsetof(FileEBookUI, fontCjk), SettingType::String, (intptr_t)""},
-    {offsetof(FileEBookUI, straightQuotes), SettingType::String, (intptr_t)""},
 };
 const StructInfo gFileEBookUIInfo = {
     sizeof(FileEBookUI),
     13,
     gFileEBookUIFields,
-    "FontName\0FontSize\0Margin\0LineSpacing\0LayoutDx\0LayoutDy\0IgnoreDocumentCSS\0CustomCSS\0FontSerif\0FontSans\0Fo"
-    "ntMono\0FontCjk\0StraightQuotes",
-    "font family for this document (e.g. Segoe UI, Microsoft YaHei); empty uses EBookUI.FontName\0font size in points "
-    "for this document; 0 uses EBookUI.FontSize\0white space around the text for this document, in points; one, two or "
-    "four values like EBookUI.Margin. empty uses EBookUI.Margin\0line-height multiplier for this document (e.g. 1.5); "
-    "0 uses EBookUI.LineSpacing\0width of the page this document is laid out into, in points; 0 uses "
-    "EBookUI.LayoutDx\0height of the page this document is laid out into, in points; 0 uses EBookUI.LayoutDy\0whether "
-    "the CSS in this document is ignored: true or false; empty uses EBookUI.IgnoreDocumentCSS\0additional CSS applied "
-    "to this document; empty uses EBookUI.CustomCSS\0serif-slot font for this document: a font file or an installed "
-    "font family. empty uses EBookUI.FontSerif\0sans-serif-slot font for this document: a font file or an installed "
-    "font family. empty uses EBookUI.FontSans\0monospace-slot font for this document: a font file or an installed font "
-    "family. empty uses EBookUI.FontMono\0CJK-slot font for this document: a font file or an installed font family. "
-    "empty uses EBookUI.FontCjk\0straight quotes in Latin text for this document: true or false; empty uses "
-    "EBookUI.StraightQuotes",
+    "ModFontCjk\0ModFontMono\0ModFontSans\0ModFontSerif\0ModStraightQuotes\0FontName\0FontSize\0Margin\0LineSpacing\0La"
+    "youtDx\0LayoutDy\0IgnoreDocumentCSS\0CustomCSS",
+    "mod: CJK-slot font for this document; empty uses EBookUI.ModFontCjk\0mod: monospace-slot font for this document; "
+    "empty uses EBookUI.ModFontMono\0mod: sans-serif-slot font for this document; empty uses EBookUI.ModFontSans\0mod: "
+    "serif-slot font for this document; empty uses EBookUI.ModFontSerif\0mod: straight quotes in Latin text for this "
+    "document, true or false; empty uses EBookUI.ModStraightQuotes\0font family for this document (e.g. Segoe UI, "
+    "Microsoft YaHei); empty uses EBookUI.FontName\0font size in points for this document; 0 uses "
+    "EBookUI.FontSize\0white space around the text for this document, in points; one, two or four values like "
+    "EBookUI.Margin. empty uses EBookUI.Margin\0line-height multiplier for this document (e.g. 1.5); 0 uses "
+    "EBookUI.LineSpacing\0width of the page this document is laid out into, in points; 0 uses EBookUI.LayoutDx\0height "
+    "of the page this document is laid out into, in points; 0 uses EBookUI.LayoutDy\0whether the CSS in this document "
+    "is ignored: true or false; empty uses EBookUI.IgnoreDocumentCSS\0additional CSS applied to this document; empty "
+    "uses EBookUI.CustomCSS",
     false};
 
 static const FieldInfo gPointF_1_Fields[] = {

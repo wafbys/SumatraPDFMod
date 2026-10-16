@@ -57,7 +57,7 @@ function makeTestCert(): string | null {
   return thumb.toUpperCase();
 }
 
-// CI's ASan job only builds SumatraPDF-static.exe, so the tool may be missing.
+// CI's ASan job only builds SumatraPDFMod-static.exe, so the tool may be missing.
 // Prefer `sign -v` when we have it; otherwise check the incremental signature
 // dictionary the signer writes.
 function verifySignedPdf(path: string): void {

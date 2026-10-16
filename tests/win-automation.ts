@@ -154,7 +154,7 @@ export function windowPosArgs(): string[] {
   return ["-window-pos", `${p.dx}x${p.dy}@${p.x}x${p.y}`];
 }
 
-// Launch SumatraPDF.exe with -for-testing: a fresh instance that won't
+// Launch SumatraPDFMod.exe with -for-testing: a fresh instance that won't
 // interfere with a running SumatraPDF, doesn't restore the previous session
 // (only opens files passed on the cmd-line) and doesn't save settings. Use
 // proc.pid with waitForFrame() to get the window.

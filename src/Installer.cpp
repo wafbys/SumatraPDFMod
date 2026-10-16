@@ -701,7 +701,7 @@ static bool ShowMoveAsideBlockedDialog(Str path, Str copyPath, Str fileName) {
     }
     cfg.cbSize = sizeof(cfg);
     cfg.hwndParent = gWnd ? gWnd->hwnd : nullptr;
-    cfg.pszWindowTitle = L"SumatraPDF";
+    cfg.pszWindowTitle = L"SumatraPDFMod";
     cfg.pszMainInstruction = CWStrTemp(fmt(Tr("Cannot update %s").s, fileName));
     cfg.pszContent = CWStrTemp(content);
     cfg.dwFlags = (TASKDIALOG_FLAGS)flags;
@@ -836,7 +836,7 @@ static bool PrepareInstallDirByRenaming(Str installDir, bool silent, bool skipEx
 static void DeleteInstallCopyLeftovers(Str destDir) {
     static const Str kCopies[] = {
         StrL("libsumatrapdf.dll.copy"), StrL("libmupdf.dll.copy"),   StrL("PdfFilter.dll.copy"),
-        StrL("PdfPreview.dll.copy"),    StrL("SumatraPDF.exe.copy"),
+        StrL("PdfPreview.dll.copy"),    StrL("SumatraPDFMod.exe.copy"),
     };
     for (Str name : kCopies) {
         TempStr copyPath = path::JoinTemp(destDir, name);
@@ -860,7 +860,7 @@ static void DeleteInstallCopyLeftovers(Str destDir) {
 static void RestoreInstallCopyFiles(Str installDir) {
     logf("RestoreInstallCopyFiles('%s')\n", installDir);
     static const Str kFiles[] = {
-        StrL("SumatraPDF.exe"), StrL("libsumatrapdf.dll"), StrL("PdfFilter.dll"),
+        StrL("SumatraPDFMod.exe"), StrL("libsumatrapdf.dll"), StrL("PdfFilter.dll"),
         StrL("PdfPreview.dll"), StrL("libmupdf.dll"),
     };
     for (Str name : kFiles) {
@@ -1234,7 +1234,7 @@ static void ShowInstallationFailedUi(HWND hwndParent) {
     }
     dialogConfig.cbSize = sizeof(TASKDIALOGCONFIG);
     dialogConfig.hwndParent = hwndParent;
-    dialogConfig.pszWindowTitle = L"SumatraPDF";
+    dialogConfig.pszWindowTitle = L"SumatraPDFMod";
     dialogConfig.pszMainInstruction = L"Installation failed";
     dialogConfig.pszContent = CWStrTemp(content);
     dialogConfig.nDefaultButton = IDOK;

@@ -114,7 +114,7 @@ export async function testit(): Promise<void> {
   entries.push({ name: `${String(TALL_PAGE).padStart(3, "0")}.jpg`, data: readFileSync(TALL_JPG) });
   writeFileSync(cbz, makeStoredZip(entries));
   writeFileSync(
-    join(dir, "SumatraPDF-settings.txt"),
+    join(dir, "SumatraPDFMod-settings.txt"),
     ["ReuseInstance = false", "RestoreSession = false", "ShowStartPage = false", "CheckForUpdates = false"].join("\n"),
   );
 

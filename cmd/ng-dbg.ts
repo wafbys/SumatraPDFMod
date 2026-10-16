@@ -222,7 +222,7 @@ async function main(): Promise<void> {
   if (opts.clean) buildArgs.push("-clean");
   await run(buildArgs, "build");
 
-  const exeName = plat === "win" ? "SumatraPDF.exe" : "SumatraPDF";
+  const exeName = plat === "win" ? "SumatraPDFMod.exe" : "SumatraPDFMod";
   const exe = join(process.cwd(), "out", plat, "dbg-asan", exeName);
   if (!existsSync(exe)) throw new Error(`debug ASan executable not found: ${exe}`);
   // A normal launch: it saves settings and restores the session.

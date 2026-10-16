@@ -228,6 +228,20 @@ struct Favorite {
 // DefaultDisplayMode are already per-document as BgCol and DisplayMode
 // below
 struct FileEBookUI {
+    // mod: CJK-slot font for this document; empty uses EBookUI.ModFontCjk
+    Str modFontCjk;
+    // mod: monospace-slot font for this document; empty uses
+    // EBookUI.ModFontMono
+    Str modFontMono;
+    // mod: sans-serif-slot font for this document; empty uses
+    // EBookUI.ModFontSans
+    Str modFontSans;
+    // mod: serif-slot font for this document; empty uses
+    // EBookUI.ModFontSerif
+    Str modFontSerif;
+    // mod: straight quotes in Latin text for this document, true or false;
+    // empty uses EBookUI.ModStraightQuotes
+    Str modStraightQuotes;
     // font family for this document (e.g. Segoe UI, Microsoft YaHei);
     // empty uses EBookUI.FontName
     Str fontName;
@@ -251,21 +265,6 @@ struct FileEBookUI {
     // additional CSS applied to this document; empty uses
     // EBookUI.CustomCSS
     Str customCSS;
-    // serif-slot font for this document: a font file or an installed font
-    // family. empty uses EBookUI.FontSerif
-    Str fontSerif;
-    // sans-serif-slot font for this document: a font file or an installed
-    // font family. empty uses EBookUI.FontSans
-    Str fontSans;
-    // monospace-slot font for this document: a font file or an installed
-    // font family. empty uses EBookUI.FontMono
-    Str fontMono;
-    // CJK-slot font for this document: a font file or an installed font
-    // family. empty uses EBookUI.FontCjk
-    Str fontCjk;
-    // straight quotes in Latin text for this document: true or false;
-    // empty uses EBookUI.StraightQuotes
-    Str straightQuotes;
 };
 
 // history of opened files, most recently used first. A closed file
@@ -574,6 +573,26 @@ struct AIChat {
 // customization options for the ebook UI (EPUB, MOBI, FB2, PDB and
 // plain text)
 struct EBookUI {
+    // mod: font for Chinese, Japanese and Korean text in ebooks, given as
+    // an installed font family or a font file path; also covers glyphs the
+    // other slots don't have. empty keeps the engine's usual system
+    // fallback
+    Str modFontCjk;
+    // mod: font for monospace text (code, pre, kbd) in ebooks, given as an
+    // installed font family or a font file path; empty keeps the
+    // document's own font
+    Str modFontMono;
+    // mod: font for sans-serif text in ebooks, given as an installed font
+    // family or a font file path; empty keeps the document's own font
+    Str modFontSans;
+    // mod: font for serif text in ebooks, given as an installed font
+    // family (e.g. Literata) or a font file path (e.g.
+    // C:/fonts/Literata.ttf); a document family that looks like a serif is
+    // drawn with this instead, empty keeps the document's own font
+    Str modFontSerif;
+    // mod: use straight quotes in Latin text ('...' and "...") instead of
+    // the typographic quotes a book may use; CJK text keeps its own quotes
+    bool modStraightQuotes;
     // default font family for ebooks (e.g. Segoe UI, Georgia, Microsoft
     // YaHei). empty uses the engine default (typically a serif). applied
     // as user CSS with !important, which beats the document's own
@@ -582,24 +601,6 @@ struct EBookUI {
     // name that can't be loaded is reported with a notification when the
     // document opens
     Str fontName;
-    // path to a font file (ttf, otf, ttc) used for serif text in ebooks
-    // (e.g. C:/fonts/Literata.ttf); a document family that looks like a
-    // serif is drawn with this file instead, empty keeps the document's
-    // own font
-    Str fontSerif;
-    // path to a font file used for sans-serif text in ebooks; empty keeps
-    // the document's own font
-    Str fontSans;
-    // path to a font file used for monospace text (code, pre, kbd) in
-    // ebooks; empty keeps the document's own font
-    Str fontMono;
-    // path to a font file used for Chinese, Japanese and Korean text in
-    // ebooks, including glyphs the other slots don't have; empty keeps the
-    // engine's usual system fallback
-    Str fontCjk;
-    // use straight quotes in Latin text ('...' and "...") instead of the
-    // typographic quotes a book may use; CJK text keeps its own quotes
-    bool straightQuotes;
     // font size in points; 0 means the default (8.0)
     float fontSize;
     // white space around the text, in points (not screen pixels), like
@@ -866,7 +867,7 @@ struct HtmlUI {
     bool useFixedPageUI;
 };
 
-// Preferences are persisted in SumatraPDF-settings.txt
+// Preferences are persisted in SumatraPDFMod-settings.txt
 struct Settings {
     // what the sidebar's bottom panel shows: favorites (the default),
     // bookmarks or thumbnails

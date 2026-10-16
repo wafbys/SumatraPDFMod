@@ -53,7 +53,7 @@ function buildPdf(): Buffer {
 function writeSettings(appdata: string, pdf: string, trim: boolean): void {
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDF-settings.txt"),
+    join(appdata, "SumatraPDFMod-settings.txt"),
     [
       "UiLanguage = en",
       "CheckForUpdates = false",

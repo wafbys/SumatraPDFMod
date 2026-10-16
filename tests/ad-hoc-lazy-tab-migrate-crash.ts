@@ -23,7 +23,7 @@ const PDF = resolve("tests/issue-1189.pdf");
 const EPUB = resolve("tests/issue-6095.epub");
 
 const APPDATA = tmpPath("ad-hoc-lazy-tab-migrate-appdata");
-const SETTINGS_PATH = join(APPDATA, "SumatraPDF-settings.txt");
+const SETTINGS_PATH = join(APPDATA, "SumatraPDFMod-settings.txt");
 
 // flat page number that MigrateFileStatePagePos turns into a "bm:" bookmark
 const LEGACY_EPUB_PAGE_NO = 2;
@@ -92,7 +92,7 @@ async function withDeadline<T>(label: string, p: Promise<T>): Promise<T> {
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   seedSettings();
   const { proc, client, frame } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   try {
@@ -117,7 +117,7 @@ export async function testit(): Promise<void> {
       throw new Error(`process exit code ${exitCode}, want 0`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDF.exe");
+    await killProcessesNamed("SumatraPDFMod.exe");
   }
   rmSync(APPDATA, { recursive: true, force: true });
   console.log("ad-hoc-lazy-tab-migrate-crash: OK");

@@ -24,7 +24,7 @@ async function render(settings: string[]): Promise<Cap> {
   const appdata = tmpPath("issue-4600-margin-appdata");
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), [...settings, `RestoreSession = false`, ``].join("\n"));
+  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), [...settings, `RestoreSession = false`, ``].join("\n"));
   const epub = join(tmpPath("epub-font"), "none.epub");
   const proc = launchSumatra(["-appdata", appdata, "-view", "single page", "-zoom", "fit page", epub]);
   try {
@@ -77,7 +77,7 @@ function show(name: string, b: Box): void {
 
 export async function testit(): Promise<void> {
   makeFixtures();
-  await killProcessesNamed("SumatraPDF.exe");
+  await killProcessesNamed("SumatraPDFMod.exe");
   const epub = join(tmpPath("epub-font"), "none.epub");
 
   const base = await box(null);

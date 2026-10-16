@@ -27,13 +27,13 @@ function writeSettings(appData: string, thumbnailsType: string): void {
     `ThumbnailsType = ${thumbnailsType}`,
     "",
   ];
-  writeFileSync(join(appData, "SumatraPDF-settings.txt"), lines.join("\n"));
+  writeFileSync(join(appData, "SumatraPDFMod-settings.txt"), lines.join("\n"));
 }
 
 // the app saves its settings (which the test then edits) a moment after
 // opening the files
 async function waitForSavedHistory(appData: string, names: string[]): Promise<void> {
-  const path = join(appData, "SumatraPDF-settings.txt");
+  const path = join(appData, "SumatraPDFMod-settings.txt");
   const deadline = Date.now() + 15_000;
   while (Date.now() < deadline) {
     const s = existsSync(path) ? readFileSync(path, "utf8") : "";
@@ -47,7 +47,7 @@ async function waitForSavedHistory(appData: string, names: string[]): Promise<vo
 
 // edits the saved settings in place, as a user would, so the file history stays
 function setThumbnailsType(appData: string, thumbnailsType: string): void {
-  const path = join(appData, "SumatraPDF-settings.txt");
+  const path = join(appData, "SumatraPDFMod-settings.txt");
   const s = readFileSync(path, "utf8");
   const line = `ThumbnailsType = ${thumbnailsType}`;
   const re = /^ThumbnailsType = .*$/m;

@@ -47,7 +47,7 @@ const char* gInstalledFiles[] = {
     "PdfFilter.dll",
     "PdfPreview.dll",
     // those probably won't delete because in use
-    "SumatraPDF.exe",
+    "SumatraPDFMod.exe",
     "RA-MICRO PDF Viewer.exe",
     // files no longer shipped, to be deleted
     "libmupdf.dll", // renamed to libsumatrapdf.dll in 3.7
@@ -57,7 +57,7 @@ const char* gInstalledFiles[] = {
     "UnRar64.dll",
     // other files we might generate
     "sumatrapdfprefs.dat",
-    "SumatraPDF-settings.txt",
+    "SumatraPDFMod-settings.txt",
 };
 // clang-format on
 #endif
