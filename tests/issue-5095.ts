@@ -93,7 +93,7 @@ function writeSettings(dir: string, layout: string) {
     layout ? `ToolbarCustomLayout = ${layout}` : ``,
     ``,
   ];
-  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), lines.join("\n"));
+  writeFileSync(join(dir, "SumatraPDF-settings.txt"), lines.join("\n"));
 }
 
 export async function testit(): Promise<void> {

@@ -152,7 +152,7 @@ export async function testit(): Promise<void> {
     return;
   }
   if (/static/i.test(basename(EXE))) {
-    console.log("skip issue-6025: static exe has no installer payload (libsumatrapdfMod.dll)");
+    console.log("skip issue-6025: static exe has no installer payload (libsumatrapdf.dll)");
     return;
   }
 

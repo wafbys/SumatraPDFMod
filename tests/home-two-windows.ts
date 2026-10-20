@@ -37,7 +37,7 @@ function makeAppDir(): string {
     states.push(`\t[\n\t\tFilePath = ${p}\n\t\tOpenCount = ${nFiles - i}\n\t]`);
   }
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     `UiLanguage = en\nCheckForUpdates = false\nRestoreSession = false\nRememberOpenedFiles = true\n` +
       `HomePageViewMode = thumbnails\nFileStates [\n${states.join("\n")}\n]\n`,
   );

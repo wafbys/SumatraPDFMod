@@ -7,7 +7,7 @@ description: Build, launch and drive SumatraPDF on Windows to verify a change en
 
 ## Build & launch
 
-- Build: `bun ./cmd/build.ts -dbg` → `out/dbg64/SumatraPDFMod.exe` (the exe `tests/util.ts` EXE points at; `SumatraPDFMod-static.exe` is the static target and is usually stale).
+- Build: `bun ./cmd/build.ts -dbg` → `out/dbg64/SumatraPDF.exe` (the exe `tests/util.ts` EXE points at; `SumatraPDF-static.exe` is the static target and is usually stale).
 - If new source files were added to `premake5.files.lua` / `premake5.lua`, run `bun cmd/premake.ts` first to regenerate `vs2022/*.vcxproj`, or the build fails with stale projects / link errors.
 - Always launch with `-for-testing` (fresh instance, no session restore, doesn't touch user settings).
 - Capture engine/app logs: `-log -log-to-file <path>` (collects `logf` output).
@@ -73,7 +73,7 @@ postMessage(frame, 0x0010 /*WM_CLOSE*/, 0, 0);
   `getWindowText`/`getWindowTextFull` come back empty for child controls.
   Text assertions beat pixel comparison when the change is textual.
 
-- `out/dbg64/SumatraPDFMod-settings.txt` exists (portable mode): the dbg build **loads** it even under `-for-testing` (which only prevents saving). Stale values there change app behavior in tests — e.g. a non-default `PdfDocumentColorMode` silently alters rendering. Check it when the app behaves unexpectedly at startup; it's written only by non-`-for-testing` (manual) launches.
+- `out/dbg64/SumatraPDF-settings.txt` exists (portable mode): the dbg build **loads** it even under `-for-testing` (which only prevents saving). Stale values there change app behavior in tests — e.g. a non-default `PdfDocumentColorMode` silently alters rendering. Check it when the app behaves unexpectedly at startup; it's written only by non-`-for-testing` (manual) launches.
 
 - Unit tests: `bun cmd/run-unit-tests.ts -dbg` (but verification = driving the app, not tests).
 - PdfFilter/PdfPreview link mupdf through `src/libsumatrapdf.def`; new `fz_*`/`pdf_*` calls in code they compile need exports added there.

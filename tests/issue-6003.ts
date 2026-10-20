@@ -1,6 +1,6 @@
 // Installer -x extracts the payload without installing (issue #6003).
-// Copy the exe into a temp dir as SumatraPDFMod.exe, then check:
-//   -x -d out  writes SumatraPDFMod.exe plus the payload under out/
+// Copy the exe into a temp dir as SumatraPDF.exe, then check:
+//   -x -d out  writes SumatraPDF.exe plus the payload under out/
 //   -x         the same under sumatra-files/ in the current directory
 //   -x -d .    unpacks the payload next to the running exe and does not
 //              overwrite that exe
@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { IS_WIN } from "./host.ts";
 import { EXE, USE_NG, runStandalone, tmpPath } from "./util.ts";
 
-const PAYLOAD = ["libsumatrapdfMod.dll", "PdfFilter.dll", "PdfPreview.dll", "SumatraPDFMod-tool.exe"];
+const PAYLOAD = ["libsumatrapdf.dll", "PdfFilter.dll", "PdfPreview.dll", "sumatrapdf-tool.exe"];
 
 function runExtract(copied: string, cwd: string, args: string[]): { out: string; exitCode: number } {
   const p = Bun.spawnSync({
@@ -56,7 +56,7 @@ export async function testit(): Promise<void> {
   const dir = tmpPath("issue-6003");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
-  const copied = join(dir, "SumatraPDFMod.exe");
+  const copied = join(dir, "SumatraPDF.exe");
   copyFileSync(EXE, copied);
   const outDir = join(dir, "out");
   mkdirSync(outDir);
@@ -69,14 +69,14 @@ export async function testit(): Promise<void> {
   if (toOut.exitCode !== 0) {
     throw new Error(`issue-6003: -x -d out exited ${toOut.exitCode}:\n${toOut.out}`);
   }
-  mustExist(outDir, ["SumatraPDFMod.exe", ...PAYLOAD]);
+  mustExist(outDir, ["SumatraPDF.exe", ...PAYLOAD]);
 
   // no -d: a sumatra-files directory under the current one
   const bare = runExtract(copied, dir, ["-x"]);
   if (bare.exitCode !== 0) {
     throw new Error(`issue-6003: -x exited ${bare.exitCode}:\n${bare.out}`);
   }
-  mustExist(join(dir, "sumatra-files"), ["SumatraPDFMod.exe", ...PAYLOAD]);
+  mustExist(join(dir, "sumatra-files"), ["SumatraPDF.exe", ...PAYLOAD]);
   for (const name of PAYLOAD) {
     if (existsSync(join(dir, name))) {
       throw new Error(`issue-6003: -x without -d unpacked '${name}' into the current directory`);
@@ -90,11 +90,11 @@ export async function testit(): Promise<void> {
   }
   mustExist(dir, PAYLOAD);
   if (!existsSync(copied)) {
-    throw new Error("issue-6003: in-place -x removed SumatraPDFMod.exe");
+    throw new Error("issue-6003: in-place -x removed SumatraPDF.exe");
   }
   const after = statSync(copied);
   if (after.size !== before.size || after.mtimeMs !== before.mtimeMs) {
-    throw new Error("issue-6003: in-place -x overwrote SumatraPDFMod.exe");
+    throw new Error("issue-6003: in-place -x overwrote SumatraPDF.exe");
   }
 }
 

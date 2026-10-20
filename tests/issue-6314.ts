@@ -1,5 +1,5 @@
 // Issue #6314: environments that forbid AI need a way to switch the AI
-// features off. SumatraPDFMod-restrict.ini gets an AIChat policy; AI chat and AI
+// features off. sumatrapdfrestrict.ini gets an AIChat policy; AI chat and AI
 // translation are also off when InternetAccess or DiskAccess is 0, or when
 // the ini exists without an AIChat = 1 line.
 //
@@ -21,7 +21,7 @@ const AI_QUERY = ">chat";
 const AI_BACKENDS = 4;
 
 // what the exe needs beside it once copied out of the build directory
-const SIDE_BY_SIDE_DLLS = ["libsumatrapdfMod.dll", "clang_rt.asan_dynamic-x86_64.dll"].map((name) =>
+const SIDE_BY_SIDE_DLLS = ["libsumatrapdf.dll", "clang_rt.asan_dynamic-x86_64.dll"].map((name) =>
   join(dirname(EXE), name),
 );
 
@@ -72,14 +72,14 @@ async function runCase(name: string, ini: string, wantAiRows: number, wantAiBit:
   const appDir = tmpPath(`issue-6314-${name}`);
   rmSync(appDir, { recursive: true, force: true });
   mkdirSync(appDir, { recursive: true });
-  const testExe = join(appDir, "SumatraPDFMod.exe");
+  const testExe = join(appDir, "SumatraPDF.exe");
   copyFileSync(EXE, testExe);
   for (const dll of SIDE_BY_SIDE_DLLS) {
     if (existsSync(dll)) {
       copyFileSync(dll, join(appDir, basename(dll)));
     }
   }
-  writeFileSync(join(appDir, "SumatraPDFMod-restrict.ini"), ini);
+  writeFileSync(join(appDir, "sumatrapdfrestrict.ini"), ini);
 
   await withControlledSumatra(
     testExe,

@@ -37,7 +37,7 @@ void TestPreview(WStr cmdLine) {
         fileNode = fileNode->next;
     }
     if (idx < 0 || !fileNode) {
-        printf("Usage: SumatraPDFMod.exe -test-preview <filename>\n");
+        printf("Usage: SumatraPDF.exe -test-preview <filename>\n");
         return;
     }
 

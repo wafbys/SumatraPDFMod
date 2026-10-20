@@ -400,7 +400,7 @@ export const sharedFiles = [
   "src/shared/SumatraLog.cpp",
   "src/shared/SumatraLog.h",
   "src/shared/Tabs.h",
-  "src/shared/SumatraPDFMod.exe.manifest",
+  "src/shared/SumatraPDF.exe.manifest",
   "src/shared/SvgIcons.cpp",
   "src/shared/SvgIcons.h",
   "src/shared/TabGroupsManage.h",

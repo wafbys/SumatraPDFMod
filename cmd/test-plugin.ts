@@ -29,14 +29,14 @@ async function main() {
   console.log(`build took ${elapsed}s`);
 
   const outDir = join("out", "dbg64");
-  const sumatraExe = resolve(join(outDir, "SumatraPDFMod-static.exe"));
+  const sumatraExe = resolve(join(outDir, "SumatraPDF-static.exe"));
   const testPluginExe = resolve(join(outDir, "test-plugin.exe"));
 
   // clean up old log files
   tryDelete("test-plugin.log.txt");
   tryDelete("plugin.log.txt");
 
-  // copy SumatraPDFMod-static.exe to test-plugin.exe so they are different executables
+  // copy SumatraPDF-static.exe to test-plugin.exe so they are different executables
   copyFileSync(sumatraExe, testPluginExe);
   console.log(`copied ${sumatraExe} -> ${testPluginExe}`);
 

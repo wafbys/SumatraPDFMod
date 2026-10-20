@@ -155,7 +155,7 @@ using Gdiplus::SolidBrush;
 
 constexpr const WCHAR* kCanvasClassName = L"SUMATRA_PDF_CANVAS";
 
-constexpr const WCHAR* kSumatraWindowTitleW = L"SumatraPDFMod";
+constexpr const WCHAR* kSumatraWindowTitleW = L"SumatraPDF";
 
 // used to show it in debug, but is not very useful,
 // so always disable
@@ -8845,7 +8845,7 @@ TempStr GetSumatraDataDirTemp() {
     if (len(dir) == 0) {
         return {};
     }
-    return path::JoinTemp(dir, StrL("SumatraPDFMod-data"));
+    return path::JoinTemp(dir, StrL("SumatraPDF-data"));
 }
 
 TempStr GetSumatraBuildSpecificDirTemp() {
@@ -14228,7 +14228,7 @@ static bool ExeHasNameOfStoreInstaller() {
     return str::ContainsI(exeName, StrL("install-store"));
 }
 
-// Uncompressed size of libsumatrapdfMod.dll in IDR_EMBEDDED_PAK, or -1 if the entry
+// Uncompressed size of libsumatrapdf.dll in IDR_EMBEDDED_PAK, or -1 if the entry
 // is missing (static build). Cached after the first call (-2 = uncached).
 static i64 GetEmbeddedLibsumatrapdfSize() {
     static i64 size = -2;
@@ -14241,7 +14241,7 @@ static i64 GetEmbeddedLibsumatrapdfSize() {
     if (!archive) {
         return size;
     }
-    int idx = lzma::GetIdxFromName(archive, StrL("libsumatrapdfMod.dll"));
+    int idx = lzma::GetIdxFromName(archive, StrL("libsumatrapdf.dll"));
     if (idx >= 0) {
         size = (i64)archive->files[idx].uncompressedSize;
     }
@@ -14266,7 +14266,7 @@ static bool IsInstallerButNotInstalled() {
     return !IsOurExeInstalled();
 }
 
-// we delay load libsumatrapdfMod.dll but it seems in some cases it fails to load
+// we delay load libsumatrapdf.dll but it seems in some cases it fails to load
 // as seen in crash reports
 // here I'm trying to explicitly LoadLibrary() to hopefully fix that
 // if not, at least I can add logging to figure out why it fails
@@ -14292,13 +14292,13 @@ static HRESULT CALLBACK LoadLibsumatrapdfDialogCallback(HWND /*hwnd*/, UINT msg,
     return S_OK;
 }
 
-// if true, and libsumatrapdfMod.dll is not next to the exe, extract it to the build data
+// if true, and libsumatrapdf.dll is not next to the exe, extract it to the build data
 // dir and load from there (portable / single-exe). if false, only try next to
 // the exe; missing dll is handled by ForceRunningAsInstaller.
 static bool gSingleExe = true;
 
 static HMODULE gLibsumatrapdfDll = nullptr;
-// Last LoadLibrary(Ex) failure for libsumatrapdfMod.dll (0 if none / size mismatch skip).
+// Last LoadLibrary(Ex) failure for libsumatrapdf.dll (0 if none / size mismatch skip).
 static DWORD gLibsumatrapdfLastLoadError = 0;
 
 static void FreeLibsumatrapdfDll() {
@@ -14379,7 +14379,7 @@ static void LogLibsumatrapdfFileStateAfterLoadFail(Str path, DWORD err) {
     }
 }
 
-// Load libsumatrapdfMod.dll from path only if the file size matches expectedSize (the
+// Load libsumatrapdf.dll from path only if the file size matches expectedSize (the
 // embedded/installer copy). Skips mismatched leftover DLLs from other builds.
 // useLoadLibraryEx: LoadLibraryExW with LOAD_WITH_ALTERED_SEARCH_PATH (helps
 // when AV hooks plain LoadLibrary, and for dependency search next to the DLL).
@@ -14472,7 +14472,7 @@ static bool LoadLibsumatrapdfFromFileRobust(Str path, i64 expectedSize, bool jus
     return false;
 }
 
-// Extract embedded libsumatrapdfMod.dll into dir (if size mismatches), then load with
+// Extract embedded libsumatrapdf.dll into dir (if size mismatches), then load with
 // retry / LoadLibraryExW. Used for single-exe portable layout.
 static bool ExtractAndLoadLibsumatrapdfRobust(Str dir, bool extract) {
     if (len(dir) == 0) {
@@ -14482,7 +14482,7 @@ static bool ExtractAndLoadLibsumatrapdfRobust(Str dir, bool extract) {
     if (expectedSize < 0) {
         return false;
     }
-    TempStr path = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
+    TempStr path = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
     i64 realSize = file::GetSize(path);
     bool justWritten = false;
     if (realSize != expectedSize) {
@@ -14518,7 +14518,7 @@ static void LogLibsumatrapdfLoadFailureDiagnostics(Str selfDir, Str buildDir, i6
             logf("LoadLibsumatrapdf FAILED: %s dir is null\n", label);
             return;
         }
-        TempStr path = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
+        TempStr path = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
         i64 size = file::GetSize(path);
         bool exists = file::Exists(path);
         logf("LoadLibsumatrapdf FAILED: %s path='%s' exists=%d size=%lld\n", label, path, (int)exists, (long long)size);
@@ -14545,10 +14545,10 @@ static void LogLibsumatrapdfLoadFailureDiagnostics(Str selfDir, Str buildDir, i6
 
 static bool LoadLibsumatrapdf(bool showErrorDialog) {
     // Static-linked builds (SumatraPDF-static) do
-    // not embed/delay-load libsumatrapdfMod.dll — MuPDF is already in the exe image.
-    // HasEmbeddedLibsumatrapdf() is false when IDR_EMBEDDED_PAK has no libsumatrapdfMod.dll entry.
+    // not embed/delay-load libsumatrapdf.dll — MuPDF is already in the exe image.
+    // HasEmbeddedLibsumatrapdf() is false when IDR_EMBEDDED_PAK has no libsumatrapdf.dll entry.
     if (!HasEmbeddedLibsumatrapdf()) {
-        logf("LoadLibsumatrapdf: no embedded libsumatrapdfMod.dll (static build); nothing to load\n");
+        logf("LoadLibsumatrapdf: no embedded libsumatrapdf.dll (static build); nothing to load\n");
         return true;
     }
 
@@ -14558,7 +14558,7 @@ static bool LoadLibsumatrapdf(bool showErrorDialog) {
     logf("LoadLibsumatrapdf: start expectedSize=%lld gSingleExe=%d selfDir='%s' buildDir='%s'\n",
          (long long)expectedSize, (int)gSingleExe, selfDir, buildDir);
 
-    // prefer existing libsumatrapdfMod.dll next to the exe (installer layout)
+    // prefer existing libsumatrapdf.dll next to the exe (installer layout)
     if (ExtractAndLoadLibsumatrapdfRobust(selfDir, false)) {
         return true;
     }
@@ -14596,30 +14596,30 @@ static bool LoadLibsumatrapdf(bool showErrorDialog) {
     TempStr msg;
     if (IsLibsumatrapdfAppControlError(err)) {
         msg = fmt(
-            R"(SumatraPDF failed to load libsumatrapdfMod.dll (error code %d).
+            R"(SumatraPDF failed to load libsumatrapdf.dll (error code %d).
 
 Windows Application Control blocked the file (WDAC, AppLocker, or Smart App Control). The DLL is present on disk but the OS policy will not allow it to load.
 
 Try:
 • Settings → Privacy & security → Windows Security → App & browser control: check Smart App Control and reputation-based protection
-• If this is a work or school PC, ask IT to allowlist SumatraPDFMod.exe and libsumatrapdfMod.dll
+• If this is a work or school PC, ask IT to allowlist SumatraPDF.exe and libsumatrapdf.dll
 • Unblock the files (right-click → Properties → Unblock) if they show "downloaded from the Internet"
 • Move the portable folder out of Downloads and try again, or install from the official website
 
-For more information see <a href="%s">Failed to load libsumatrapdfMod.dll</a>.)",
+For more information see <a href="%s">Failed to load libsumatrapdf.dll</a>.)",
             (int)err, kFailedToLoadURL());
     } else {
         msg = fmt(
-            R"(SumatraPDF failed to load libsumatrapdfMod.dll (error code %d).
+            R"(SumatraPDF failed to load libsumatrapdf.dll (error code %d).
 
-This is often caused by antivirus software blocking or quarantining libsumatrapdfMod.dll when SumatraPDF extracts it.
+This is often caused by antivirus software blocking or quarantining libsumatrapdf.dll when SumatraPDF extracts it.
 
 Try:
-• Add an exclusion for the SumatraPDF folder and %%LocalAppData%%\SumatraPDFMod-data
+• Add an exclusion for the SumatraPDF folder and %%LocalAppData%%\SumatraPDF-data
 • Temporarily disable real-time antivirus protection, then start SumatraPDF again
 • Re-download SumatraPDF from the official website
 
-For more information see <a href="%s">Failed to load libsumatrapdfMod.dll</a>.)",
+For more information see <a href="%s">Failed to load libsumatrapdf.dll</a>.)",
             (int)err, kFailedToLoadURL());
     }
 
@@ -14636,7 +14636,7 @@ For more information see <a href="%s">Failed to load libsumatrapdfMod.dll</a>.)"
     }
     dialogConfig.cbSize = sizeof(TASKDIALOGCONFIG);
     dialogConfig.pszWindowTitle = L"SumatraPDF";
-    dialogConfig.pszMainInstruction = L"Failed to load libsumatrapdfMod.dll";
+    dialogConfig.pszMainInstruction = L"Failed to load libsumatrapdf.dll";
     dialogConfig.pszContent = CWStrTemp(msg);
     dialogConfig.nDefaultButton = IDOK;
     dialogConfig.dwFlags = flags;
@@ -14661,12 +14661,12 @@ static HRESULT CALLBACK TaskdialogHandleLinkscallback(HWND /*hwnd*/, UINT msg, W
 }
 
 // !gSingleExe (installer build): a single exe is both an installer and the app
-// (once libsumatrapdfMod.dll has been extracted next to it). If we don't find
-// libsumatrapdfMod.dll alongside us, assume this is the installer. If it's present but a
+// (once libsumatrapdf.dll has been extracted next to it). If we don't find
+// libsumatrapdf.dll alongside us, assume this is the installer. If it's present but a
 // different size than ours, it's a damaged installation.
 static bool ForceRunningAsInstaller() {
     if (!HasEmbeddedLibsumatrapdf()) {
-        // this is not a version that needs libsumatrapdfMod.dll
+        // this is not a version that needs libsumatrapdf.dll
         return false;
     }
 
@@ -14678,7 +14678,7 @@ static bool ForceRunningAsInstaller() {
     }
 
     TempStr dir = GetSelfExeDirTemp();
-    TempStr path = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
+    TempStr path = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
     auto realSize = file::GetSize(path);
     if (realSize < 0) {
         return true;
@@ -14765,7 +14765,7 @@ static void ShowInstallerHelp() {
         flags |= TDF_RTL_LAYOUT;
     }
     dialogConfig.cbSize = sizeof(TASKDIALOGCONFIG);
-    dialogConfig.pszWindowTitle = L"SumatraPDFMod installer usage";
+    dialogConfig.pszWindowTitle = L"SumatraPDF installer usage";
     dialogConfig.pszMainInstruction = CWStrTemp(msg);
     dialogConfig.pszContent =
         LR"(<a href="https://www.sumatrapdfreader.org/docs/Installer-cmd-line-arguments">Read more on website</a>)";
@@ -14907,7 +14907,7 @@ static i64 GetDirLastActivityAgeSec(Str dirPath, const ULARGE_INTEGER& now) {
 
 // delete stale build dirs and legacy top-level dirs from previous layouts
 // PdfPreview.dll writes one log per preview-host session when logging is enabled
-// but, being a restricted shell host, doesn't prune them -- so SumatraPDFMod.exe
+// but, being a restricted shell host, doesn't prune them -- so SumatraPDF.exe
 // keeps only the newest `keep` here (the logs live in our per-build data dir).
 struct PreviewLogFile {
     Str path;
@@ -15208,7 +15208,7 @@ static SeqStrings gToolDescs =
 constexpr int kNoMutool = -1234321; // arbitrary negative value that won't collide with any mutool exit code
 
 // Returns the index into gToolNames if the command line invokes one of the
-// mupdf-derived command-line tools (e.g. `SumatraPDFMod.exe info file.pdf`), else
+// mupdf-derived command-line tools (e.g. `SumatraPDF.exe info file.pdf`), else
 // -1. CommandLineToArgvW always returns the program path as argv[0], so the tool
 // name (if any) is argv[1]. This must not depend on how the exe path was spelled
 // on the command line (absolute, relative, short, just the name via PATH).
@@ -15280,20 +15280,20 @@ static WStr SkipFirstArg(WStr cmdLine) {
 }
 
 // When this is SumatraPDF-dll.exe (carries embedded installer resources) and is
-// properly installed - libsumatrapdfMod.dll and SumatraPDFMod-tool.exe sit next to it - run
-// the requested tool by launching the console SumatraPDFMod-tool.exe instead of
+// properly installed - libsumatrapdf.dll and sumatrapdf-tool.exe sit next to it - run
+// the requested tool by launching the console sumatrapdf-tool.exe instead of
 // running it in-process. This is a GUI (Windows subsystem) exe and interacts
 // poorly with cmd.exe / PowerShell; the console exe doesn't. The child inherits
 // our standard handles, so console output and redirection (`> out.txt`, `| more`)
 // keep working. Returns the child's exit code, or kNoMutool when delegation
 // doesn't apply (the caller then runs the tool in-process). The static
-// SumatraPDFMod.exe (no embedded resources) always runs the tool in-process.
+// SumatraPDF.exe (no embedded resources) always runs the tool in-process.
 static int MaybeDelegateToToolExe() {
     if (!HasEmbeddedLibsumatrapdf()) {
         return kNoMutool;
     }
-    TempStr toolExe = GetPathInExeDirTemp(StrL("SumatraPDFMod-tool.exe"));
-    TempStr libsumatrapdf = GetPathInExeDirTemp(StrL("libsumatrapdfMod.dll"));
+    TempStr toolExe = GetPathInExeDirTemp(StrL("sumatrapdf-tool.exe"));
+    TempStr libsumatrapdf = GetPathInExeDirTemp(StrL("libsumatrapdf.dll"));
     if (!file::Exists(toolExe) || !file::Exists(libsumatrapdf)) {
         return kNoMutool;
     }
@@ -15377,11 +15377,11 @@ static int MaybeRunMutool() {
             // here) to the inherited stderr handle so it survives the bad pipe.
             if (WasLaunchedByPowershellWithPipeRedirect()) {
                 static Str msg = StrL(R"(SumatraPDF: command-line tools don't work when their output is redirected by
-PowerShell (e.g. `SumatraPDFMod.exe info file.pdf > out.txt` or `... | more`).
+PowerShell (e.g. `SumatraPDF.exe info file.pdf > out.txt` or `... | more`).
 PowerShell pipes a GUI app's output through a pipe that drops the data.
 
 Run the command from cmd.exe instead, e.g.:
-    cmd /c "SumatraPDFMod.exe info file.pdf > out.txt"
+    cmd /c "SumatraPDF.exe info file.pdf > out.txt"
 )");
                 HANDLE hErr = GetStdHandle(STD_ERROR_HANDLE);
                 if (hErr && hErr != INVALID_HANDLE_VALUE) {
@@ -15392,7 +15392,7 @@ Run the command from cmd.exe instead, e.g.:
                 goto Exit;
             }
             // in the installed dll build, hand off to the console
-            // SumatraPDFMod-tool.exe (which interacts properly with the console)
+            // sumatrapdf-tool.exe (which interacts properly with the console)
             int delegated = MaybeDelegateToToolExe();
             if (delegated != kNoMutool) {
                 res = delegated;
@@ -15457,7 +15457,7 @@ static void GetProgramInfo(str::Builder& b) {
         // show the size of the dll so that we can verify it's the
         // correct size for the given version
         TempStr dir = path::GetDirTemp(exePath);
-        TempStr dllPath = path::JoinTemp(dir, StrL("libsumatrapdfMod.dll"));
+        TempStr dllPath = path::JoinTemp(dir, StrL("libsumatrapdf.dll"));
         auto fileSizeDll = GetFileSizeAsStrTemp(dllPath);
         b.Append(fmt("Dll: %s %s\n", dllPath, fileSizeDll));
     }
@@ -15531,11 +15531,11 @@ static Str gCrashDumpPath;
 
 // Message from MuPDF's uncaught-throw abort (error.c). Looked up at crash time
 // so we do not need a hard link for every tool that builds CrashHandlerNoOp.
-// libsumatrapdfMod.dll (or the static main module) exports fz_last_uncaught_error.
+// libsumatrapdf.dll (or the static main module) exports fz_last_uncaught_error.
 const char* LookupUncaughtMupdfError() {
     using Fn = const char* (*)();
     HMODULE modules[2] = {
-        GetModuleHandleW(L"libsumatrapdfMod.dll"),
+        GetModuleHandleW(L"libsumatrapdf.dll"),
         GetModuleHandleW(nullptr),
     };
     for (HMODULE h : modules) {
@@ -15648,7 +15648,7 @@ static void InstallSumatraCrashHandler(bool localOnly) {
     TempStr crashInfoDir = GetCrashInfoDirTemp();
 
     CrashHandlerConfig cfg{};
-    cfg.crashDumpPath = path::JoinTemp(crashInfoDir, StrL("SumatraPDFMod-crash.dmp"));
+    cfg.crashDumpPath = path::JoinTemp(crashInfoDir, StrL("sumatrapdfcrash.dmp"));
     cfg.submitUrl = BuildSubmitUrlTemp();
     cfg.fullDumpEnvVar = StrL("SUMATRAPDF_FULLDUMP");
     cfg.localOnly = localOnly;
@@ -15798,7 +15798,7 @@ int APIENTRY WinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevIns
     if (gIsDebugBuild) {
         if (len(flags.logFile) == 0) {
             // from the perm arena like all other flag strings (~Flags frees nothing)
-            TempStr dir = GetPathInExeDirTemp(StrL("SumatraPDFMod-log.txt"));
+            TempStr dir = GetPathInExeDirTemp(StrL("sumlog.txt"));
             flags.logFile = str::Dup(GetPermArena(), dir);
             flags.log = true;
             logFileBecauseDebug = true;
@@ -15899,18 +15899,18 @@ int APIENTRY WinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevIns
         }
         exitCode = RunInstaller();
         // exit immediately. for some reason exit handlers try to
-        // pull in libsumatrapdfMod.dll which we don't have access to in the installer
+        // pull in libsumatrapdf.dll which we don't have access to in the installer
         ScheduleDeleteTempInstaller();
         ::ExitProcess(exitCode);
     }
 
-    // when not a single self-contained exe, a missing sibling libsumatrapdfMod.dll means
+    // when not a single self-contained exe, a missing sibling libsumatrapdf.dll means
     // we're really the installer; run it (matches pre-single-exe behavior)
     if (!gSingleExe && ForceRunningAsInstaller() && !flags.dumpExif && !flags.dumpChm && !flags.unitTests) {
         logf("forcing running as an installer\n");
         exitCode = RunInstaller();
         // exit immediately. for some reason exit handlers try to
-        // pull in libsumatrapdfMod.dll which we don't have access to in the installer
+        // pull in libsumatrapdf.dll which we don't have access to in the installer
         ScheduleDeleteTempInstaller();
         ::ExitProcess(exitCode);
     }
@@ -15931,7 +15931,7 @@ int APIENTRY WinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevIns
 #endif
 
     // -x extract only needs the embedded LzSA archive in the EXE — not a loaded
-    // libsumatrapdfMod.dll. Do this before LoadLibsumatrapdf so Desktop/sandbox
+    // libsumatrapdf.dll. Do this before LoadLibsumatrapdf so Desktop/sandbox
     // Access Denied or AV blocking LoadLibrary cannot abort a pure extract
     // (see crash report 8c10917a4, WDAG/Sandbox + -x).
     // ParseFlags skips flag parsing when argv[1] is a mutool name (poster, …),
@@ -15962,10 +15962,10 @@ int APIENTRY WinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevIns
         return exitCode;
     }
 
-    // load libsumatrapdfMod.dll eagerly before any code path that might call into it.
+    // load libsumatrapdf.dll eagerly before any code path that might call into it.
     // if we let the delay-load helper do it and it fails, it raises a fatal
     // exception. this must remain after the installer / -x checks above because
-    // during installation or extract libsumatrapdfMod.dll need not be loaded yet
+    // during installation or extract libsumatrapdf.dll need not be loaded yet
     if (!LoadLibsumatrapdf(!flags.silent)) {
         ::ExitProcess(1);
     }

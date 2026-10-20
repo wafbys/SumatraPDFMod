@@ -1,8 +1,8 @@
-; libsumatrapdfMod.dll export list (hand-maintained)
+; libsumatrapdf.dll export list (hand-maintained)
 
 
 
-LIBRARY libsumatrapdfMod
+LIBRARY libsumatrapdf
 
 EXPORTS
 
@@ -1845,7 +1845,7 @@ EXPORTS
 
 
 ; LzmaDecode / x86_Convert are NOT exported: LzmaSimpleArchive links them into
-; SumatraPDFMod.exe (and base) so the installer can extract libsumatrapdfMod.dll without
+; SumatraPDF.exe (and base) so the installer can extract libsumatrapdf.dll without
 ; calling into the delay-loaded DLL.
 
 ; libwebp exports (needed for WebpReader)
@@ -2024,8 +2024,8 @@ EXPORTS
 	pdf_keep_annot
 
 ; cmark-gfm exports (required for MarkdownToc; also used by mupdf md.c).
-; Keep the cmark-gfm static-lib project; link it only into mupdf/libsumatrapdfMod.dll
-; and re-export these so SumatraPDFMod.exe does not carry a second copy.
+; Keep the cmark-gfm static-lib project; link it only into mupdf/libsumatrapdf.dll
+; and re-export these so SumatraPDF.exe does not carry a second copy.
 
 	cmark_find_syntax_extension
 	cmark_get_default_mem_allocator
@@ -2054,8 +2054,8 @@ EXPORTS
 	cmark_render_html
 
 ; libarchive exports (required for base/Archive.cpp). Keep the libarchive
-; static-lib project; link it only into mupdf/libsumatrapdfMod.dll (and static EXE)
-; and re-export these so SumatraPDFMod.exe / PdfFilter / PdfPreview do not carry
+; static-lib project; link it only into mupdf/libsumatrapdf.dll (and static EXE)
+; and re-export these so SumatraPDF.exe / PdfFilter / PdfPreview do not carry
 ; a second copy.
 
 	archive_entry_filetype
@@ -2078,8 +2078,8 @@ EXPORTS
 	archive_read_support_format_all
 
 ; unrar exports (required for base/Archive.cpp RAR fallback). Keep the unrar
-; static-lib project; link it only into libsumatrapdfMod.dll (and static EXE) and
-; re-export these so SumatraPDFMod.exe / PdfFilter / PdfPreview do not carry a
+; static-lib project; link it only into libsumatrapdf.dll (and static EXE) and
+; re-export these so SumatraPDF.exe / PdfFilter / PdfPreview do not carry a
 ; second copy. Functions are PASCAL (stdcall); .def names stay undecorated.
 
 	RAROpenArchiveEx
@@ -2088,8 +2088,8 @@ EXPORTS
 	RARProcessFile
 
 ; chmdec exports (required for ChmFile / -dump-chm). Keep the chmdec static-lib
-; project; link it only into libsumatrapdfMod.dll (and static EXE) and re-export these
-; so SumatraPDFMod.exe / PdfFilter / PdfPreview do not carry a second copy.
+; project; link it only into libsumatrapdf.dll (and static EXE) and re-export these
+; so SumatraPDF.exe / PdfFilter / PdfPreview do not carry a second copy.
 
 	chm_ctx_new
 	chm_ctx_free

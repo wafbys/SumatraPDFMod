@@ -143,9 +143,9 @@ export async function testit(): Promise<void> {
   const appdata = tmpPath("ad-hoc-uia-appdata");
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), SETTINGS);
+  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), SETTINGS);
 
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   const logPath = tmpPath("ad-hoc-uia-log.txt");
   rmSync(logPath, { force: true });
   const args = [EXE, "-for-testing", "-appdata", appdata, "-log-to-file", logPath, pdf];

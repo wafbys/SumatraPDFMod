@@ -1,7 +1,7 @@
 /* Copyright 2026 the SumatraPDF project authors (see AUTHORS file).
    License: GPLv3 */
 
-constexpr const char* kRestrictionsFileName = "SumatraPDFMod-restrict.ini";
+constexpr const char* kRestrictionsFileName = "sumatrapdfrestrict.ini";
 constexpr const char* kRestrictedUseDocsUrl = "https://www.sumatrapdfreader.org/docs/Configure-for-restricted-use";
 
 struct RestrictedUseItem {

@@ -87,11 +87,11 @@ SessionData [
   ]
 ]
 `;
-  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), settings);
+  writeFileSync(join(dir, "SumatraPDF-settings.txt"), settings);
 }
 
 function readScrollPos(dir: string): { page: string; x: number; y: number } {
-  const text = readFileSync(join(dir, "SumatraPDFMod-settings.txt"), "utf8");
+  const text = readFileSync(join(dir, "SumatraPDF-settings.txt"), "utf8");
   const m = /TabStates \[\s*\[[^\]]*?PageNo = (\S+)[^\]]*?ScrollPos = (\S+) (\S+)/.exec(text);
   if (!m) {
     throw new Error("issue-6220: no TabStates ScrollPos in saved settings");
@@ -151,7 +151,7 @@ async function runVariant(name: string, v: Variant): Promise<void> {
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   try {
     const only = process.env.ISSUE_6220_VARIANT;
     // deep into the page, so the next page is the most visible one
@@ -166,7 +166,7 @@ export async function testit(): Promise<void> {
       await runVariant(name, v);
     }
   } finally {
-    await killProcessesNamed("SumatraPDFMod.exe");
+    await killProcessesNamed("SumatraPDF.exe");
   }
 }
 

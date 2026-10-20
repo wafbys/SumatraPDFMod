@@ -70,4 +70,4 @@ IDI_DOCTYPE_MOBI        ICON "gfx\\mobi-32bit.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 
-1                       RT_MANIFEST          "SumatraPDFMod.exe.manifest"
+1                       RT_MANIFEST          "SumatraPDF.exe.manifest"

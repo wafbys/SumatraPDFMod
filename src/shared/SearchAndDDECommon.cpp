@@ -2147,7 +2147,7 @@ static TempStr BuildOpenFileCmdTemp(Str pattern, Str path, int line, int col) {
 // first token is the program and the rest its arguments.
 static bool LaunchInverseSearchCmd(Str cmdLine) {
 #if OS_WIN
-    // resolve relative paths with relation to SumatraPDFMod.exe's directory
+    // resolve relative paths with relation to SumatraPDF.exe's directory
     TempStr appDir = GetSelfExeDirTemp();
     AutoCloseHandle process(LaunchProcessInDir(cmdLine, appDir));
     return process != nullptr;

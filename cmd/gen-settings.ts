@@ -1317,7 +1317,7 @@ const fileState: Field[] = [
     "Thumbnail",
     { name: "", ctype: "Pixmap *" },
     "NULL",
-    "thumbnails are saved as PNG files in SumatraPDFMod-cache directory",
+    "thumbnails are saved as PNG files in sumatrapdfcache directory",
   ).notSaved(),
   field("Index", Int, 0, "temporary value needed for FileHistory::cmpOpenCount").notSaved(),
   field("Himl", { name: "", ctype: "HIMAGELIST" }, "NULL", "image list holding the file's shell icon").notSaved(),
@@ -2396,7 +2396,7 @@ const globalPrefsLayout = [
   "CheckForUpdates",
 ];
 
-const globalPrefsStruct = struct("Settings", globalPrefs, "Preferences are persisted in SumatraPDFMod-settings.txt");
+const globalPrefsStruct = struct("Settings", globalPrefs, "Preferences are persisted in SumatraPDF-settings.txt");
 
 const themes: Field[] = [array("Themes", theme, "color themes").ver("3.6")];
 const themesStruct = struct("Themes", themes, "for parsing themes");
@@ -3055,13 +3055,13 @@ body {
 
 <div class="desc">
 
-<h2>Customizing SumatraPDFMod %VER%</h2>
+<h2>Customizing SumatraPDF %VER%</h2>
 
 <p>You can change the look and behavior of
 <a href="https://www.sumatrapdfreader.org/">SumatraPDF</a>
-by editing the file <code>SumatraPDFMod-settings.txt</code>. The file is stored in
-<code>%LOCALAPPDATA%\\SumatraPDFMod</code> directory for the installed version or in the
-same directory as <code>SumatraPDFMod.exe</code> executable for the portable version.</p>
+by editing the file <code>SumatraPDF-settings.txt</code>. The file is stored in
+<code>%LOCALAPPDATA%\\SumatraPDF</code> directory for the installed version or in the
+same directory as <code>SumatraPDF.exe</code> executable for the portable version.</p>
 
 <p>Use the menu item <code>Settings -> Advanced Settings...</code> to open the settings file
 with your default text editor.</p>

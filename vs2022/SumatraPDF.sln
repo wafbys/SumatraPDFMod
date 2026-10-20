@@ -18,7 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a-zopfli", "a-zopfli.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base.vcxproj", "{8078947C-6CAF-950D-159C-7B1001B2110F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libsumatrapdfMod.dll", "libsumatrapdfMod.dll", "{44A20225-B0D9-4ABC-B9E3-AEDF259A71B5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libsumatrapdf.dll", "libsumatrapdf.dll", "{44A20225-B0D9-4ABC-B9E3-AEDF259A71B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a-libwebp", "a-libwebp.vcxproj", "{38708512-A4DA-3989-ED18-EB2E59C217DE}"
 EndProject

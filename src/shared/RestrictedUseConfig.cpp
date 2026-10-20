@@ -130,7 +130,7 @@ bool CanWriteRestrictedUseConfig() {
         file::Close(h);
     }
 
-    TempStr basePath = GetPathInExeDirTemp(StrL("SumatraPDFMod-restrict-write-test.tmp"));
+    TempStr basePath = GetPathInExeDirTemp(StrL("SumatraPDF-restrict-write-test.tmp"));
     TempStr probePath = MakeUniqueFilePathTemp(basePath);
     if (!file::WriteFile(probePath, {})) {
         return false;

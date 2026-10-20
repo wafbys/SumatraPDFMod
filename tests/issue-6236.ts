@@ -97,7 +97,7 @@ ${version === 2 ? '<meta name="cover" content="cover-img"/>' : ""}
 // mirrors GetThumbnailPathTemp: md5 of the path, lowercase hex, .png
 function thumbnailPath(appData: string, docPath: string): string {
   const hash = new Bun.CryptoHasher("md5").update(docPath).digest("hex");
-  return join(appData, "SumatraPDFMod-cache", `${hash}.png`);
+  return join(appData, "sumatrapdfcache", `${hash}.png`);
 }
 
 async function waitForFile(path: string, what: string): Promise<void> {
@@ -124,7 +124,7 @@ export async function testit(): Promise<void> {
   const appData = join(root, "appdata");
   mkdirSync(appData, { recursive: true });
   writeFileSync(
-    join(appData, "SumatraPDFMod-settings.txt"),
+    join(appData, "SumatraPDF-settings.txt"),
     ["UiLanguage = en", "CheckForUpdates = false", "RememberOpenedFiles = true", "ShowStartPage = true", ""].join("\n"),
   );
   const withCover = join(root, "book.pdf");

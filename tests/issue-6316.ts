@@ -26,7 +26,7 @@ CheckForUpdates = false
 RestoreSession = false
 ReloadModifiedDocuments = ${mode === "auto"}
 `;
-  writeFileSync(join(dir, "SumatraPDFMod-settings.txt"), settings);
+  writeFileSync(join(dir, "SumatraPDF-settings.txt"), settings);
 
   const logPath = join(dir, "app.log");
   const pipe = `issue-6316-${process.pid}-${mode}`;

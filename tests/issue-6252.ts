@@ -122,7 +122,7 @@ export async function testit(): Promise<void> {
   const pdf = join(dir, "doc.pdf");
   writeFileSync(pdf, makePdf(), "latin1");
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     ["UiLanguage = en", "CheckForUpdates = false", "RestoreSession = false", "CitationHoverDelay = 100", ""].join("\n"),
   );
 

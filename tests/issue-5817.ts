@@ -15,7 +15,7 @@ const FULL = { dx: 150, dy: 212 };
 // mirrors GetThumbnailPathTemp: md5 of the path, lowercase hex, .png
 function thumbnailPath(appData: string, docPath: string): string {
   const hash = new Bun.CryptoHasher("md5").update(docPath).digest("hex");
-  return join(appData, "SumatraPDFMod-cache", `${hash}.png`);
+  return join(appData, "sumatrapdfcache", `${hash}.png`);
 }
 
 function writeSettings(appData: string, thumbnailsType: string): void {
@@ -27,13 +27,13 @@ function writeSettings(appData: string, thumbnailsType: string): void {
     `ThumbnailsType = ${thumbnailsType}`,
     "",
   ];
-  writeFileSync(join(appData, "SumatraPDFMod-settings.txt"), lines.join("\n"));
+  writeFileSync(join(appData, "SumatraPDF-settings.txt"), lines.join("\n"));
 }
 
 // the app saves its settings (which the test then edits) a moment after
 // opening the files
 async function waitForSavedHistory(appData: string, names: string[]): Promise<void> {
-  const path = join(appData, "SumatraPDFMod-settings.txt");
+  const path = join(appData, "SumatraPDF-settings.txt");
   const deadline = Date.now() + 15_000;
   while (Date.now() < deadline) {
     const s = existsSync(path) ? readFileSync(path, "utf8") : "";
@@ -47,7 +47,7 @@ async function waitForSavedHistory(appData: string, names: string[]): Promise<vo
 
 // edits the saved settings in place, as a user would, so the file history stays
 function setThumbnailsType(appData: string, thumbnailsType: string): void {
-  const path = join(appData, "SumatraPDFMod-settings.txt");
+  const path = join(appData, "SumatraPDF-settings.txt");
   const s = readFileSync(path, "utf8");
   const line = `ThumbnailsType = ${thumbnailsType}`;
   const re = /^ThumbnailsType = .*$/m;

@@ -43,7 +43,7 @@ async function testCase(mode: "reading" | "created" | "hover" | "main"): Promise
   const document = fixture ? join(dir, "reading.pdf") : resolve("ext/a-zlib/zlib.3.pdf");
   if (fixture) writeFileSync(document, readingPdf(), "latin1");
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     "UiLanguage = en\nRestoreSession = false\nCheckForUpdates = false\n",
   );
   const pipe = `highlight-${process.pid}-${Date.now()}`;

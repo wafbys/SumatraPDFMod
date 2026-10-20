@@ -124,7 +124,7 @@ export async function testit(): Promise<void> {
     const ad = join(dir, name);
     mkdirSync(ad, { recursive: true });
     writeFileSync(
-      join(ad, "SumatraPDFMod-settings.txt"),
+      join(ad, "SumatraPDF-settings.txt"),
       `AllowExternalImages = ${allow ? "true" : "false"}\nReuseInstance = false\n` +
         "RestoreSession = false\nShowStartPage = false\nCheckForUpdates = false\n",
     );

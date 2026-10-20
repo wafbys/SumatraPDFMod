@@ -46,7 +46,7 @@ function page(pages: Page[], n: number): Page {
 
 async function openRotated(dir: string, pdf: string, follow: boolean) {
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     [
       "ReuseInstance = false",
       "RestoreSession = false",

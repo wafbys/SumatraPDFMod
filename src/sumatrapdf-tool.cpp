@@ -1,15 +1,15 @@
 /* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
    License: GPLv3 */
 
-// SumatraPDFMod-tool.exe runs the mupdf-derived command-line tools (draw,
-// convert, info, ...). Unlike SumatraPDFMod.exe - a GUI (Windows subsystem) app
+// sumatrapdf-tool.exe runs the mupdf-derived command-line tools (draw,
+// convert, info, ...). Unlike SumatraPDF.exe - a GUI (Windows subsystem) app
 // that can't write to a console or be piped reliably - this is a console
 // subsystem app, so it behaves well under cmd.exe / PowerShell.
 //
-// It links libsumatrapdfMod.dll for everything (the tool implementations live there),
+// It links libsumatrapdf.dll for everything (the tool implementations live there),
 // so the executable itself stays tiny.
 //
-// Usage: SumatraPDFMod-tool.exe <tool> [args...]   e.g. SumatraPDFMod-tool.exe info file.pdf
+// Usage: sumatrapdf-tool.exe <tool> [args...]   e.g. sumatrapdf-tool.exe info file.pdf
 
 #include <windows.h>
 #include <shellapi.h>
@@ -20,7 +20,7 @@
 #define _stricmp strcasecmp
 #endif
 
-// implemented in (and exported from) libsumatrapdfMod.dll - see src/libsumatrapdf.def
+// implemented in (and exported from) libsumatrapdf.dll - see src/libsumatrapdf.def
 extern "C" {
 int muconvert_main(int argc, char* argv[]);
 int mudraw_main(int argc, char* argv[]);
@@ -49,7 +49,7 @@ char** fz_argv_from_wargv(int argc, wchar_t** wargv);
 void fz_free_argv(int argc, char** argv);
 }
 
-// src/EmbeddedResources.cpp: mupdf's built-in fonts, from SumatraPDFMod.exe next to us
+// src/EmbeddedResources.cpp: mupdf's built-in fonts, from SumatraPDF.exe next to us
 void InstallEmbeddedFontLoader();
 
 // must match premake5.lua and src/SumatraPDF.cpp

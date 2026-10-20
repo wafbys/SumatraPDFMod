@@ -31,7 +31,7 @@ type Bucket = {
   sections: Map<string, number>;
 };
 
-const defaultExe = join("out", "rel64", "SumatraPDFMod-static.exe");
+const defaultExe = join("out", "rel64", "SumatraPDF-static.exe");
 const defaultPdb = join("out", "rel64", "SumatraPDF-static.pdb");
 const sectionColumns = [".text", ".rdata", ".data", ".pdata", ".rsrc", ".reloc"];
 
@@ -363,7 +363,7 @@ function renderReport(
   const projects = sortedBuckets(projectBuckets);
   const objects = sortedBuckets(objectBuckets);
   const lines: string[] = [];
-  lines.push(`SumatraPDFMod-static.exe size report`);
+  lines.push(`SumatraPDF-static.exe size report`);
   lines.push(`Generated: ${new Date().toISOString()}`);
   lines.push(`EXE: ${exe}`);
   lines.push(`PDB: ${pdb}`);

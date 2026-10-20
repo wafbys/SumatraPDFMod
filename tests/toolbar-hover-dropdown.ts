@@ -719,7 +719,7 @@ async function checkCustomZoomLevels(dir: string, pdf: string): Promise<void> {
   const appdata = join(dir, "appdata-custom");
   mkdirSync(appdata);
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     "UiLanguage = en\nRestoreSession = false\nShowStartPage = false\nCheckForUpdates = false\n" +
       `Theme = Dark\nZoomLevels = ${CUSTOM_ZOOM_LEVELS.join(" ")}\n`,
   );
@@ -783,7 +783,7 @@ export async function testit(): Promise<void> {
   const appdata = join(dir, "appdata");
   mkdirSync(appdata);
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     "UiLanguage = en\nRestoreSession = false\nShowStartPage = false\nCheckForUpdates = false\n",
   );
 

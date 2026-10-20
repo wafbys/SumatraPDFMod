@@ -54,11 +54,11 @@ ${tabState(LOADED_PDF)}
   ]
 ]
 `;
-  writeFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), seed, "utf8");
+  writeFileSync(join(APPDATA, "SumatraPDF-settings.txt"), seed, "utf8");
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   seedSettings();
   const { proc, client, frame } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   try {
@@ -66,7 +66,7 @@ export async function testit(): Promise<void> {
 
     // frees gInitialSessionData; the still-lazy first tab borrows from it
     sendCommandSync(frame, cmdId("CmdToggleFavoritesSort"));
-    const settingsPath = join(APPDATA, "SumatraPDFMod-settings.txt");
+    const settingsPath = join(APPDATA, "SumatraPDF-settings.txt");
     const saveDeadline = Date.now() + 5000 * SLOW_BUILD_FACTOR;
     let previous = "";
     let saved = false;
@@ -98,7 +98,7 @@ export async function testit(): Promise<void> {
       throw new Error(`lazy-tab-state-after-save: exit code ${exitCode}, want 0`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDFMod.exe");
+    await killProcessesNamed("SumatraPDF.exe");
     rmSync(APPDATA, { recursive: true, force: true });
   }
 }

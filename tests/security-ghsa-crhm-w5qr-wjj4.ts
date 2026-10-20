@@ -13,9 +13,9 @@ import { ControlCommand, withControlledSumatra } from "./control.ts";
 import { EXE, runStandalone, tmpPath } from "./util.ts";
 
 // What the exe needs beside it once copied out of the build directory. The
-// regular build loads the engine from libsumatrapdfMod.dll; the static (ASan) one
+// regular build loads the engine from libsumatrapdf.dll; the static (ASan) one
 // has it linked in but needs the ASan runtime, so copy whichever is there.
-const SIDE_BY_SIDE_DLLS = ["libsumatrapdfMod.dll", "clang_rt.asan_dynamic-x86_64.dll"].map((name) =>
+const SIDE_BY_SIDE_DLLS = ["libsumatrapdf.dll", "clang_rt.asan_dynamic-x86_64.dll"].map((name) =>
   join(dirname(EXE), name),
 );
 
@@ -55,14 +55,14 @@ async function assertPolicies(name: string, ini: string, want: Partial<PolicyBit
   rmSync(appDir, { recursive: true, force: true });
   mkdirSync(appDir, { recursive: true });
 
-  const testExe = join(appDir, "SumatraPDFMod.exe");
+  const testExe = join(appDir, "SumatraPDF.exe");
   copyFileSync(EXE, testExe);
   for (const dll of SIDE_BY_SIDE_DLLS) {
     if (existsSync(dll)) {
       copyFileSync(dll, join(appDir, basename(dll)));
     }
   }
-  writeFileSync(join(appDir, "SumatraPDFMod-restrict.ini"), ini);
+  writeFileSync(join(appDir, "sumatrapdfrestrict.ini"), ini);
 
   await withControlledSumatra(
     testExe,

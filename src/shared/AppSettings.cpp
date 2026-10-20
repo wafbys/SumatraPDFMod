@@ -276,24 +276,19 @@ static int cmpFloat(const float* a, const float* b) {
     return 0;
 }
 
-// SumatraPDF (mod): the mod keeps its settings in its own file. Portable
-// installs keep the settings next to the exe, so a plain SumatraPDF sharing the
-// folder would otherwise read and rewrite this file - dropping the font slots
-// it doesn't know about. An install that still has upstream's file name is
-// migrated (moved) to this one in LoadSettings().
-static constexpr const char* kModSettingsFileName = "SumatraPDFMod-settings.txt";
-static constexpr const char* kUpstreamSettingsFileName = "SumatraPDF-settings.txt";
+// The mod wrote its own file name until 2026-10-16; a portable install that
+// still has it is migrated (moved) to the standard name in LoadSettings().
+static constexpr const char* kSettingsFileName = "SumatraPDF-settings.txt";
+static constexpr const char* kLegacySettingsFileName = "SumatraPDFMod-settings.txt";
 
 TempStr GetSettingsFileNameTemp() {
     // Str(), not StrL(): the name lives in a const char*, and StrL() would take
     // sizeof(that pointer) - 1 characters of it
-    return str::DupTemp(Str(kModSettingsFileName));
+    return str::DupTemp(Str(kSettingsFileName));
 }
 
-// upstream's file name; read - and renamed to the mod's name - while an
-// install hasn't been migrated yet
-TempStr GetUpstreamSettingsPathTemp() {
-    return GetPathInAppDataDirTemp(str::DupTemp(Str(kUpstreamSettingsFileName)));
+TempStr GetLegacySettingsPathTemp() {
+    return GetPathInAppDataDirTemp(str::DupTemp(Str(kLegacySettingsFileName)));
 }
 
 // this could be virtual path when running in app store
@@ -847,16 +842,16 @@ bool LoadSettings() {
 
     Settings* gprefs = nullptr;
     TempStr settingsPath = GetSettingsPathTemp();
-    // one-time migration from upstream's file name; if the move fails (folder
+    // one-time migration from the mod's old file name; if the move fails (folder
     // not writable, file locked) the old file is still read as it is, so the
     // user only loses the rename
     if (!file::Exists(settingsPath)) {
-        TempStr upstreamPath = GetUpstreamSettingsPathTemp();
-        if (file::Exists(upstreamPath)) {
-            if (file::Rename(settingsPath, upstreamPath)) {
-                logf("LoadSettings: moved '%s' to '%s'\n", upstreamPath, settingsPath);
+        TempStr legacyPath = GetLegacySettingsPathTemp();
+        if (file::Exists(legacyPath)) {
+            if (file::Rename(settingsPath, legacyPath)) {
+                logf("LoadSettings: moved '%s' to '%s'\n", legacyPath, settingsPath);
             } else {
-                settingsPath = upstreamPath;
+                settingsPath = legacyPath;
             }
         }
     }

@@ -54,11 +54,11 @@ ${tabState(MISSING_EPUB)}
   ]
 ]
 `;
-  writeFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), seed, "utf8");
+  writeFileSync(join(APPDATA, "SumatraPDF-settings.txt"), seed, "utf8");
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   seedSettings();
   const { proc, client } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   try {
@@ -80,7 +80,7 @@ export async function testit(): Promise<void> {
       throw new Error(`restore-chm-missing-tab: exit code ${exitCode}, want 0`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDFMod.exe");
+    await killProcessesNamed("SumatraPDF.exe");
     rmSync(APPDATA, { recursive: true, force: true });
   }
 }

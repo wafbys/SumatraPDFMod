@@ -43,7 +43,7 @@ export async function testit(): Promise<void> {
   const appdata = tmpPath(kTag);
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  const settingsPath = join(appdata, "SumatraPDFMod-settings.txt");
+  const settingsPath = join(appdata, "SumatraPDF-settings.txt");
   const logPath = join(appdata, "log.txt");
   const cbz = join(appdata, "comic.cbz");
   copyFileSync(join(ROOT, "tests", "issue-1201.cbz"), cbz);

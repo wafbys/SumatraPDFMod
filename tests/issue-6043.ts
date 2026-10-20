@@ -170,7 +170,7 @@ async function testTheme(theme: "Light" | "Dark"): Promise<void> {
   mkdirSync(appdata, { recursive: true });
   writeFileSync(pdf, makePdf(), "latin1");
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     `UiLanguage = en\nTheme = ${theme}\nRestoreSession = false\nShowStartPage = false\nShowFavorites = false\nSidebarDx = 500\n`,
   );
 

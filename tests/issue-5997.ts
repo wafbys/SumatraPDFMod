@@ -107,7 +107,7 @@ export async function testit(): Promise<void> {
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     "UiLanguage = en\nCheckForUpdates = false\nRestoreSession = false\n",
   );
   const pdf = join(dir, "free-text.pdf");

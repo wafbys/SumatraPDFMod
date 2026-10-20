@@ -23,10 +23,10 @@ interface BuildOptions {
 const usage = `Usage: bun cmd/build.ts <mode> [options]
 
 Windows builds:
-  -dbg | -rel             Build SumatraPDFMod.exe for x64
+  -dbg | -rel             Build SumatraPDF.exe for x64
   -profile                Build a function-timing profile variant (out/prf64)
   -rel -32                Build the 32-bit release
-  -asan [-dbg|-rel]       Build SumatraPDFMod-static.exe with MSVC ASan
+  -asan [-dbg|-rel]       Build SumatraPDF-static.exe with MSVC ASan
   -all [-clean]           Build release SumatraPDF and SumatraPDF-static
   -smoke                  Rebuild release SumatraPDF, then run the debug unit tests
   -ci                     Build CI/pre-release artifacts
@@ -194,12 +194,12 @@ async function buildWindows(config: Config, win32: boolean, clean: boolean, ninj
   console.log(`${configName} ${platform} build`);
   if (clean) clearDirPreserveSettings(outDir);
   if (ninja) {
-    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDFMod.exe")]);
+    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDF.exe")]);
   } else {
     const { msbuildPath } = detectVisualStudio2026();
     await buildApp(msbuildPath, configName, platform, "SumatraPDF");
   }
-  printBinaries(outDir, new Set(["SumatraPDFMod.exe"]));
+  printBinaries(outDir, new Set(["SumatraPDF.exe"]));
 }
 
 async function buildNinja(targets: string[]): Promise<void> {
@@ -211,11 +211,11 @@ async function buildNinja(targets: string[]): Promise<void> {
 function printBinaries(dir: string, targets: Set<string>): void {
   const paths: string[] = [];
   const dynamicFiles = new Set([
-    "SumatraPDFMod.exe",
-    "libsumatrapdfMod.dll",
+    "SumatraPDF.exe",
+    "libsumatrapdf.dll",
     "PdfFilter.dll",
     "PdfPreview.dll",
-    "SumatraPDFMod-tool.exe",
+    "sumatrapdf-tool.exe",
   ]);
   const walk = (path: string): void => {
     for (const entry of readdirSync(path, { withFileTypes: true })) {
@@ -225,7 +225,7 @@ function printBinaries(dir: string, targets: Set<string>): void {
         continue;
       }
       const relPath = relative(dir, entryPath).replaceAll("\\", "/");
-      const isDynamic = targets.has("SumatraPDFMod.exe") && dynamicFiles.has(relPath);
+      const isDynamic = targets.has("SumatraPDF.exe") && dynamicFiles.has(relPath);
       if (entry.isFile() && (targets.has(entry.name) || isDynamic)) {
         paths.push(entryPath);
       }
@@ -267,11 +267,11 @@ function findAsanDll(vsRoot: string): string {
 async function buildWindowsAsan(config: Config, clean: boolean, ninja: boolean): Promise<void> {
   const configName = config === "release" ? "Release" : "Debug";
   const outDir = join("out", config === "release" ? "rel64_asan" : "dbg64_asan");
-  console.log(`${configName} ASan build (SumatraPDFMod-static.exe, x64_asan)`);
+  console.log(`${configName} ASan build (SumatraPDF-static.exe, x64_asan)`);
   if (clean) clearDirPreserveSettings(outDir);
   const { msbuildPath, vsRoot } = detectVisualStudio2026();
   if (ninja) {
-    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDFMod-static.exe")]);
+    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDF-static.exe")]);
   } else {
     await runLogged(msbuildPath, [
       String.raw`vs2022\SumatraPDF.sln`,
@@ -280,9 +280,9 @@ async function buildWindowsAsan(config: Config, clean: boolean, ninja: boolean):
       "/m",
     ]);
   }
-  printBinaries(outDir, new Set(["SumatraPDFMod-static.exe"]));
+  printBinaries(outDir, new Set(["SumatraPDF-static.exe"]));
   copyFileSync(findAsanDll(vsRoot), join(outDir, asanDllName));
-  console.log(`exe: ${join(outDir, "SumatraPDFMod-static.exe")}`);
+  console.log(`exe: ${join(outDir, "SumatraPDF-static.exe")}`);
 }
 
 async function buildAll(clean: boolean, ninja: boolean): Promise<void> {
@@ -290,7 +290,7 @@ async function buildAll(clean: boolean, ninja: boolean): Promise<void> {
   console.log("Release x64 SumatraPDF and SumatraPDF-static build");
   if (clean) clearDirPreserveSettings(outDir);
   if (ninja) {
-    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDFMod.exe"), join(ninjaToRoot, outDir, "SumatraPDFMod-static.exe")]);
+    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDF.exe"), join(ninjaToRoot, outDir, "SumatraPDF-static.exe")]);
   } else {
     const { msbuildPath } = detectVisualStudio2026();
     await buildApp(msbuildPath, "Release", "x64", "SumatraPDF");
@@ -301,7 +301,7 @@ async function buildAll(clean: boolean, ninja: boolean): Promise<void> {
       "/m",
     ]);
   }
-  printBinaries(outDir, new Set(["SumatraPDFMod.exe", "SumatraPDFMod-static.exe"]));
+  printBinaries(outDir, new Set(["SumatraPDF.exe", "SumatraPDF-static.exe"]));
 }
 
 async function buildSmoke(ninja: boolean): Promise<void> {
@@ -309,12 +309,12 @@ async function buildSmoke(ninja: boolean): Promise<void> {
   console.log("smoke build");
   clearDirPreserveSettings(outDir);
   if (ninja) {
-    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDFMod.exe")]);
+    await buildNinja([join(ninjaToRoot, outDir, "SumatraPDF.exe")]);
   } else {
     const { msbuildPath } = detectVisualStudio2026();
     await buildApp(msbuildPath, "Release", "x64", "SumatraPDF:Rebuild");
   }
-  printBinaries(outDir, new Set(["SumatraPDFMod.exe"]));
+  printBinaries(outDir, new Set(["SumatraPDF.exe"]));
   // unit tests are compiled into the debug SumatraPDF only
   await runLogged("bun", [join("cmd", "run-unit-tests.ts"), "-dbg"]);
 }

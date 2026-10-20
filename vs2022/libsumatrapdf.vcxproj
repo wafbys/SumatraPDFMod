@@ -333,140 +333,140 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg32\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg32\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgarm64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgarm64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64_asan\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64_asan\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull32\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull32\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfullarm64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfullarm64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64_asan\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64_asan\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_asan\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_asan\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32_prefast\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32_prefast\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64_prefast\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64_prefast\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast_asan\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast_asan\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf32\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf32\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prfarm64\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\prfarm64\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64_asan\obj\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64_asan\obj\libsumatrapdf\</IntDir>
-    <TargetName>libsumatrapdfMod</TargetName>
+    <TargetName>libsumatrapdf</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -501,10 +501,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbg32\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbg32\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbg32/libsumatrapdfMod.dll" /PDB:"../out/dbg32/libsumatrapdf.pdb" /IMPLIB:"../out/dbg32/obj/libsumatrapdfMod.lib" /MAP:"../out/dbg32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbg32/libsumatrapdf.dll" /PDB:"../out/dbg32/libsumatrapdf.pdb" /IMPLIB:"../out/dbg32/obj/libsumatrapdf.lib" /MAP:"../out/dbg32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -544,10 +544,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbg64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbg64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbg64/libsumatrapdfMod.dll" /PDB:"../out/dbg64/libsumatrapdf.pdb" /IMPLIB:"../out/dbg64/obj/libsumatrapdfMod.lib" /MAP:"../out/dbg64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbg64/libsumatrapdf.dll" /PDB:"../out/dbg64/libsumatrapdf.pdb" /IMPLIB:"../out/dbg64/obj/libsumatrapdf.lib" /MAP:"../out/dbg64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -587,10 +587,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbgarm64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbgarm64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbgarm64/libsumatrapdfMod.dll" /PDB:"../out/dbgarm64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgarm64/obj/libsumatrapdfMod.lib" /MAP:"../out/dbgarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbgarm64/libsumatrapdf.dll" /PDB:"../out/dbgarm64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgarm64/obj/libsumatrapdf.lib" /MAP:"../out/dbgarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -630,10 +630,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbg64_asan\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbg64_asan\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbg64_asan/libsumatrapdfMod.dll" /PDB:"../out/dbg64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/dbg64_asan/obj/libsumatrapdfMod.lib" /MAP:"../out/dbg64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbg64_asan/libsumatrapdf.dll" /PDB:"../out/dbg64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/dbg64_asan/obj/libsumatrapdf.lib" /MAP:"../out/dbg64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -672,10 +672,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbgfull32\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbgfull32\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbgfull32/libsumatrapdfMod.dll" /PDB:"../out/dbgfull32/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull32/obj/libsumatrapdfMod.lib" /MAP:"../out/dbgfull32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbgfull32/libsumatrapdf.dll" /PDB:"../out/dbgfull32/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull32/obj/libsumatrapdf.lib" /MAP:"../out/dbgfull32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -714,10 +714,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbgfull64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbgfull64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbgfull64/libsumatrapdfMod.dll" /PDB:"../out/dbgfull64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull64/obj/libsumatrapdfMod.lib" /MAP:"../out/dbgfull64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbgfull64/libsumatrapdf.dll" /PDB:"../out/dbgfull64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull64/obj/libsumatrapdf.lib" /MAP:"../out/dbgfull64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -756,10 +756,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbgfullarm64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbgfullarm64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbgfullarm64/libsumatrapdfMod.dll" /PDB:"../out/dbgfullarm64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfullarm64/obj/libsumatrapdfMod.lib" /MAP:"../out/dbgfullarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbgfullarm64/libsumatrapdf.dll" /PDB:"../out/dbgfullarm64/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfullarm64/obj/libsumatrapdf.lib" /MAP:"../out/dbgfullarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -798,10 +798,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\dbgfull64_asan\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\dbgfull64_asan\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/dbgfull64_asan/libsumatrapdfMod.dll" /PDB:"../out/dbgfull64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull64_asan/obj/libsumatrapdfMod.lib" /MAP:"../out/dbgfull64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/dbgfull64_asan/libsumatrapdf.dll" /PDB:"../out/dbgfull64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/dbgfull64_asan/obj/libsumatrapdf.lib" /MAP:"../out/dbgfull64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -841,10 +841,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel32\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel32\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel32/libsumatrapdfMod.dll" /PDB:"../out/rel32/libsumatrapdf.pdb" /IMPLIB:"../out/rel32/obj/libsumatrapdfMod.lib" /MAP:"../out/rel32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel32/libsumatrapdf.dll" /PDB:"../out/rel32/libsumatrapdf.pdb" /IMPLIB:"../out/rel32/obj/libsumatrapdf.lib" /MAP:"../out/rel32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -884,10 +884,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel64/libsumatrapdfMod.dll" /PDB:"../out/rel64/libsumatrapdf.pdb" /IMPLIB:"../out/rel64/obj/libsumatrapdfMod.lib" /MAP:"../out/rel64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel64/libsumatrapdf.dll" /PDB:"../out/rel64/libsumatrapdf.pdb" /IMPLIB:"../out/rel64/obj/libsumatrapdf.lib" /MAP:"../out/rel64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -927,10 +927,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\arm64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\arm64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/arm64/libsumatrapdfMod.dll" /PDB:"../out/arm64/libsumatrapdf.pdb" /IMPLIB:"../out/arm64/obj/libsumatrapdfMod.lib" /MAP:"../out/arm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/arm64/libsumatrapdf.dll" /PDB:"../out/arm64/libsumatrapdf.pdb" /IMPLIB:"../out/arm64/obj/libsumatrapdf.lib" /MAP:"../out/arm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -969,10 +969,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel64_asan\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel64_asan\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel64_asan/libsumatrapdfMod.dll" /PDB:"../out/rel64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_asan/obj/libsumatrapdfMod.lib" /MAP:"../out/rel64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel64_asan/libsumatrapdf.dll" /PDB:"../out/rel64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_asan/obj/libsumatrapdf.lib" /MAP:"../out/rel64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1013,10 +1013,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel32_prefast\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel32_prefast\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel32_prefast/libsumatrapdfMod.dll" /PDB:"../out/rel32_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/rel32_prefast/obj/libsumatrapdfMod.lib" /MAP:"../out/rel32_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel32_prefast/libsumatrapdf.dll" /PDB:"../out/rel32_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/rel32_prefast/obj/libsumatrapdf.lib" /MAP:"../out/rel32_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1057,10 +1057,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel64_prefast\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel64_prefast\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel64_prefast/libsumatrapdfMod.dll" /PDB:"../out/rel64_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_prefast/obj/libsumatrapdfMod.lib" /MAP:"../out/rel64_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel64_prefast/libsumatrapdf.dll" /PDB:"../out/rel64_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_prefast/obj/libsumatrapdf.lib" /MAP:"../out/rel64_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1101,10 +1101,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\arm64_prefast\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\arm64_prefast\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/arm64_prefast/libsumatrapdfMod.dll" /PDB:"../out/arm64_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/arm64_prefast/obj/libsumatrapdfMod.lib" /MAP:"../out/arm64_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/arm64_prefast/libsumatrapdf.dll" /PDB:"../out/arm64_prefast/libsumatrapdf.pdb" /IMPLIB:"../out/arm64_prefast/obj/libsumatrapdf.lib" /MAP:"../out/arm64_prefast/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1144,10 +1144,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\rel64_prefast_asan\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\rel64_prefast_asan\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/rel64_prefast_asan/libsumatrapdfMod.dll" /PDB:"../out/rel64_prefast_asan/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_prefast_asan/obj/libsumatrapdfMod.lib" /MAP:"../out/rel64_prefast_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/rel64_prefast_asan/libsumatrapdf.dll" /PDB:"../out/rel64_prefast_asan/libsumatrapdf.pdb" /IMPLIB:"../out/rel64_prefast_asan/obj/libsumatrapdf.lib" /MAP:"../out/rel64_prefast_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1186,10 +1186,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\prf32\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\prf32\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/prf32/libsumatrapdfMod.dll" /PDB:"../out/prf32/libsumatrapdf.pdb" /IMPLIB:"../out/prf32/obj/libsumatrapdfMod.lib" /MAP:"../out/prf32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/prf32/libsumatrapdf.dll" /PDB:"../out/prf32/libsumatrapdf.pdb" /IMPLIB:"../out/prf32/obj/libsumatrapdf.lib" /MAP:"../out/prf32/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1228,10 +1228,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\prf64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\prf64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/prf64/libsumatrapdfMod.dll" /PDB:"../out/prf64/libsumatrapdf.pdb" /IMPLIB:"../out/prf64/obj/libsumatrapdfMod.lib" /MAP:"../out/prf64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/prf64/libsumatrapdf.dll" /PDB:"../out/prf64/libsumatrapdf.pdb" /IMPLIB:"../out/prf64/obj/libsumatrapdf.lib" /MAP:"../out/prf64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1270,10 +1270,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\prfarm64\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\prfarm64\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/prfarm64/libsumatrapdfMod.dll" /PDB:"../out/prfarm64/libsumatrapdf.pdb" /IMPLIB:"../out/prfarm64/obj/libsumatrapdfMod.lib" /MAP:"../out/prfarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/prfarm64/libsumatrapdf.dll" /PDB:"../out/prfarm64/libsumatrapdf.pdb" /IMPLIB:"../out/prfarm64/obj/libsumatrapdf.lib" /MAP:"../out/prfarm64/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
@@ -1312,10 +1312,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\out\prf64_asan\obj\libsumatrapdfMod.lib</ImportLibrary>
+      <ImportLibrary>..\out\prf64_asan\obj\libsumatrapdf.lib</ImportLibrary>
       <GenerateMapFile>false</GenerateMapFile>
       <ModuleDefinitionFile>../src/libsumatrapdf.def</ModuleDefinitionFile>
-      <AdditionalOptions>/OUT:"../out/prf64_asan/libsumatrapdfMod.dll" /PDB:"../out/prf64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/prf64_asan/obj/libsumatrapdfMod.lib" /MAP:"../out/prf64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/OUT:"../out/prf64_asan/libsumatrapdf.dll" /PDB:"../out/prf64_asan/libsumatrapdf.pdb" /IMPLIB:"../out/prf64_asan/obj/libsumatrapdf.lib" /MAP:"../out/prf64_asan/obj/libsumatrapdf.map" /DEF:..\src\libsumatrapdf.def -IGNORE:4701 -IGNORE:4702 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>

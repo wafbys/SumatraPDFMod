@@ -65,7 +65,7 @@ async function openZoomed(name: string, settings: string[]): Promise<Session> {
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    `${appdata}/SumatraPDFMod-settings.txt`,
+    `${appdata}/SumatraPDF-settings.txt`,
     ["RestoreSession = false", "SmoothScroll = false", ...settings, ""].join("\n"),
   );
 

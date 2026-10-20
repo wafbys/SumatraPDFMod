@@ -124,7 +124,7 @@ export async function testit(): Promise<void> {
   const appdata = join(dir, "appdata");
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     [
       "ReuseInstance = true",
       "UseTabs = true",

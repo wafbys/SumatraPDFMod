@@ -284,7 +284,7 @@ struct FileState {
     // that only a diff has to be saved instead of all states for the whole
     // tree (which can be quite large) (internal)
     Vec<int>* tocState;
-    // thumbnails are saved as PNG files in SumatraPDFMod-cache directory
+    // thumbnails are saved as PNG files in sumatrapdfcache directory
     Pixmap* thumbnail;
     // image list holding the file's shell icon
     HIMAGELIST himl;
@@ -883,7 +883,7 @@ struct HtmlUI {
     bool useFixedPageUI;
 };
 
-// Preferences are persisted in SumatraPDFMod-settings.txt
+// Preferences are persisted in SumatraPDF-settings.txt
 struct Settings {
     // what the sidebar's bottom panel shows: favorites (the default),
     // bookmarks or thumbnails

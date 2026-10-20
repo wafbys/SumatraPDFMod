@@ -1,7 +1,7 @@
 // Test for https://github.com/sumatrapdfreader/sumatrapdf/issues/5665
 //
-// `SumatraPDFMod.exe run script.js` (the mupdf JavaScript `run` tool) must be able
-// to read stdin via readline(). SumatraPDFMod.exe is a GUI-subsystem app, so its
+// `SumatraPDF.exe run script.js` (the mupdf JavaScript `run` tool) must be able
+// to read stdin via readline(). SumatraPDF.exe is a GUI-subsystem app, so its
 // CRT stdin wasn't wired to the inherited input handle and readline() failed
 // with "cannot read line from stdin". The fix wires stdin in
 // fz_redirect_io_to_existing_console() (ext/mupdf/source/tools/mudraw.c).

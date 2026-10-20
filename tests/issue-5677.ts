@@ -1,6 +1,6 @@
 // Test for https://github.com/sumatrapdfreader/sumatrapdf/issues/5677
 //
-// `SumatraPDFMod.exe info file.pdf` (and the other mupdf-derived tools) must write
+// `SumatraPDF.exe info file.pdf` (and the other mupdf-derived tools) must write
 // ONLY the tool's output to stdout, so that `info file.pdf > out.txt` captures
 // clean output. Before the fix:
 //   - the tool wasn't even detected when the exe was launched via a relative

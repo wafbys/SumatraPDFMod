@@ -18,6 +18,6 @@ TempStr BuiltOnDate();
 extern Str currentVersion; // e.g. "3.2.1138"
 extern Str gitCommidId;
 
-constexpr const char* kExeName = "SumatraPDFMod.exe";
+constexpr const char* kExeName = "SumatraPDF.exe";
 
 int GetAppIconID();

@@ -333,7 +333,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg32\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg32\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -341,7 +341,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -349,7 +349,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgarm64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -357,7 +357,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64_asan\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -365,7 +365,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull32\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull32\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -373,7 +373,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -381,7 +381,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfullarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfullarm64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -389,7 +389,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64_asan\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -397,7 +397,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -405,7 +405,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -413,7 +413,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -421,7 +421,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_asan\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -429,7 +429,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32_prefast\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -437,7 +437,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -445,7 +445,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64_prefast\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -453,7 +453,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast_asan\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -461,7 +461,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf32\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf32\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -469,7 +469,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -477,7 +477,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prfarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\prfarm64\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -485,7 +485,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64_asan\obj\SumatraPDF\</IntDir>
-    <TargetName>SumatraPDFMod</TargetName>
+    <TargetName>SumatraPDF</TargetName>
     <TargetExt>.exe</TargetExt>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -521,12 +521,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbg32/obj/SumatraPDF.lib" /MAP:"../out/dbg32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbg32/obj/SumatraPDF.lib" /MAP:"../out/dbg32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg32\embedded ../out/dbg32\embedded.lzsa ../out/dbg32\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbg32\PdfFilter.dll:PdfFilter.dll ../out/dbg32\PdfPreview.dll:PdfPreview.dll ../out/dbg32\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg32\embedded ../out/dbg32\embedded.lzsa ../out/dbg32\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbg32\PdfFilter.dll:PdfFilter.dll ../out/dbg32\PdfPreview.dll:PdfPreview.dll ../out/dbg32\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -564,12 +564,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbg64/obj/SumatraPDF.lib" /MAP:"../out/dbg64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbg64/obj/SumatraPDF.lib" /MAP:"../out/dbg64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg64\embedded ../out/dbg64\embedded.lzsa ../out/dbg64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbg64\PdfFilter.dll:PdfFilter.dll ../out/dbg64\PdfPreview.dll:PdfPreview.dll ../out/dbg64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg64\embedded ../out/dbg64\embedded.lzsa ../out/dbg64\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbg64\PdfFilter.dll:PdfFilter.dll ../out/dbg64\PdfPreview.dll:PdfPreview.dll ../out/dbg64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -607,12 +607,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbgarm64/obj/SumatraPDF.lib" /MAP:"../out/dbgarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbgarm64/obj/SumatraPDF.lib" /MAP:"../out/dbgarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgarm64\embedded ../out/dbgarm64\embedded.lzsa ../out/dbgarm64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbgarm64\PdfFilter.dll:PdfFilter.dll ../out/dbgarm64\PdfPreview.dll:PdfPreview.dll ../out/dbgarm64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgarm64\embedded ../out/dbgarm64\embedded.lzsa ../out/dbgarm64\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbgarm64\PdfFilter.dll:PdfFilter.dll ../out/dbgarm64\PdfPreview.dll:PdfPreview.dll ../out/dbgarm64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -650,12 +650,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbg64_asan/obj/SumatraPDF.lib" /MAP:"../out/dbg64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbg64_asan/obj/SumatraPDF.lib" /MAP:"../out/dbg64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg64_asan\embedded ../out/dbg64_asan\embedded.lzsa ../out/dbg64_asan\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbg64_asan\PdfFilter.dll:PdfFilter.dll ../out/dbg64_asan\PdfPreview.dll:PdfPreview.dll ../out/dbg64_asan\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbg64_asan\embedded ../out/dbg64_asan\embedded.lzsa ../out/dbg64_asan\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbg64_asan\PdfFilter.dll:PdfFilter.dll ../out/dbg64_asan\PdfPreview.dll:PdfPreview.dll ../out/dbg64_asan\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /y "$(VCToolsInstallDir)bin\Hostx64\x64\clang_rt.asan_dynamic-x86_64.dll" "$(OutDir)"</Command>
@@ -696,12 +696,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbgfull32/obj/SumatraPDF.lib" /MAP:"../out/dbgfull32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbgfull32/obj/SumatraPDF.lib" /MAP:"../out/dbgfull32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull32\embedded ../out/dbgfull32\embedded.lzsa ../out/dbgfull32\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbgfull32\PdfFilter.dll:PdfFilter.dll ../out/dbgfull32\PdfPreview.dll:PdfPreview.dll ../out/dbgfull32\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull32\embedded ../out/dbgfull32\embedded.lzsa ../out/dbgfull32\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbgfull32\PdfFilter.dll:PdfFilter.dll ../out/dbgfull32\PdfPreview.dll:PdfPreview.dll ../out/dbgfull32\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -739,12 +739,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbgfull64/obj/SumatraPDF.lib" /MAP:"../out/dbgfull64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbgfull64/obj/SumatraPDF.lib" /MAP:"../out/dbgfull64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull64\embedded ../out/dbgfull64\embedded.lzsa ../out/dbgfull64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbgfull64\PdfFilter.dll:PdfFilter.dll ../out/dbgfull64\PdfPreview.dll:PdfPreview.dll ../out/dbgfull64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull64\embedded ../out/dbgfull64\embedded.lzsa ../out/dbgfull64\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbgfull64\PdfFilter.dll:PdfFilter.dll ../out/dbgfull64\PdfPreview.dll:PdfPreview.dll ../out/dbgfull64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -782,12 +782,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbgfullarm64/obj/SumatraPDF.lib" /MAP:"../out/dbgfullarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbgfullarm64/obj/SumatraPDF.lib" /MAP:"../out/dbgfullarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfullarm64\embedded ../out/dbgfullarm64\embedded.lzsa ../out/dbgfullarm64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbgfullarm64\PdfFilter.dll:PdfFilter.dll ../out/dbgfullarm64\PdfPreview.dll:PdfPreview.dll ../out/dbgfullarm64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfullarm64\embedded ../out/dbgfullarm64\embedded.lzsa ../out/dbgfullarm64\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbgfullarm64\PdfFilter.dll:PdfFilter.dll ../out/dbgfullarm64\PdfPreview.dll:PdfPreview.dll ../out/dbgfullarm64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -825,12 +825,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/dbgfull64_asan/obj/SumatraPDF.lib" /MAP:"../out/dbgfull64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/dbgfull64_asan/obj/SumatraPDF.lib" /MAP:"../out/dbgfull64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull64_asan\embedded ../out/dbgfull64_asan\embedded.lzsa ../out/dbgfull64_asan\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/dbgfull64_asan\PdfFilter.dll:PdfFilter.dll ../out/dbgfull64_asan\PdfPreview.dll:PdfPreview.dll ../out/dbgfull64_asan\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/dbgfull64_asan\embedded ../out/dbgfull64_asan\embedded.lzsa ../out/dbgfull64_asan\libsumatrapdf.dll:libsumatrapdf.dll ../out/dbgfull64_asan\PdfFilter.dll:PdfFilter.dll ../out/dbgfull64_asan\PdfPreview.dll:PdfPreview.dll ../out/dbgfull64_asan\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /y "$(VCToolsInstallDir)bin\Hostx64\x64\clang_rt.asan_dynamic-x86_64.dll" "$(OutDir)"</Command>
@@ -875,12 +875,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel32/obj/SumatraPDF.lib" /MAP:"../out/rel32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel32/obj/SumatraPDF.lib" /MAP:"../out/rel32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel32\embedded ../out/rel32\embedded.lzsa ../out/rel32\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel32\PdfFilter.dll:PdfFilter.dll ../out/rel32\PdfPreview.dll:PdfPreview.dll ../out/rel32\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel32\embedded ../out/rel32\embedded.lzsa ../out/rel32\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel32\PdfFilter.dll:PdfFilter.dll ../out/rel32\PdfPreview.dll:PdfPreview.dll ../out/rel32\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -922,12 +922,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel64/obj/SumatraPDF.lib" /MAP:"../out/rel64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel64/obj/SumatraPDF.lib" /MAP:"../out/rel64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64\embedded ../out/rel64\embedded.lzsa ../out/rel64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel64\PdfFilter.dll:PdfFilter.dll ../out/rel64\PdfPreview.dll:PdfPreview.dll ../out/rel64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64\embedded ../out/rel64\embedded.lzsa ../out/rel64\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel64\PdfFilter.dll:PdfFilter.dll ../out/rel64\PdfPreview.dll:PdfPreview.dll ../out/rel64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -969,12 +969,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/arm64/obj/SumatraPDF.lib" /MAP:"../out/arm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/arm64/obj/SumatraPDF.lib" /MAP:"../out/arm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/arm64\embedded ../out/arm64\embedded.lzsa ../out/arm64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/arm64\PdfFilter.dll:PdfFilter.dll ../out/arm64\PdfPreview.dll:PdfPreview.dll ../out/arm64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/arm64\embedded ../out/arm64\embedded.lzsa ../out/arm64\libsumatrapdf.dll:libsumatrapdf.dll ../out/arm64\PdfFilter.dll:PdfFilter.dll ../out/arm64\PdfPreview.dll:PdfPreview.dll ../out/arm64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1015,12 +1015,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel64_asan/obj/SumatraPDF.lib" /MAP:"../out/rel64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel64_asan/obj/SumatraPDF.lib" /MAP:"../out/rel64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_asan\embedded ../out/rel64_asan\embedded.lzsa ../out/rel64_asan\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel64_asan\PdfFilter.dll:PdfFilter.dll ../out/rel64_asan\PdfPreview.dll:PdfPreview.dll ../out/rel64_asan\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_asan\embedded ../out/rel64_asan\embedded.lzsa ../out/rel64_asan\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel64_asan\PdfFilter.dll:PdfFilter.dll ../out/rel64_asan\PdfPreview.dll:PdfPreview.dll ../out/rel64_asan\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /y "$(VCToolsInstallDir)bin\Hostx64\x64\clang_rt.asan_dynamic-x86_64.dll" "$(OutDir)"</Command>
@@ -1065,12 +1065,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel32_prefast/obj/SumatraPDF.lib" /MAP:"../out/rel32_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel32_prefast/obj/SumatraPDF.lib" /MAP:"../out/rel32_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel32_prefast\embedded ../out/rel32_prefast\embedded.lzsa ../out/rel32_prefast\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel32_prefast\PdfFilter.dll:PdfFilter.dll ../out/rel32_prefast\PdfPreview.dll:PdfPreview.dll ../out/rel32_prefast\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel32_prefast\embedded ../out/rel32_prefast\embedded.lzsa ../out/rel32_prefast\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel32_prefast\PdfFilter.dll:PdfFilter.dll ../out/rel32_prefast\PdfPreview.dll:PdfPreview.dll ../out/rel32_prefast\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1112,12 +1112,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel64_prefast/obj/SumatraPDF.lib" /MAP:"../out/rel64_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel64_prefast/obj/SumatraPDF.lib" /MAP:"../out/rel64_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_prefast\embedded ../out/rel64_prefast\embedded.lzsa ../out/rel64_prefast\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel64_prefast\PdfFilter.dll:PdfFilter.dll ../out/rel64_prefast\PdfPreview.dll:PdfPreview.dll ../out/rel64_prefast\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_prefast\embedded ../out/rel64_prefast\embedded.lzsa ../out/rel64_prefast\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel64_prefast\PdfFilter.dll:PdfFilter.dll ../out/rel64_prefast\PdfPreview.dll:PdfPreview.dll ../out/rel64_prefast\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1159,12 +1159,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/arm64_prefast/obj/SumatraPDF.lib" /MAP:"../out/arm64_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/arm64_prefast/obj/SumatraPDF.lib" /MAP:"../out/arm64_prefast/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/arm64_prefast\embedded ../out/arm64_prefast\embedded.lzsa ../out/arm64_prefast\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/arm64_prefast\PdfFilter.dll:PdfFilter.dll ../out/arm64_prefast\PdfPreview.dll:PdfPreview.dll ../out/arm64_prefast\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/arm64_prefast\embedded ../out/arm64_prefast\embedded.lzsa ../out/arm64_prefast\libsumatrapdf.dll:libsumatrapdf.dll ../out/arm64_prefast\PdfFilter.dll:PdfFilter.dll ../out/arm64_prefast\PdfPreview.dll:PdfPreview.dll ../out/arm64_prefast\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1205,12 +1205,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/rel64_prefast_asan/obj/SumatraPDF.lib" /MAP:"../out/rel64_prefast_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/rel64_prefast_asan/obj/SumatraPDF.lib" /MAP:"../out/rel64_prefast_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_prefast_asan\embedded ../out/rel64_prefast_asan\embedded.lzsa ../out/rel64_prefast_asan\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/rel64_prefast_asan\PdfFilter.dll:PdfFilter.dll ../out/rel64_prefast_asan\PdfPreview.dll:PdfPreview.dll ../out/rel64_prefast_asan\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/rel64_prefast_asan\embedded ../out/rel64_prefast_asan\embedded.lzsa ../out/rel64_prefast_asan\libsumatrapdf.dll:libsumatrapdf.dll ../out/rel64_prefast_asan\PdfFilter.dll:PdfFilter.dll ../out/rel64_prefast_asan\PdfPreview.dll:PdfPreview.dll ../out/rel64_prefast_asan\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /y "$(VCToolsInstallDir)bin\Hostx64\x64\clang_rt.asan_dynamic-x86_64.dll" "$(OutDir)"</Command>
@@ -1250,12 +1250,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/prf32/obj/SumatraPDF.lib" /MAP:"../out/prf32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/prf32/obj/SumatraPDF.lib" /MAP:"../out/prf32/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf32\embedded ../out/prf32\embedded.lzsa ../out/prf32\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/prf32\PdfFilter.dll:PdfFilter.dll ../out/prf32\PdfPreview.dll:PdfPreview.dll ../out/prf32\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf32\embedded ../out/prf32\embedded.lzsa ../out/prf32\libsumatrapdf.dll:libsumatrapdf.dll ../out/prf32\PdfFilter.dll:PdfFilter.dll ../out/prf32\PdfPreview.dll:PdfPreview.dll ../out/prf32\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1292,12 +1292,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/prf64/obj/SumatraPDF.lib" /MAP:"../out/prf64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/prf64/obj/SumatraPDF.lib" /MAP:"../out/prf64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf64\embedded ../out/prf64\embedded.lzsa ../out/prf64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/prf64\PdfFilter.dll:PdfFilter.dll ../out/prf64\PdfPreview.dll:PdfPreview.dll ../out/prf64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf64\embedded ../out/prf64\embedded.lzsa ../out/prf64\libsumatrapdf.dll:libsumatrapdf.dll ../out/prf64\PdfFilter.dll:PdfFilter.dll ../out/prf64\PdfPreview.dll:PdfPreview.dll ../out/prf64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1334,12 +1334,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/prfarm64/obj/SumatraPDF.lib" /MAP:"../out/prfarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/prfarm64/obj/SumatraPDF.lib" /MAP:"../out/prfarm64/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prfarm64\embedded ../out/prfarm64\embedded.lzsa ../out/prfarm64\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/prfarm64\PdfFilter.dll:PdfFilter.dll ../out/prfarm64\PdfPreview.dll:PdfPreview.dll ../out/prfarm64\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prfarm64\embedded ../out/prfarm64\embedded.lzsa ../out/prfarm64\libsumatrapdf.dll:libsumatrapdf.dll ../out/prfarm64\PdfFilter.dll:PdfFilter.dll ../out/prfarm64\PdfPreview.dll:PdfPreview.dll ../out/prfarm64\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <CustomBuild>
       <BuildInParallel>true</BuildInParallel>
@@ -1376,12 +1376,12 @@
       <AdditionalDependencies>delayimp.lib;d2d1.lib;uiautomationcore.lib;uxtheme.lib;wintrust.lib;advapi32.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;shell32.lib;windowscodecs.lib;comctl32.lib;msimg32.lib;winspool.lib;wininet.lib;urlmon.lib;gdiplus.lib;ole32.lib;oleAut32.lib;shlwapi.lib;version.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>false</GenerateMapFile>
-      <AdditionalOptions>/IMPLIB:"../out/prf64_asan/obj/SumatraPDF.lib" /MAP:"../out/prf64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdfMod.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IMPLIB:"../out/prf64_asan/obj/SumatraPDF.lib" /MAP:"../out/prf64_asan/obj/SumatraPDF.map" /DELAYLOAD:libsumatrapdf.dll /DELAYLOAD:gdiplus.dll /DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:urlmon.dll /DELAYLOAD:wininet.dll /DELAYLOAD:uiautomationcore.dll /DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf64_asan\embedded ../out/prf64_asan\embedded.lzsa ../out/prf64_asan\libsumatrapdfMod.dll:libsumatrapdfMod.dll ../out/prf64_asan\PdfFilter.dll:PdfFilter.dll ../out/prf64_asan\PdfPreview.dll:PdfPreview.dll ../out/prf64_asan\SumatraPDFMod-tool.exe:SumatraPDFMod-tool.exe</Command>
+      <Command>call ..\cmd\pack-embedded-prebuild.cmd ../out/prf64_asan\embedded ../out/prf64_asan\embedded.lzsa ../out/prf64_asan\libsumatrapdf.dll:libsumatrapdf.dll ../out/prf64_asan\PdfFilter.dll:PdfFilter.dll ../out/prf64_asan\PdfPreview.dll:PdfPreview.dll ../out/prf64_asan\sumatrapdf-tool.exe:sumatrapdf-tool.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /y "$(VCToolsInstallDir)bin\Hostx64\x64\clang_rt.asan_dynamic-x86_64.dll" "$(OutDir)"</Command>

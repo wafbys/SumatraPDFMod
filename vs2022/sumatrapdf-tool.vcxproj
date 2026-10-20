@@ -333,140 +333,140 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg32\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg32\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgarm64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbg64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbg64_asan\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull32\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull32\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull|ARM64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfullarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfullarm64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFull x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\dbgfull64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\dbgfull64_asan\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_asan\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel32_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel32_prefast\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze|ARM64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\arm64_prefast\</OutDir>
     <IntDir>$(ProjectDir)..\out\arm64_prefast\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseAnalyze x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\rel64_prefast_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\rel64_prefast_asan\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf32\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf32\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prfarm64\</OutDir>
     <IntDir>$(ProjectDir)..\out\prfarm64\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile x64_asan|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\out\prf64_asan\</OutDir>
     <IntDir>$(ProjectDir)..\out\prf64_asan\obj\sumatrapdf-tool\</IntDir>
-    <TargetName>SumatraPDFMod-tool</TargetName>
+    <TargetName>sumatrapdf-tool</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

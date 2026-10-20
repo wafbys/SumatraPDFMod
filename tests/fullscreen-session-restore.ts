@@ -40,7 +40,7 @@ export async function testit(): Promise<void> {
   const dir = tmpPath("fullscreen-session-restore");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
-  const settingsPath = join(dir, "SumatraPDFMod-settings.txt");
+  const settingsPath = join(dir, "SumatraPDF-settings.txt");
   writeFileSync(
     settingsPath,
     "UiLanguage = en\nCheckForUpdates = false\nRestoreSession = true\nReuseInstance = false\n" +

@@ -41,7 +41,7 @@ export async function testit(): Promise<void> {
   const pdf = join(appData, "doc.pdf");
   copyFileSync(SRC_PDF, pdf);
   writeFileSync(
-    join(appData, "SumatraPDFMod-settings.txt"),
+    join(appData, "SumatraPDF-settings.txt"),
     ["UiLanguage = en", "CheckForUpdates = false", "RestoreSession = false", "EscToExit = true", ""].join("\n"),
   );
 

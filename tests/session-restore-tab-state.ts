@@ -28,7 +28,7 @@ function makePdf(): string {
 // the TabState is the only record of how the tab was viewed: no FileState
 function seedSettings(dir: string, pdf: string): void {
   writeFileSync(
-    join(dir, "SumatraPDFMod-settings.txt"),
+    join(dir, "SumatraPDF-settings.txt"),
     `UiLanguage = en
 CheckForUpdates = false
 RestoreSession = true
@@ -61,7 +61,7 @@ SessionData [
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   const dir = tmpPath("session-restore-tab-state");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
@@ -83,7 +83,7 @@ export async function testit(): Promise<void> {
     throw new Error(`session-restore-tab-state: exit code ${exitCode}, want 0`);
   }
 
-  const text = readFileSync(join(dir, "SumatraPDFMod-settings.txt"), "utf8");
+  const text = readFileSync(join(dir, "SumatraPDF-settings.txt"), "utf8");
   const m =
     /TabStates \[\s*\[[^\]]*?DisplayMode = ([^\r\n]+)\r?\n[^\]]*?PageNo = (\S+)\r?\n[^\]]*?Zoom = ([^\r\n]+)\r?\n/.exec(
       text,

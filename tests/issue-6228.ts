@@ -38,7 +38,7 @@ export async function testit(): Promise<void> {
   mkdirSync(appdata, { recursive: true });
   writeFileSync(pdf, makePdf(), "latin1");
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     "CheckForUpdates = false\nRestoreSession = false\nUseTabs = true\nNoHomeTab = true\n",
   );
 

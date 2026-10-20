@@ -14,7 +14,7 @@ const PDF = resolve("tests/issue-1189.pdf");
 const WM_QUERYENDSESSION = 0x0011;
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   const { proc, client, frame } = await launchControlled([PDF]);
   try {
     await client.waitForRenderIdle();
@@ -30,7 +30,7 @@ export async function testit(): Promise<void> {
     await killAndWait(proc);
     throw e;
   } finally {
-    await killProcessesNamed("SumatraPDFMod.exe");
+    await killProcessesNamed("SumatraPDF.exe");
   }
   console.log("ad-hoc-query-end-session: OK");
 }

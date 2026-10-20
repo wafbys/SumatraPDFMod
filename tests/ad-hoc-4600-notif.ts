@@ -13,7 +13,7 @@ async function shot(doc: string, fontName: string, tag: string): Promise<void> {
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     [`EBookUI [`, `\tFontName = ${fontName}`, `]`, `RestoreSession = false`, ``].join("\n"),
   );
   const proc = launchSumatra(["-appdata", appdata, "-view", "single page", "-zoom", "fit page", doc]);
@@ -32,7 +32,7 @@ async function shot(doc: string, fontName: string, tag: string): Promise<void> {
 
 export async function testit(): Promise<void> {
   makeFixtures();
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   const epub = join(tmpPath("epub-font"), "none.epub");
   const pdf = tmpPath("issue-4600.pdf");
   writeFileSync(pdf, makeMinimalPdf("font test"));
@@ -50,7 +50,7 @@ async function shotPerFile(doc: string, globalFont: string, fileFont: string, ta
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
   writeFileSync(
-    join(appdata, "SumatraPDFMod-settings.txt"),
+    join(appdata, "SumatraPDF-settings.txt"),
     [
       `EBookUI [`,
       `\tFontName = ${globalFont}`,

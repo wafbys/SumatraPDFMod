@@ -126,7 +126,7 @@ function writeSettings(extra: string[]): void {
   rmSync(APPDATA, { recursive: true, force: true });
   mkdirSync(APPDATA, { recursive: true });
   writeFileSync(
-    join(APPDATA, "SumatraPDFMod-settings.txt"),
+    join(APPDATA, "SumatraPDF-settings.txt"),
     [`EBookUI [`, `\tFontName = Georgia`, `\tLineSpacing = 1.4`, `]`, `RestoreSession = false`, ...extra, ``].join(
       "\n",
     ),
@@ -254,13 +254,13 @@ export async function testit(): Promise<void> {
   if (USE_NG) {
     writeSettings([]);
     await ngApply(epub, "This file");
-    checkThisFile(readFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), "utf8"));
+    checkThisFile(readFileSync(join(APPDATA, "SumatraPDF-settings.txt"), "utf8"));
     await ngApply(epub, "For all ebooks");
-    checkAllEbooks(readFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), "utf8"));
+    checkAllEbooks(readFileSync(join(APPDATA, "SumatraPDF-settings.txt"), "utf8"));
     console.log("  ng: the CSS box, Tab stops, Esc and Reset checks drive Win32 controls; skipped");
     return;
   }
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
 
   // --- both states of the CSS box ---------------------------------------
   writeSettings([]);
@@ -407,7 +407,7 @@ export async function testit(): Promise<void> {
     } finally {
       await killAndWait(l.proc);
     }
-    checkThisFile(readFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), "utf8"));
+    checkThisFile(readFileSync(join(APPDATA, "SumatraPDF-settings.txt"), "utf8"));
   }
 
   // --- OK with "For all ebooks" writes the global section ----------------
@@ -425,7 +425,7 @@ export async function testit(): Promise<void> {
     } finally {
       await killAndWait(l.proc);
     }
-    checkAllEbooks(readFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), "utf8"));
+    checkAllEbooks(readFileSync(join(APPDATA, "SumatraPDF-settings.txt"), "utf8"));
   }
 }
 

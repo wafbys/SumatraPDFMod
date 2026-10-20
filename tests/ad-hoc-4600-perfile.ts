@@ -19,7 +19,7 @@ async function render(epub: string, settings: string): Promise<Uint8Array> {
   const appdata = tmpPath("issue-4600-perfile-appdata");
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), settings);
+  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), settings);
   const proc = launchSumatra(["-appdata", appdata, "-view", "single page", "-zoom", "fit page", epub]);
   try {
     const frame = await waitForFrame(proc.pid!);
@@ -77,7 +77,7 @@ function prefs(fileBlock: string, epub: string): string {
 
 export async function testit(): Promise<void> {
   makeFixtures();
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   const epub = join(EPUB_DIR, "none.epub");
 
   // baseline: global FontName only
@@ -113,7 +113,7 @@ export async function testit(): Promise<void> {
   const appdata = tmpPath("issue-4600-perfile-appdata");
   rmSync(appdata, { recursive: true, force: true });
   mkdirSync(appdata, { recursive: true });
-  const settingsPath = join(appdata, "SumatraPDFMod-settings.txt");
+  const settingsPath = join(appdata, "SumatraPDF-settings.txt");
   writeFileSync(settingsPath, prefs(`\t\tEBookUI [\n\t\t\tFontName = Courier New\n\t\t]`, epub));
   const other = join(EPUB_DIR, "cls.epub");
   // no -for-testing: that mode never writes the settings file back

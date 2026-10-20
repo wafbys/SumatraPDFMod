@@ -1,7 +1,7 @@
 /* Copyright 2022 the SumatraPDF project authors (see AUTHORS file).
    License: GPLv3 */
 
-// permissions that can be revoked through SumatraPDFMod-restrict.ini or the -restrict command line flag
+// permissions that can be revoked through sumatrapdfrestrict.ini or the -restrict command line flag
 enum class Perm : uint {
     // enables Update checks, crash report submitting and hyperlinks
     InternetAccess = 1 << 0,
@@ -21,7 +21,7 @@ enum class Perm : uint {
     AIChat = 1 << 7,
     // enables all of the above
     All = 0x0FFFFFF,
-    // set if either SumatraPDFMod-restrict.ini or the -restrict command line flag is present
+    // set if either sumatrapdfrestrict.ini or the -restrict command line flag is present
     RestrictedUse = 0x1000000,
 };
 

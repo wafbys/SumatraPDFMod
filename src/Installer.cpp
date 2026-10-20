@@ -103,8 +103,8 @@ static Checkbox* CreateCheckbox(HWND hwndParent, Str s, bool isChecked) {
 // Last Win32 error from WriteInstallerFileRobust (for user-facing messages).
 static DWORD gLastWriteInstallerErr = 0;
 
-// Write a file during install/upgrade. libsumatrapdfMod.dll is often locked by
-// SumatraPDFMod.exe, dllhost/prevhost (preview), or PdfFilter; a plain
+// Write a file during install/upgrade. libsumatrapdf.dll is often locked by
+// SumatraPDF.exe, dllhost/prevhost (preview), or PdfFilter; a plain
 // CreateFile(CREATE_ALWAYS) then fails and leaves the old DLL (size mismatch
 // with the new exe). Retry: direct write, temp+rename, kill holders, delete.
 static bool WriteInstallerFileRobust(Str path, Str data) {
@@ -225,7 +225,7 @@ static TempStr WriteInstallerFileFailureMsgTemp(Str filePath) {
 }
 
 // --- Rename locked install files aside before extract ----------------------------
-// Upgrades rename libsumatrapdfMod.dll / PdfFilter.dll / PdfPreview.dll to *.copy so we
+// Upgrades rename libsumatrapdf.dll / PdfFilter.dll / PdfPreview.dll to *.copy so we
 // can write new files even when the old DLL is still mapped. If rename stays
 // blocked, show a dialog that retries every 3s (or silent retries for ~60s).
 
@@ -489,7 +489,7 @@ static void LogFileAttrsAndAclSummary(Str path) {
 }
 
 // One rename attempt: clear RO, delete stale .copy, kill holders, MoveFileEx.
-// ClearReadOnly runs for every file (including libsumatrapdfMod.dll), same as the
+// ClearReadOnly runs for every file (including libsumatrapdf.dll), same as the
 // legacy libmupdf path — a RO bit alone must not block upgrades.
 static bool TryRenameAsideOnce(Str path, Str copyPath) {
     if (!file::Exists(path)) {
@@ -582,7 +582,7 @@ static TempStr FormatMoveAsideDialogContentTemp(Str fileName, Str path) {
     return fmt(Tr("Could not update %s because another program still has the file open.\n\n"
                   "Common causes:\n"
                   "• Windows Search Indexer (loads PdfFilter.dll for PDF search)\n"
-                  "• File Explorer PDF preview (loads PdfPreview.dll / libsumatrapdfMod.dll)\n"
+                  "• File Explorer PDF preview (loads PdfPreview.dll / libsumatrapdf.dll)\n"
                   "• Another SumatraPDF window or PDF application\n\n"
                   "What to try:\n"
                   "• Close Explorer windows that show a PDF preview pane\n"
@@ -701,7 +701,7 @@ static bool ShowMoveAsideBlockedDialog(Str path, Str copyPath, Str fileName) {
     }
     cfg.cbSize = sizeof(cfg);
     cfg.hwndParent = gWnd ? gWnd->hwnd : nullptr;
-    cfg.pszWindowTitle = L"SumatraPDFMod";
+    cfg.pszWindowTitle = L"SumatraPDF";
     cfg.pszMainInstruction = CWStrTemp(fmt(Tr("Cannot update %s").s, fileName));
     cfg.pszContent = CWStrTemp(content);
     cfg.dwFlags = (TASKDIALOG_FLAGS)flags;
@@ -771,7 +771,7 @@ static bool MoveAsideInstallFile(Str installDir, Str fileName, bool silent) {
     return true;
 }
 
-// Through 3.6 the engine DLL was libmupdf.dll; 3.7+ ships libsumatrapdfMod.dll.
+// Through 3.6 the engine DLL was libmupdf.dll; 3.7+ ships libsumatrapdf.dll.
 // Best-effort only: a locked legacy file must not abort install — the new DLL
 // has a different name and can still be written. Prefer rename-aside so a
 // still-mapped module can unload later; fall back to delete when possible.
@@ -797,7 +797,7 @@ static void MoveAsideOrDeleteLegacyLibmupdf(Str installDir) {
     LogLastError();
 }
 
-// destDir\SumatraPDFMod.exe is the running installer (e.g. `./SumatraPDFMod.exe -x`
+// destDir\SumatraPDF.exe is the running installer (e.g. `./SumatraPDF.exe -x`
 // from the exe's own directory). Overwriting/renaming it is confusing and fails.
 static bool IsExtractingOverSelf(Str destDir) {
     TempStr dstExe = path::JoinTemp(destDir, Str(kExeName));
@@ -812,7 +812,7 @@ static bool PrepareInstallDirByRenaming(Str installDir, bool silent, bool skipEx
     static const Str kFiles[] = {
         StrL("PdfFilter.dll"),
         StrL("PdfPreview.dll"),
-        StrL("libsumatrapdfMod.dll"),
+        StrL("libsumatrapdf.dll"),
     };
     for (Str name : kFiles) {
         if (!MoveAsideInstallFile(installDir, name, silent)) {
@@ -820,7 +820,7 @@ static bool PrepareInstallDirByRenaming(Str installDir, bool silent, bool skipEx
         }
     }
     // The exe itself: a just-killed (TerminateProcess is async) or relaunched
-    // instance can still map SumatraPDFMod.exe, which would make CopySelfToDir's
+    // instance can still map SumatraPDF.exe, which would make CopySelfToDir's
     // overwrite fail with a sharing violation. Rename it aside too - renaming a
     // mapped image is allowed even though overwriting/deleting it is not.
     // Skip when -x extracts into this exe's own directory: we keep the running
@@ -835,8 +835,8 @@ static bool PrepareInstallDirByRenaming(Str installDir, bool silent, bool skipEx
 
 static void DeleteInstallCopyLeftovers(Str destDir) {
     static const Str kCopies[] = {
-        StrL("libsumatrapdfMod.dll.copy"), StrL("libmupdf.dll.copy"),   StrL("PdfFilter.dll.copy"),
-        StrL("PdfPreview.dll.copy"),    StrL("SumatraPDFMod.exe.copy"),
+        StrL("libsumatrapdf.dll.copy"), StrL("libmupdf.dll.copy"),   StrL("PdfFilter.dll.copy"),
+        StrL("PdfPreview.dll.copy"),    StrL("SumatraPDF.exe.copy"),
     };
     for (Str name : kCopies) {
         TempStr copyPath = path::JoinTemp(destDir, name);
@@ -855,12 +855,12 @@ static void DeleteInstallCopyLeftovers(Str destDir) {
 }
 
 // After a failed upgrade that renamed install files to *.copy, put the previous
-// install back so the user is not left without SumatraPDFMod.exe / companion DLLs.
+// install back so the user is not left without SumatraPDF.exe / companion DLLs.
 // Also undoes a partial PrepareInstallDirByRenaming when a later rename fails.
 static void RestoreInstallCopyFiles(Str installDir) {
     logf("RestoreInstallCopyFiles('%s')\n", installDir);
     static const Str kFiles[] = {
-        StrL("SumatraPDFMod.exe"), StrL("libsumatrapdfMod.dll"), StrL("PdfFilter.dll"),
+        StrL("SumatraPDF.exe"), StrL("libsumatrapdf.dll"), StrL("PdfFilter.dll"),
         StrL("PdfPreview.dll"), StrL("libmupdf.dll"),
     };
     for (Str name : kFiles) {
@@ -895,8 +895,8 @@ static void RestoreInstallCopyFiles(Str installDir) {
 }
 
 // IDR_EMBEDDED_PAK also holds translations and the manual; the installer only
-// writes the top-level binaries (libsumatrapdfMod.dll, PdfFilter.dll, PdfPreview.dll,
-// SumatraPDFMod-tool.exe) to the install dir.
+// writes the top-level binaries (libsumatrapdf.dll, PdfFilter.dll, PdfPreview.dll,
+// sumatrapdf-tool.exe) to the install dir.
 static bool IsInstallerPayload(Str name) {
     if (str::ContainsCharAny(name, StrL("\\/"))) {
         return false;
@@ -1041,7 +1041,7 @@ Exit:
     // Best-effort: restore search indexing after we may have stopped WSearch.
     StartWindowsSearchService();
     // Pre-release debug report (no symbols download) so we learn about failed
-    // upgrades (e.g. locked libsumatrapdfMod.dll) with the install log attached.
+    // upgrades (e.g. locked libsumatrapdf.dll) with the install log attached.
     // Not when the user aborted: that is their machine blocking us, not a bug
     if (gInstallFailed && !gInstallAborted) {
         TempStr cond = fmt("Installation failed: %s", gFirstError ? gFirstError : StrL("(no details)"));
@@ -1234,7 +1234,7 @@ static void ShowInstallationFailedUi(HWND hwndParent) {
     }
     dialogConfig.cbSize = sizeof(TASKDIALOGCONFIG);
     dialogConfig.hwndParent = hwndParent;
-    dialogConfig.pszWindowTitle = L"SumatraPDFMod";
+    dialogConfig.pszWindowTitle = L"SumatraPDF";
     dialogConfig.pszMainInstruction = L"Installation failed";
     dialogConfig.pszContent = CWStrTemp(content);
     dialogConfig.nDefaultButton = IDOK;
@@ -1860,9 +1860,9 @@ bool ExtractLibsumatrapdfToDir(Str destDir) {
         log(StrL("ExtractLibsumatrapdfToDir: OpenEmbeddedFilesArchive failed\n"));
         return false;
     }
-    int idx = lzma::GetIdxFromName(gArchive, StrL("libsumatrapdfMod.dll"));
+    int idx = lzma::GetIdxFromName(gArchive, StrL("libsumatrapdf.dll"));
     if (idx < 0) {
-        log(StrL("ExtractLibsumatrapdfToDir: libsumatrapdfMod.dll not found in archive\n"));
+        log(StrL("ExtractLibsumatrapdfToDir: libsumatrapdf.dll not found in archive\n"));
         return false;
     }
     lzma::FileInfo* fi = &gArchive->files[idx];
@@ -1870,7 +1870,7 @@ bool ExtractLibsumatrapdfToDir(Str destDir) {
          (unsigned)fi->compressedSize);
     u8* uncompressed = lzma::GetFileDataByIdx(gArchive, idx, nullptr);
     if (!uncompressed) {
-        log(StrL("ExtractLibsumatrapdfToDir: failed to decompress libsumatrapdfMod.dll\n"));
+        log(StrL("ExtractLibsumatrapdfToDir: failed to decompress libsumatrapdf.dll\n"));
         return false;
     }
     if (!dir::CreateAll(destDir)) {
@@ -2001,7 +2001,7 @@ bool ExtractInstallerFiles(Str dir) {
     }
 
     if (skipSelfExe) {
-        logf("ExtractInstallerFiles: dest is this exe's directory, not copying SumatraPDFMod.exe\n");
+        logf("ExtractInstallerFiles: dest is this exe's directory, not copying SumatraPDF.exe\n");
     } else {
         ok = CopySelfToDir(dir);
         if (!ok) {

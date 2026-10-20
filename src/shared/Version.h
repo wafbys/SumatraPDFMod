@@ -42,4 +42,4 @@
 #define kCopyrightStr "Copyright 2006-2026 all authors (GPLv3)"
 #define kPublisherStr "Krzysztof Kowalczyk"
 
-#define kAppName "SumatraPDFMod"
+#define kAppName "SumatraPDF"

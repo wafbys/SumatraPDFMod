@@ -57,7 +57,7 @@ ${tabState(PENDING_PDF)}
   ]
 ]
 `;
-  writeFileSync(join(APPDATA, "SumatraPDFMod-settings.txt"), seed, "utf8");
+  writeFileSync(join(APPDATA, "SumatraPDF-settings.txt"), seed, "utf8");
 }
 
 async function currentPath(client: ControlClient): Promise<string> {
@@ -71,7 +71,7 @@ async function currentPath(client: ControlClient): Promise<string> {
 }
 
 export async function testit(): Promise<void> {
-  await killProcessesNamed("SumatraPDFMod.exe");
+  await killProcessesNamed("SumatraPDF.exe");
   seedSettings();
   const { proc, client, frame } = await launchControlled(["-appdata", APPDATA], { saveSettings: true });
   try {
@@ -114,7 +114,7 @@ export async function testit(): Promise<void> {
       throw new Error(`pending-tab-freed-session-state: exit code ${exitCode}, want 0`);
     }
   } finally {
-    await killProcessesNamed("SumatraPDFMod.exe");
+    await killProcessesNamed("SumatraPDF.exe");
     rmSync(APPDATA, { recursive: true, force: true });
   }
 }

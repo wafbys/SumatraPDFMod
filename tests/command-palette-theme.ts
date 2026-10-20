@@ -100,7 +100,7 @@ export async function testit(): Promise<void> {
   rmSync(dir, { recursive: true, force: true });
   const appdata = join(dir, "appdata");
   mkdirSync(appdata, { recursive: true });
-  writeFileSync(join(appdata, "SumatraPDFMod-settings.txt"), SETTINGS);
+  writeFileSync(join(appdata, "SumatraPDF-settings.txt"), SETTINGS);
 
   const { proc, client, frame } = await launchControlled(["-appdata", appdata]);
   try {

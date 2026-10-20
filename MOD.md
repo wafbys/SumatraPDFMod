@@ -1,4 +1,4 @@
-# MOD：电子书四槽字体（SumatraPDFMod）
+# MOD：电子书四槽字体（SumatraPDF）
 
 这个分支（`mod`）在上游 SumatraPDF 的基础上加了「四槽字体」：读 EPUB / HTML / TXT 等
 **重排文档**时，用读者指定的字体替换书里声明的字体，连书里内嵌的字体也一起替换。
@@ -13,32 +13,32 @@ PDF、封面图、扫描页不变。附带一个开关，把拉丁文字里的�
 
 每个槽可以填**字体文件路径**，也可以填**系统已安装的字体族名**（后者不需要字体副本）。
 
-## 名字都带 Mod
+## 名字
+
+产物、窗口标题、设置文件都跟上游 SumatraPDF 同名：2026-10-16 曾全部改成
+`SumatraPDFMod`，10-20 改回。
 
 | 东西 | 名字 |
 | --- | --- |
-| 产物（`out/rel64/`、`out/dbg64/`） | `SumatraPDFMod.exe`（静态版 `SumatraPDFMod-static.exe`） |
-| 引擎 DLL / 命令行工具 | `libsumatrapdfMod.dll`、`SumatraPDFMod-tool.exe` |
-| 窗口标题、关于页、exe 文件属性 | `SumatraPDFMod`（`kAppName`、`kSumatraWindowTitle`） |
-| 便携设置文件 | `SumatraPDFMod-settings.txt`（exe 旁；见下） |
+| 产物（`out/rel64/`、`out/dbg64/`） | `SumatraPDF.exe`（静态版 `SumatraPDF-static.exe`） |
+| 引擎 DLL / 命令行工具 | `libsumatrapdf.dll`、`sumatrapdf-tool.exe` |
+| 窗口标题、关于页、exe 文件属性 | `SumatraPDF`（`kAppName`、`kSumatraWindowTitleW`） |
+| 便携设置文件 | `SumatraPDF-settings.txt`（exe 旁；见下） |
 | 本分支自己的设置项 | 一律 `Mod` 前缀，排在各自结构（`EBookUI` / `FileEBookUI`）**最前面**、按字母序；`EBookUI` 块本身也排在设置文件最前，Mod 组之后有一条分割线注释 `# ---- mod settings above; plain SumatraPDF settings below ----` |
-| 不变的名字 | `PdfFilter.dll`、`PdfPreview.dll`（Windows 搜索/预览组件，名字里本来就没有 SumatraPDF）；premake 工程名与源文件名（`SumatraPDF.vcxproj`、`src/SumatraPDF.cpp`…）也是原样，改它们只动开发环境、不动产物 |
 
-产物的名字有两处，premake 重新生成时会保持一致：`premake5.lua` 里各工程的
-`targetname`，以及已提交的 `vs2022/*.vcxproj` 里的 `<TargetName>`（`cmd/build.ts` 默认
-走 MSBuild + vcxproj；`-ninja` 时走 `cmd/ninja.ts` 的资源表，同样已改）。exe 的
-`/DELAYLOAD:libsumatrapdfMod.dll`、预打包命令里的文件名、`EmbeddedResources.cpp` 里
-"DLL 找同目录的 exe 读嵌入资源"的那一处，也都跟着改了。
+`Mod*` 前缀是**故意保留**的：它标的是本分支新增的设置，不是产品名。
 
-**设置文件**：便携版把设置放在 exe 旁，所以本 mod 用**自己的文件名**，免得和官方
-SumatraPDF 放在一个目录时互相覆盖（官方版保存时会丢掉它不认识的 `Mod*` 字段）。
-第一次启动如果只找到官方的 `SumatraPDF-settings.txt`，会把它**改名**成
-`SumatraPDFMod-settings.txt`（改名失败就照旧读旧文件，不丢数据）。实现在
-`src/shared/AppSettings.cpp`（`GetSettingsFileNameTemp` + `LoadSettings` 里的搬迁）。
+**设置文件**：便携版把设置放在 exe 旁。改名前是 `SumatraPDF-settings.txt`，10-16 改成
+`SumatraPDFMod-settings.txt`，现在改回 `SumatraPDF-settings.txt`。第一次启动如果只找到
+`SumatraPDFMod-settings.txt`，会把它**改名**成 `SumatraPDF-settings.txt`（改名失败就
+照旧读旧文件，不丢数据）。实现在 `src/shared/AppSettings.cpp`
+（`GetSettingsFileNameTemp` + `LoadSettings` 里的搬迁）。
 
-改名前写的旧键名（`FontSerif` 等）**不保留、不兼容**：本分支里已经没有这些名字，
-配置文件里也不会有（本仓库的部署目录已经改成 `Mod*`）。要在自己的文件里改：
-`EBookUI` / `FileEBookUI` 块里的键名前面加上 `Mod` 即可，没改的按未知设置忽略。
+**别把便携版和官方版放同一个目录**：官方保存设置时会丢掉它不认识的 `Mod*` 键。改回同名
+之后文件名也一样了，只能靠目录分开。
+
+上游的旧键名（`FontSerif` 等）**不兼容**：本分支只认 `Mod*`。要在自己的文件里改：
+`EBookUI` / `FileEBookUI` 块里的键名前加上 `Mod` 即可，没改的按未知设置忽略。
 
 ## 在界面里设置
 

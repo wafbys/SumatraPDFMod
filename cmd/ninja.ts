@@ -11,9 +11,9 @@ const generatedFile = join(ninjaDir, ".generated");
 // must re-generate them from scratch (the fixups are not idempotent).
 const premakeFiles = ["premake5.lua", "premake5.files.lua", "cmd/ninja.ts"];
 const resources = [
-  ["SumatraPDF", "SumatraPDFMod.exe", "../../src/SumatraPDF.rc"],
-  ["SumatraPDF-static", "SumatraPDFMod-static.exe", "../../src/SumatraPDF.rc"],
-  ["libsumatrapdf", "libsumatrapdfMod.dll", "../../src/libsumatrapdf.rc"],
+  ["SumatraPDF", "SumatraPDF.exe", "../../src/SumatraPDF.rc"],
+  ["SumatraPDF-static", "SumatraPDF-static.exe", "../../src/SumatraPDF.rc"],
+  ["libsumatrapdf", "libsumatrapdf.dll", "../../src/libsumatrapdf.rc"],
   ["PdfFilter", "PdfFilter.dll", "../../src/ifilter/PdfFilter.rc"],
   ["PdfPreview", "PdfPreview.dll", "../../src/previewer/PdfPreview.rc"],
 ] as const;
@@ -78,8 +78,8 @@ function addResources(text: string, path: string): string {
       }
       // The prebuild packs IDR_EMBEDDED_PAK into out/<cfg>/, so the .res waits
       // for that stamp and gets the archive path via the EMBEDDED_PAK resdefine
-      // premake sets: embedded.lzsa (also holding libsumatrapdfMod.dll & co) for
-      // SumatraPDFMod.exe, embedded-static.lzsa for SumatraPDFMod-static.exe.
+      // premake sets: embedded.lzsa (also holding libsumatrapdf.dll & co) for
+      // SumatraPDF.exe, embedded-static.lzsa for SumatraPDF-static.exe.
       // Mixed slashes on purpose: QM() turns the path into an RC string, and
       // rc mangles ".." after "/" into "..." (./../../out -> ./.../.../out)
       // while a backslash before the config name is an escape (out\rel64
@@ -90,7 +90,7 @@ function addResources(text: string, path: string): string {
       if (project === "SumatraPDF") {
         const stamp = `../../out/${config}/obj/SumatraPDF/SumatraPDF.prebuild`;
         const archive = `../../out/${config}/embedded.lzsa`;
-        const bins = ["libsumatrapdfMod.dll", "PdfFilter.dll", "PdfPreview.dll", "SumatraPDFMod-tool.exe"];
+        const bins = ["libsumatrapdf.dll", "PdfFilter.dll", "PdfPreview.dll", "sumatrapdf-tool.exe"];
         const bin = bins.map((name) => `../../out/${config}/${name}`);
         pack = packArchiveEdge(text, project, archive, stamp, bin, packRules);
         deps = ` | ${archive}`;
@@ -216,17 +216,17 @@ function fixEscapes(): void {
     fixed = fixed.replace(/^build (\.\.\/\.\.\/out\/[^/]+)\/obj\/libsumatrapdf\.lib: phony .+\n/gm, "");
     fixed = fixed.replace(
       /^build (\.\.\/\.\.\/out\/[^/]+)\/libsumatrapdf\.dll(?: \| [^:]+)?:(.*)$/gm,
-      "build $1/libsumatrapdfMod.dll:$2",
+      "build $1/libsumatrapdf.dll:$2",
     );
     // The archive prebuild must wait for every binary it packages.
     fixed = fixed.replace(
       /^build (\.\.\/\.\.\/out\/([^/]+)\/obj\/SumatraPDF\/SumatraPDF\.prebuild): prebuild.*$/gm,
-      "build $1: prebuild || ../../out/$2/libsumatrapdfMod.dll ../../out/$2/PdfFilter.dll ../../out/$2/PdfPreview.dll ../../out/$2/SumatraPDFMod-tool.exe",
+      "build $1: prebuild || ../../out/$2/libsumatrapdf.dll ../../out/$2/PdfFilter.dll ../../out/$2/PdfPreview.dll ../../out/$2/sumatrapdf-tool.exe",
     );
     fixed = addResources(fixed, path);
     const dlls = [...fixed.matchAll(/^build (\.\.\/\.\.\/out\/[^/]+)\/libsumatrapdf\.dll: link_msc-v145/gm)];
     for (const [, outputDir] of dlls) {
-      fixed += `\nbuild ${outputDir}/obj/libsumatrapdfMod.lib: phony ${outputDir}/libsumatrapdfMod.dll\n`;
+      fixed += `\nbuild ${outputDir}/obj/libsumatrapdf.lib: phony ${outputDir}/libsumatrapdf.dll\n`;
     }
     fixed = fixed.replace(/\/D"([^"]+)="([^"]+)""/g, (_match, name, value) => `/D${name}=\\"${value}\\"`);
     if (fixed !== text) {
