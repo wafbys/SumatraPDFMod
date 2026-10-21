@@ -43,3 +43,6 @@
 #define kPublisherStr "Krzysztof Kowalczyk"
 
 #define kAppName "SumatraPDF"
+// what the UI calls the app (title bar, About); file and registry names keep
+// kAppName so a mod build and an official build don't share a settings file
+#define kAppDisplayName "SumatraPDFMod"

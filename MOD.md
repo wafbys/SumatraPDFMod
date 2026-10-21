@@ -15,16 +15,23 @@ PDF、封面图、扫描页不变。附带一个开关，把拉丁文字里的�
 
 ## 名字
 
-产物、窗口标题、设置文件都跟上游 SumatraPDF 同名：2026-10-16 曾全部改成
-`SumatraPDFMod`，10-20 改回。
+**文件名跟上游同名**（产物、引擎 DLL、设置文件、数据目录、注册表键），**界面里的名字是
+`SumatraPDFMod`**（标题栏、首页/About 的品牌字、About 窗口标题、Help 菜单项）。界面名是
+`kAppDisplayName` / `kSumatraWindowTitleW`，文件名还是 `kAppName`。2026-10-16 曾把文件名
+也改成 Mod，10-20 改回。
 
 | 东西 | 名字 |
 | --- | --- |
 | 产物（`out/rel64/`、`out/dbg64/`） | `SumatraPDF.exe`（静态版 `SumatraPDF-static.exe`） |
 | 引擎 DLL / 命令行工具 | `libsumatrapdf.dll`、`sumatrapdf-tool.exe` |
-| 窗口标题、关于页、exe 文件属性 | `SumatraPDF`（`kAppName`、`kSumatraWindowTitleW`） |
+| 标题栏、首页/About 品牌字 | `SumatraPDFMod`（`kAppDisplayName`） |
+| About 窗口标题、Help 菜单项 | `About SumatraPDFMod` |
+| exe 文件属性（产品名） | `SumatraPDF`（`src/SumatraPDF.rc`） |
 | 便携设置文件 | `SumatraPDF-settings.txt`（exe 旁；见下） |
 | 本分支自己的设置项 | 一律 `Mod` 前缀，排在各自结构（`EBookUI` / `FileEBookUI`）**最前面**、按字母序；`EBookUI` 块本身也排在设置文件最前，Mod 组之后有一条分割线注释 `# ---- mod settings above; plain SumatraPDF settings below ----` |
+
+About 里的链接：`manual` / `version history` / `website` 指上游文档站；`github` / `issues` /
+`licenses` / `last change` 指 `https://github.com/wafbys/SumatraPDFMod`。
 
 `Mod*` 前缀是**故意保留**的：它标的是本分支新增的设置，不是产品名。
 

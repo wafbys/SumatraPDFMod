@@ -144,7 +144,7 @@ const CommandInfo gCommands[] = {
     {CmdHelpOpenKeyboardShortcuts, "CmdHelpOpenKeyboardShortcuts\0", StrL("Help: Keyboard Shortcuts")},
     {CmdToggleKeyboardHelp, "CmdToggleKeyboardHelp\0", StrL("Show Keyboard Shortcuts")},
     {CmdHelpVisitWebsite, "CmdHelpVisitWebsite\0", StrL("Help: SumatraPDF Website")},
-    {CmdHelpAbout, "CmdHelpAbout\0", StrL("Help: About SumatraPDF...")},
+    {CmdHelpAbout, "CmdHelpAbout\0", StrL("Help: About SumatraPDFMod...")},
     {CmdMoveFrameFocus, "CmdMoveFrameFocus\0", StrL("Move Frame Focus")},
     {CmdFavoriteAdd, "CmdFavoriteAdd\0", StrL("Add Favorite")},
     {CmdFavoriteDel, "CmdFavoriteDel\0", StrL("Delete Favorite")},

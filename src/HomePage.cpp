@@ -171,12 +171,12 @@ static AboutRow gAboutRows[] = {
     {StrL("manual"), StrL("SumatraPDF manual"), StrL("https://www.sumatrapdfreader.org/docs/SumatraPDF-documentation")},
     {StrL("version history"), StrL("What's new"), StrL("https://www.sumatrapdfreader.org/docs/Version-history")},
     {StrL("website"), StrL("SumatraPDF website"), Str(kWebsiteURL)},
-    {StrL("forums"), StrL("SumatraPDF forums"), StrL("https://github.com/sumatrapdfreader/sumatrapdf/discussions")},
-    {StrL("licenses"), StrL("Various Open Source"),
-     StrL("https://github.com/sumatrapdfreader/sumatrapdf/blob/master/AUTHORS")},
+    {StrL("github"), StrL("wafbys/SumatraPDFMod"), StrL("https://github.com/wafbys/SumatraPDFMod")},
+    {StrL("issues"), StrL("Report a bug"), StrL("https://github.com/wafbys/SumatraPDFMod/issues")},
+    {StrL("licenses"), StrL("Various Open Source"), StrL("https://github.com/wafbys/SumatraPDFMod/blob/mod/AUTHORS")},
 #ifdef GIT_COMMIT_ID_STR
     {StrL("last change"), StrL("git commit " GIT_COMMIT_ID_STR),
-     StrL("https://github.com/sumatrapdfreader/sumatrapdf/commit/" GIT_COMMIT_ID_STR)},
+     StrL("https://github.com/wafbys/SumatraPDFMod/commits/mod")},
 #endif
     {StrL("more software by me"), StrL("Sumatra File Manager"), StrL("https://sumatrafilemanager.com")},
     {{}, StrL("Sumatra File Manager Online"), StrL("https://online.sumatrafilemanager.com")},
@@ -295,7 +295,7 @@ static PlatformFont* HomeBrandFont() {
 }
 
 Size SumatraLogo::GetIdealSize() {
-    Size sz = PlatformFontMeasureText(font, StrL(kAppName));
+    Size sz = PlatformFontMeasureText(font, StrL(kAppDisplayName));
     sz.dx += HomeBrandStripesDx() + DpiScale(kHomeBrandGap);
     sz.dy = std::max(sz.dy, DpiScale(kHomeBrandStripeDy));
     return sz;
@@ -303,7 +303,7 @@ Size SumatraLogo::GetIdealSize() {
 
 void SumatraLogo::Paint(VirtPaintCtx& ctx) {
     static Color cols[] = {kCol1, kCol2, kCol3, kCol4, kCol5};
-    Size txtSize = PlatformFontMeasureText(font, StrL(kAppName));
+    Size txtSize = PlatformFontMeasureText(font, StrL(kAppDisplayName));
     Rect r = ctx.bounds;
     int stripeDx = DpiScale(kHomeBrandStripeDx);
     int stripeDy = DpiScale(kHomeBrandStripeDy);
@@ -315,7 +315,7 @@ void SumatraLogo::Paint(VirtPaintCtx& ctx) {
     }
     x = r.x + HomeBrandStripesDx() + DpiScale(kHomeBrandGap);
     Rect rcName(x, r.y + ((r.dy - txtSize.dy) / 2), txtSize.dx, txtSize.dy);
-    ctx.gfx->DrawText(StrL(kAppName), rcName, 0, font, ThemeWindowTextColor());
+    ctx.gfx->DrawText(StrL(kAppDisplayName), rcName, 0, font, ThemeWindowTextColor());
 }
 
 // the About screen's virtual controls for one HWND. Positions come from
@@ -780,7 +780,7 @@ void ShowAboutWindow(MainWindow* win) {
         ReportIf(!gAtomAbout);
     }
 
-    WCHAR* title = CWStrTemp(Tr("About SumatraPDF"));
+    WCHAR* title = CWStrTemp(Tr("About SumatraPDFMod"));
     DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
     int x = CW_USEDEFAULT;
     int y = CW_USEDEFAULT;

@@ -142,7 +142,7 @@ const commandsRaw = [
     "CmdHelpOpenKeyboardShortcuts", "Help: Keyboard Shortcuts",
     "CmdToggleKeyboardHelp", "Show Keyboard Shortcuts",
     "CmdHelpVisitWebsite", "Help: SumatraPDF Website",
-    "CmdHelpAbout", "Help: About SumatraPDF...",
+    "CmdHelpAbout", "Help: About SumatraPDFMod...",
     "CmdMoveFrameFocus", "Move Frame Focus",
     "CmdFavoriteAdd", "Add Favorite",
     "CmdFavoriteDel", "Delete Favorite",
